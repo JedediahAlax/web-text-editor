@@ -56,12 +56,19 @@ p {
 }
 
 input {
-  width: 500px;
+  width: 1000px;
+  height: 1000px;
   align-self: center;
 }
 
 form {
   text-align: center;
+}
+
+textarea {
+  align-self: center;
+  width: 1000px;
+  height: 1000px;
 }
 
 
