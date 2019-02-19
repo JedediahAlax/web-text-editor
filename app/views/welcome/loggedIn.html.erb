@@ -1,12 +1,117 @@
-<div class="jumbotron">
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<h1>You have logged in!</h1>
-<p>
-  The time is now: <%= Time.now %>
-</p>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
-<textarea name="name" rows="8" cols="80"> </textarea>
+
+    <title>Document Name</title>
+    <h1 class= "page-header">Document Name</h1>
+  </head>
+
+  <!-- Navbar -->
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="FileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          File
+        </a>
+        <div class="dropdown-menu" aria-labelledby="FileDropdown">
+          <a class="dropdown-item" href="#">New</a>
+          <a class="dropdown-item" href="#">Open</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Save</a>
+          <a class="dropdown-item" href="#">Download as</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Print</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Help</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+  </div>
+  <!-- Tool bar -->
+  <div class= "container">
+    <div class="p-3 btn-group" role="group" aria-label="Button group with nested dropdown">
+
+      <!-- Bold button -->
+      <button type="button" class="btn btn-outline-dark font-weight-bold" data-toggle="button" aria-pressed="false" autocomplete="off">
+        B
+      </button>
+
+      <!-- Italics button -->
+      <button type="button" class="btn btn-outline-dark font-italic" data-toggle="button" aria-pressed="false" autocomplete="off">
+        i
+      </button>
+
+      <!-- Format drop down -->
+      <div class="dropdown">
+        <button class="btn btn-outline-dark dropdown-toggle text-center" type="button" id="formatDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Format
+        </button>
+        <div class="dropdown-menu" aria-labelledby="formatDropdownMenu">
+          <button class="dropdown-item" type="button">center</button>
+          <button class="dropdown-item" type="button">left-align</button>
+          <button class="dropdown-item" type="button">right align</button>
+        </div>
+      </div>
+
+    <!-- Font drop down -->
+    <div class="dropdown">
+      <button class="btn btn-outline-dark dropdown-toggle text-center" type="button" id="FontDropdownMenu" data-toggle="dropdown">
+        Font
+      </button>
+      <div class="dropdown-menu" aria-labelledby="FontDropdownMenu">
+        <button class="dropdown-item" type="button">Times</button>
+        <button class="dropdown-item" type="button">Arial</button>
+        <button class="dropdown-item" type="button">Ect...</button>
+      </div>
+    </div>
+
+    <!-- Text size drop down -->
+    <div class="dropdown">
+      <button class="btn btn-outline-dark dropdown-toggle text-center" type="button" id="TextSizeDropdownMenu" data-toggle="dropdown">
+        Size
+      </button>
+      <div class="dropdown-menu" aria-labelledby="TextSizeDropdownMenu">
+        <button class="dropdown-item" type="button">12</button>
+        <button class="dropdown-item" type="button">16</button>
+        <button class="dropdown-item" type="button">Ect...</button>
+      </div>
+    </div>
+
+  </div> <!-- End -->
 
 
-</div>
+
+
+
+  <!-- Text box-->
+  <div class= "container">
+    <div class="form-group">
+      <textarea class="form-control shadow-lg p-3 mb-5 bg-white rounded" rows="80"></textarea>
+    </div>
+  </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</html>
