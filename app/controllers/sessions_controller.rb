@@ -10,6 +10,8 @@ class SessionsController < ApplicationController
     # if the user is found in database AND the password is correct for that user we log in.
     if user && user.authenticate(params[:session][:password])
       # log user in and redirect to where ever appropriate
+      log_in user
+      redirect_to user
     else
       # user was not found in database OR password submitted to user was invalid. no log in :(
       flash.now[:danger] = "Invalid email and/or password."
@@ -19,7 +21,8 @@ class SessionsController < ApplicationController
 
 
   def destroy
-
+    log_out
+    redirect_to root_url
   end
 
 end
