@@ -13,6 +13,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      # log in user after signup
+      log_in @user
       flash[:success] = "Welcome to Textitor!!"
       redirect_to @user
     else
