@@ -1,12 +1,31 @@
-
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "Textitor", root_path, id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Help", '#' %></li>
-        <li><%= link_to "Log in", '/welcome/loggedIn' %></li>
-      </ul>
-    </nav>
+<!-- Navigation Bar-->
+<body class="mx-auto" style="padding-top: 0">
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+<div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="../assets/logo.png"><a/>
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-traget="#navbarResponsive">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">My Documents</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/welcome/loggedIn">Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Help</a>
+          </li>
+        </ul>
+      </div>
   </div>
-</header>
+</nav>
+</body>
