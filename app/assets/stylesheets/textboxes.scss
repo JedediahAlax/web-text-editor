@@ -1,0 +1,19 @@
+// Place all the styles related to the Textboxes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+textarea {
+    display: block;
+    margin: auto;
+    resize: none;
+    width: 500px;
+    height: 400px;
+}
+
+iframe {
+    display: block;
+    margin: auto;
+    resize: none;
+    width: 500px;
+    height: 400px;
+}

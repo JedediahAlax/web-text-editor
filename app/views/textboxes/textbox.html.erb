@@ -1,0 +1,42 @@
+<h1>Textboxes#textbox</h1>
+<p>Find me in app/views/textboxes/textbox.html.erb</p>
+
+<!-- Style="Display: none;"-->
+<textarea  id="textbox" placeholder="Sweet Text Box!"></textarea>
+<p id="paragraph">Start</p>
+<button type="button" name="button" onclick="strong()"></button>
+
+<iframe id="display" name="display"></iframe>
+
+<script type="text/javascript">
+    var openTag = "<p>";
+    var endTag = "</p>";
+    var newText = "";
+    var oldText = "";
+
+
+    document.body.onkeyup = function() {
+        newText = document.getElementById("textbox").value;
+        window.frames['display'].document.body.innerHTML = oldText + openTag +newText + endTag;
+        console.log(oldText + openTag +newText + endTag);
+    }
+
+    window.onload = function() {
+        document.getElementById("textbox").value = "";
+    }
+
+    function stateChanged() {
+        newText = openTag + newText + endTag;
+        oldText = oldText + newText;
+        newText = "";
+        document.getElementById("textbox").value = "";
+
+    }
+
+    function strong() {
+        stateChanged();
+        openTag = "<strong>";
+        endTag = "</strong>";
+    }
+
+</script>
