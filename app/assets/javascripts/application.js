@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require bootstrap
-//= reuire bootstrap/dropdown
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
