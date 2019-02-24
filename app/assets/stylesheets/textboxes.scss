@@ -2,9 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-textarea {
+.mycontainer {
+    width: 1000px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+}
+
+.floatleft {
+    float: left;
     display: block;
     margin: auto;
+}
+
+textarea {
+    display: block;
+    margin: 8px;
     resize: none;
     width: 500px;
     height: 400px;
@@ -12,8 +27,14 @@ textarea {
 
 iframe {
     display: block;
-    margin: auto;
+    margin: 8px;
     resize: none;
     width: 500px;
     height: 400px;
+}
+
+button {
+    width: 75px;
+    height: 35px;
+    text-align: center;
 }

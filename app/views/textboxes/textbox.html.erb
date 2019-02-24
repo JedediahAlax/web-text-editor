@@ -1,42 +1,75 @@
 <h1>Textboxes#textbox</h1>
-<p>Find me in app/views/textboxes/textbox.html.erb</p>
 
-<!-- Style="Display: none;"-->
-<textarea  id="textbox" placeholder="Sweet Text Box!"></textarea>
-<p id="paragraph">Start</p>
-<button type="button" name="button" onclick="strong()"></button>
+<br>
+<br>
 
-<iframe id="display" name="display"></iframe>
+<div class="mycontainer">
+    <div class="floatleft">
+        <button type="button" name="button" onclick="normal()">Normal</button>
+    </div>
+    <div class="floatleft">
+        <button type="button" name="button" onclick="strong()">Bold</button>
+    </div>
+    <div class="floatleft">
+        <button type="button" name="button" onclick="italics()">Italics</button>
+    </div>
+</div>
+
+<br>
+<br>
+
+<div class="floatleft">
+    <!-- Style="Display: none;"-->
+    <textarea  id="textbox" value="" placeholder="Sweet Text Box!" onkeydown="keyPressed()"></textarea>
+</div>
+<div class="floatleft">
+    <iframe id="display" name="display"></iframe>
+</div>
+
+<span id="ruler" style="visibility: hidden; white-space: nowrap;""></span>
 
 <script type="text/javascript">
-    var openTag = "<p>";
+    var openTag = "<p style=\"display: inline;\">";
     var endTag = "</p>";
     var newText = "";
     var oldText = "";
-
-
-    document.body.onkeyup = function() {
-        newText = document.getElementById("textbox").value;
-        window.frames['display'].document.body.innerHTML = oldText + openTag +newText + endTag;
-        console.log(oldText + openTag +newText + endTag);
-    }
+    var textBox = document.getElementById("textbox");
 
     window.onload = function() {
-        document.getElementById("textbox").value = "";
+        textBox.value = "";
+    }
+
+    document.body.onkeyup = function() {
+        newText = textBox.value;
+        window.frames['display'].document.body.innerHTML = oldText + openTag + newText + endTag;
+        console.log(oldText + openTag +newText + endTag);
+        console.log(textBox.selectionStart);
     }
 
     function stateChanged() {
         newText = openTag + newText + endTag;
         oldText = oldText + newText;
         newText = "";
-        document.getElementById("textbox").value = "";
+        textBox.value = "";
 
+    }
+
+    function normal() {
+        stateChanged();
+        openTag = "<p style=\"display: inline;\">";
+        endTag = "</p>";
     }
 
     function strong() {
         stateChanged();
-        openTag = "<strong>";
+        openTag = "<strong style=\"display: inline;\">";
         endTag = "</strong>";
+    }
+
+    function italics() {
+        stateChanged();
+        openTag = "<i style=\"display: inline;\">";
+        endTag = "</i>";
     }
 
 </script>
