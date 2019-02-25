@@ -5,10 +5,10 @@
 
 <div class="mycontainer">
     <div class="floatleft">
-        <button type="button" name="button" onclick="normal()">Normal</button>
+        <button type="button" name="button" onclick="logRich()">Log Rich</button>
     </div>
     <div class="floatleft">
-        <button type="button" name="button" onclick="strong()">Bold</button>
+        <button type="button" name="button" onclick="bold()">Bold</button>
     </div>
     <div class="floatleft">
         <button type="button" name="button" onclick="italics()">Italics</button>
@@ -20,7 +20,7 @@
 
 <div class="floatleft">
     <!-- Style="Display: none;"-->
-    <textarea id="textbox" name="textbox" placeholder="Sweet Text Box!" onkeydown="changed()"></textarea>
+    <textarea id="textbox" name="textbox" placeholder="Sweet Text Box!" value="" autofocus="true"></textarea>
 </div>
 <div class="floatleft">
     <iframe id="display" name="display"></iframe>
@@ -28,9 +28,59 @@
 
 
 <script>
+    var textbox = document.getElementById('textbox');
+    var stateChanged = true;
+    var startTag = "";
+    var endTag = "";
+    var stateBeginning = 0;
+    var stateEnd = 0;
+    var richText = "";
+    var stateText =  "";
+    var richStateText = "";
 
-  function changed() {
-    console.log('Changed!');
-  }
+    window.onload = function () {
+        //sets all paragraph tags for 'display' to inline
+        var style = document.createElement("div");
+        style.innerHTML = "<br><style>p { display: inline; }</style>";
+        frames['display'].document.head.appendChild(style);
+        //
+
+        document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
+        newState(); //sets the first state
+    }
+
+    function newState() {
+        startTag = "<p>";
+        endTag = "</p>";
+        stateBeginning = textbox.selectionStart;
+        stateEnd = stateBeginning; //nothing is in a new state
+    }
+
+    textbox.onkeyup = function(e){
+        handleStates(); // on keypress updates states start and end vars, then composes the richStateText vars based on their bounds and their respective start and end tags
+        richText = richStateText; //FIXME
+        window.frames['display'].document.body.innerHTML = richText;
+        console.log(richText);
+    }
+
+    function handleStates() {
+        stateEnd += 1; //FIXME
+        stateText = textbox.value.substring(stateBeginning, stateEnd);
+        richStateText = startTag + stateText + endTag;
+    }
+
+    String.prototype.insert = function (index, string) {
+        if (index > 0) return this.substring(0, index) + string + this.substring(index, this.length);
+        else return string + this;
+    };
+
+    function logRich() {
+        console.log(richText);
+    }
+
+    function bold() {
+        startTag += "<b>";
+        endTag = endTag.insert(0, "</b>")
+    }
 
 </script>
