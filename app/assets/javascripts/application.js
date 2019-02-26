@@ -12,11 +12,7 @@
 //
 //= require jquery
 //= require rails-ujs
-//= require bootstrap-dropdown
+//= require bootstrap
 //= require activestorage
 //= require turbolinks
-//= require_tree .
-
-$(document).ready(function(){
-       $('.dropdown-toggle').dropdown();
-   });
+//= require_tree 
