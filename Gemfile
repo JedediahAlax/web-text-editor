@@ -6,7 +6,9 @@ ruby '2.5.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
 # added bootstrap for style
-gem 'bootstrap-sass', '3.3.7'
+# gem 'bootstrap-sass', '3.3.7'
+
+gem 'bootstrap-sass', '~> 3.4.1'
 
 #used for integration tests
 gem 'rails-controller-testing'
