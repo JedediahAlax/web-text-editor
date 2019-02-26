@@ -95,18 +95,46 @@
       </div>
     </div>
 
-  </div> <!-- End -->
+  </div> 
+  <!-- End -->
 
 
 
 
 
-  <!-- Text box-->
-  <div class= "container">
-    <div class="form-group">
-      <textarea class="form-control shadow-lg p-3 mb-5 bg-white rounded" rows="80"></textarea>
-    </div>
-  </div>
+  <!-- Text box -->
+
+  <html>
+    <head>
+      <title>Textitor</title>
+      <script src="https://use.fontawesome.com/aac5c45839.js"></script>
+    </head>
+    <body onload="enableEditMode();">
+      <div>
+        <button onclick="execCmd('bold');"><i class="fa fa-bold"></i></button>
+      </div>
+      <iframe name="richTextField" style="width: 750px; height: 1000px;"></iframe>
+          <script type="text/javascript">
+            
+            function enableEditMode() {
+              richTextField.document.designMode = 'On';
+            }
+
+            function execCmd(command) {
+              richTextField.document.execCommand(command, false, null);
+            }
+          </script>
+          <script type="text/javascript">
+            var edit = document.getElementById('richTextField');
+
+            edit.innerHTML = localStorage.getItem('richTextField');
+
+            edit.addEventListener('blur', function() {
+            localStorage.setItem('richTextField', this.innerHTML);
+        });
+      </script>
+      </div>
+    </body>
 
 
     <!-- Optional JavaScript -->
