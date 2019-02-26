@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title> Rich text Editor</title>
+      <script src="https://use.fontawesome.com/aac5c45839.js"></script>
+  </head>
+  <h1>You have logged in!</h1>
+  <!-- allows the buttons created below to edit the rich text displayed by the
+    i frame -->
+  <body onload="enabledEditMode();">
+    <div>
+      <button onclick="execCmd('bold');"><i class="fa fa-bold"></i></button>
+      <button onclick="execCmd('italic');"><i class="fa fa-italic"></i></button>
+      <button onclick="execCmd('underline');"><i class="fa fa-underline"></i></button>
+      <button onclick="execCmd('strikethrough');"><i class="fa fa-strikethrough"></i></button>
+      <button onclick="execCmd('justifyLeft');"><i class="fa fa-align-left"></i></button>
+      <button onclick="execCmd('justifyCenter');"><i class="fa fa-align-center"></i></button>
+      <button onclick="execCmd('justifyRight');"><i class="fa fa-align-right"></i></button>
+      <button onclick="execCmd('justifyFull');"><i class="fa fa-align-justify"></i></button>
+      <button onclick="execCmd('cut');"><i class="fa fa-cut"></i></button>
+      <button onclick="execCmd('copy');"><i class="fa fa-copy"></i></button>
+      <button onclick="execCmd('indent');"><i class="fa fa-indent"></i></button>
+      <button onclick="execCmd('outdent');"><i class="fa fa-dedent"></i></button>
+      <button onclick="execCmd('subscript');"><i class="fa fa-subscript"></i></button>
+      <button onclick="execCmd('superscript');"><i class="fa fa-superscript"></i></button>
+      <button onclick="execCmd('undo');"><i class="fa fa-undo"></i></button>
+      <button onclick="execCmd('redo');"><i class="fa fa-repeat"></i></button>
+      <button onclick="execCmd('insertUnorderedList');"><i class="fa fa-list-ul"></i></button>
+      <button onclick="execCmd('insertOrderedList');"><i class="fa fa-list-ol"></i></button>
+      <button onclick="execCmd('insertParagraph');"><i class="fa fa-paragraph"></i></button>
+
+      <select onclick="execCommandWithArg('formatBlock', this.value);">
+        <option value="H1">h1</option>
+        <option value="H2">h2</option>
+        <option value="H3">h3</option>
+        <option value="H4">h4</option>
+        <option value="H5">h5</option>
+        <option value="H6">h6</option>
+      </select>
+      <button onclick="execCmd('insertHorizontalRule');">hr</button>
+      <button onclick="execCmd('createLink', prompt('Enter a URL', 'http://'));"><i class="fa fa-link"></i></button>
+      <button onclick="execCmd('unlink');"><i class="fa fa-unlink"></i></button>
+      <button onclick="toggleSource();"><i class="fa fa-code"></i></button>
+      <button onclick="toggleEdit();">Edit</button>
+
+      <select onclick="execCommandWithArg('fontName', this.value);">
+        <option value="Arial">Arial</option>
+        <option value="Comic Sans">Comic Sans MS</option>
+        <option value="Courier">Courier</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Tahoma">Tahoma</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Verdana">Verdana</option>
+
+      </select>
+      <select onclick="execCommandWithArg('fontSize', this.value);">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+      </select>
+      <p>
+
+      Font Color: <input style="width: 50px; height: 30px;" type="color" onchange="execCommandWithArg('foreColor', this.value);">
+      Background: <input style="width: 50px; height: 30px;"type="color" onchange="execCommandWithArg('hiliteColor', this.value);">
+      <button onclick="execCommandWithArg('insertImage', prompt('Enter image URL', ''));"><i class="fa fa-file-image-o"></i></button>
+      <button onclick="execCmd('selectAll')">Select All</button>
+    </div>
+    <iframe name="richTextField" style="width: 1000px; height: 500px;"></iframe>
+    <script type="text/javascript">
+
+      var showSourceCode = false;
+      var isInEditMode = true;
+
+      function enabledEditMode () {
+        richTextField.document.designMode = 'On';
+      }
+
+      function execCmd (command) {
+        richTextField.document.execCommand(command, false, null)
+      }
+
+      function execCommandWithArg (command, arg) {
+        richTextField.document.execCommand(command, false, arg)
+      }
+      function toggleSource () {
+        if(showSourceCode){
+          richTextField.document.getElementsByTagName('body')[0].innerHTML = richTextField.document.getElementsByTagName('body')[0].textContent;
+          showSourceCode = false;
+        }
+        else{
+          richTextField.document.getElementsByTagName('body')[0].textContent = richTextField.document.getElementsByTagName('body')[0].innerHTML;
+          showSourceCode = true;
+        }
+      }
+
+        function toggleEdit () {
+          if(isInEditMode){
+            richTextField.document.designMode = 'Off';
+            isInEditMode = false;
+          }
+          else {
+            richTextField.document.designMode = 'On';
+            isInEditMode = true;
+          }
+      }
+
+      </script>
+    </body>
+  </html>
