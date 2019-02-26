@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
     root 'splash_page#home'
     get '/welcome/loggedIn'
-    get '/welcome/help'
+    get '/splash_page/help'
     get 'users/new'
     get '/signup', to: 'users#new'
     get '/login', to: 'sessions#new'
@@ -16,5 +16,5 @@ Rails.application.routes.draw do
 
     resources :users
 
-  
+
 end
