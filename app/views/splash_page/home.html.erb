@@ -1,7 +1,10 @@
 <div class="center jumbotron" >
   <h1> Welcome to Textitor</h1>
   <h2> A simple online text editor made just for you!</h2>
-
+  <% if logged_in? %>
+  <%= link_to "Use Textitor!", '/textboxes/textbox', class: "btn btn-lg btn-primary" %>
+  <% else %>
   <%= link_to "Sign up!", '/users/new', class: "btn btn-lg btn-primary" %>
-
+  
+  <% end %>
 </div>
