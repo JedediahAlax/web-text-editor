@@ -76,13 +76,42 @@
         else return string + this;
     };
 
+    function removeSubstring(string, substring) {
+        var index = string.indexOf(substring);
+        if (index != -1) {
+            var first = string.substring(0, index);
+            var last = string.substring(index + substring.length, string.length);
+            string = first + last;
+        }
+        return string;
+    }
+
     function logRich() {
         console.log(richText);
     }
 
     function bold() {
-        state.startTag += "<b>";
-        state.endTag = state.endTag.insert(0, "</b>");
+        var startTag = "<b>";
+        var endTag = "</b>";
+        if (!state.startTag.includes(startTag)) {
+            state.startTag = state.startTag.insert(state.startTag.length, startTag);
+            state.endTag = state.endTag.insert(0, endTag);
+        } else {
+            state.startTag = removeSubstring(state.startTag, startTag);
+            state.endTag = removeSubstring(state.endTag, endTag);
+        }
+    }
+
+    function italics() {
+        var startTag = "<i>";
+        var endTag = "</i>";
+        if (!state.startTag.includes(startTag)) {
+            state.startTag = state.startTag.insert(state.startTag.length, startTag);
+            state.endTag = state.endTag.insert(0, endTag);
+        } else {
+            state.startTag = removeSubstring(state.startTag, startTag);
+            state.endTag = removeSubstring(state.endTag, endTag);
+        }
     }
 
 </script>
