@@ -8,7 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid black;
+    border: none;
 }
 
 .floatleft {
@@ -23,6 +23,8 @@ textarea {
     resize: none;
     width: 500px;
     height: 400px;
+    top: 0;
+    left: 0;
 }
 
 iframe {
@@ -31,10 +33,13 @@ iframe {
     resize: none;
     width: 500px;
     height: 400px;
+    top: 0;
+    left: 0;
 }
 
 button {
     width: 75px;
     height: 35px;
     text-align: center;
+    background: lightgray;
 }

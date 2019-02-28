@@ -1,17 +1,12 @@
-<h1>Textboxes#textbox</h1>
-
 <br>
 <br>
 
 <div class="mycontainer">
     <div class="floatleft">
-        <button type="button" name="button" onclick="logRich()">Log Rich</button>
+        <button type="button" name="button" id="bold" onclick="bold()">Bold</button>
     </div>
     <div class="floatleft">
-        <button type="button" name="button" onclick="bold()">Bold</button>
-    </div>
-    <div class="floatleft">
-        <button type="button" name="button" onclick="italics()">Italics</button>
+        <button type="button" name="button" id="italics" onclick="italics()">Italics</button>
     </div>
 </div>
 
@@ -86,19 +81,17 @@
         return string;
     }
 
-    function logRich() {
-        console.log(richText);
-    }
-
     function bold() {
         var startTag = "<b>";
         var endTag = "</b>";
-        if (!state.startTag.includes(startTag)) {
+        if (!state.startTag.includes(startTag)) { // if the style isn't applied, apply it
             state.startTag = state.startTag.insert(state.startTag.length, startTag);
             state.endTag = state.endTag.insert(0, endTag);
-        } else {
+            document.getElementById('bold').style.background = "gray";
+        } else { //if the style is applied, remove it
             state.startTag = removeSubstring(state.startTag, startTag);
             state.endTag = removeSubstring(state.endTag, endTag);
+            document.getElementById('bold').style.background = "lightgray";
         }
     }
 
@@ -108,9 +101,11 @@
         if (!state.startTag.includes(startTag)) {
             state.startTag = state.startTag.insert(state.startTag.length, startTag);
             state.endTag = state.endTag.insert(0, endTag);
+            document.getElementById('italics').style.background = "gray";
         } else {
             state.startTag = removeSubstring(state.startTag, startTag);
             state.endTag = removeSubstring(state.endTag, endTag);
+            document.getElementById('italics').style.background = "lightgray";
         }
     }
 
