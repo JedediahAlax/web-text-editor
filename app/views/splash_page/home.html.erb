@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Complete Bootstrap 4 Website Layout</title>
+	<title>Textitor</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -15,7 +15,7 @@
 <body>
 
 <!--- Image Slider -->
-<div class="container-fluid text-center my-5">
+<div class="container-fluid text-center">
 <div id="slides" class="carousel slide" data-ride="carousel>
     <li data-target="#slides" data-slide-to="0" class="active"></li>
 <div class="carousel-inner text-center">
@@ -24,14 +24,8 @@
     <div class="carousel-caption">
       <h1 class="display-2">Textitor!</h1>
       <h3>A rich-text web-based editor</h3>
-      <button type="button" class="btn btn-outline-light btn-lg" id="newDocButton" href="/sessions/new">NEW DOCUMENT</button>
-      <script>
-      $('#newDocButton').on('click', function (e) {
-
-     //your awesome code here
-      })
-      </script>
-      <button type="button" class="btn btn-outline-light btn-lg">MY DOCUMENTS</button>
+      <%= link_to "NEW DOCUMENT", '/textboxes/textbox', class: "btn btn-outline-light btn-lrg" %>
+      <%= link_to "MY DOCUMENTS", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
   </div>
 </div>
 </div>
@@ -42,7 +36,7 @@
   <h1 class="display-4"> Welcome to Textitor</h1>
    <p class="lead">A simple online text editor made just for you!</p>
    <hr class="my-4">
-  <p>Built using Ruby on Rails and Bootstrap!</p>
+  <p>Built using Ruby on Rails!</p>
   <% if logged_in? %>
   <%= link_to "Use Textitor!", '/textboxes/textbox', class: "btn btn-lg btn-primary" %>
   <% else %>
