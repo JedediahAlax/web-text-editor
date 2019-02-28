@@ -12,8 +12,9 @@
 //
 //= require jquery
 //= require rails-ujs
-//= require bootstrap-dropdown
+//= require bootstrap
 //= require activestorage
+<<<<<<< HEAD
 //= require_tree .
 
 $(document).ready(function(){
@@ -23,3 +24,7 @@ $(document).ready(function(){
         $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideUp()
     });
 })
+=======
+//= require turbolinks
+//= require_tree 
+>>>>>>> 0a95219da79ad467a4496e0721857e927ee7dcd0

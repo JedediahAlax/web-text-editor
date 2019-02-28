@@ -1,35 +1,32 @@
-<h1>Textboxes#textbox</h1>
-
 <br>
 <br>
 
-<div class="mycontainer">
+<div class="toolchain">
     <div class="floatleft">
-        <button type="button" name="button" onclick="logRich()">Log Rich</button>
+        <button type="button" name="button" id="bold" onclick="bold()">Bold</button>
     </div>
     <div class="floatleft">
-        <button type="button" name="button" onclick="bold()">Bold</button>
-    </div>
-    <div class="floatleft">
-        <button type="button" name="button" onclick="italics()">Italics</button>
+        <button type="button" name="button" id="italics" onclick="italics()">Italics</button>
     </div>
 </div>
 
-<br>
-<br>
-
-<div class="floatleft">
-    <!-- Style="Display: none;"-->
-    <textarea id="textbox" name="textbox" placeholder="Sweet Text Box!" value="" autofocus="true"></textarea>
-</div>
-<div class="floatleft">
-    <iframe id="display" name="display"></iframe>
+<div style="width: 100%; height: 1px;"">
 </div>
 
+<div class="wrapper">
+    <div class="display">
+        <!-- Style="Display: none;"-->
+        <textarea id="textbox" name="textbox" placeholder="Sweet Text Box!" value="" autofocus="true"></textarea>
+    </div>
+    <div class="display">
+        <iframe id="display" name="display"></iframe>
+    </div>
+</div>
 
 <script>
     var textbox = document.getElementById('textbox');
     var richText = "";
+    var style;
 
     var state = {
         "startTag": "",
@@ -42,7 +39,7 @@
 
     window.onload = function () {
         //sets all paragraph tags for 'display' to inline
-        var style = document.createElement("div");
+        style = document.createElement("div");
         style.innerHTML = "<br><style>p { display: inline; }</style>";
         frames['display'].document.head.appendChild(style);
         //
@@ -60,15 +57,23 @@
 
     textbox.onkeyup = function(e){
         handleStates(); // on keypress updates states start and end vars, then composes the richStateText vars based on their bounds and their respective start and end tags
-        richText = state.richText; //FIXME
-        window.frames['display'].document.body.innerHTML = richText;
-        console.log(richText);
+        encode();
+        renderDisplay();
     }
 
     function handleStates() {
         state.end += 1; //FIXME
+    }
+
+    function renderDisplay() {
+        window.frames['display'].document.body.innerHTML = richText;
+        console.log(richText);
+    }
+
+    function encode() {
         state.plainText = textbox.value.substring(state.start, state.end);
         state.richText = state.startTag + state.plainText + state.endTag;
+        richText = state.richText; //FIXME
     }
 
     String.prototype.insert = function (index, string) {
@@ -76,13 +81,46 @@
         else return string + this;
     };
 
-    function logRich() {
-        console.log(richText);
+    function removeSubstring(string, substring) {
+        var index = string.indexOf(substring);
+        if (index != -1) {
+            var first = string.substring(0, index);
+            var last = string.substring(index + substring.length, string.length);
+            string = first + last;
+        }
+        return string;
     }
 
     function bold() {
-        state.startTag += "<b>";
-        state.endTag = state.endTag.insert(0, "</b>");
+        var startTag = "<b>";
+        var endTag = "</b>";
+        if (!state.startTag.includes(startTag)) { // if the style isn't applied, apply it
+            state.startTag = state.startTag.insert(state.startTag.length, startTag);
+            state.endTag = state.endTag.insert(0, endTag);
+            document.getElementById('bold').style.background = "gray";
+        } else { //if the style is applied, remove it
+            state.startTag = removeSubstring(state.startTag, startTag);
+            state.endTag = removeSubstring(state.endTag, endTag);
+            document.getElementById('bold').style.background = "lightgray";
+        }
+        encode();
+        renderDisplay();
+    }
+
+    function italics() {
+        var startTag = "<i>";
+        var endTag = "</i>";
+        if (!state.startTag.includes(startTag)) {
+            state.startTag = state.startTag.insert(state.startTag.length, startTag);
+            state.endTag = state.endTag.insert(0, endTag);
+            document.getElementById('italics').style.background = "gray";
+        } else {
+            state.startTag = removeSubstring(state.startTag, startTag);
+            state.endTag = removeSubstring(state.endTag, endTag);
+            document.getElementById('italics').style.background = "lightgray";
+        }
+        encode();
+        renderDisplay();
     }
 
 </script>

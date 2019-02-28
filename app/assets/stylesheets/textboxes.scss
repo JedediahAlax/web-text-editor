@@ -2,16 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.mycontainer {
-    width: 1000px;
-    height: 50px;
+.toolchain {
+    width: 100%;
+    border: none;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid black;
 }
 
-.floatleft {
+.display {
     float: left;
     display: block;
     margin: auto;
@@ -23,6 +20,8 @@ textarea {
     resize: none;
     width: 500px;
     height: 400px;
+    top: 0;
+    left: 0;
 }
 
 iframe {
@@ -31,10 +30,14 @@ iframe {
     resize: none;
     width: 500px;
     height: 400px;
+    top: 0;
+    left: 0;
 }
 
 button {
     width: 75px;
     height: 35px;
     text-align: center;
+    background: lightgray;
+    margin: 3px;
 }
