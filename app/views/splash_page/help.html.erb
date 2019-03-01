@@ -1,73 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Help Page</title>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <h1>HELP PAGE</h1>
 
-<head>
+      <hr class="my-4">
+      <h3 class="text-center">HOW DO I SIGN UP?</h3>
+      <p>
+        You can sign up by using the Log in button on the left or the Sign Up button on the top right! 
+      </p>
 
-<meta name="viewport"
-  content="width=device-width, initial-scale=1">
-  <style>
-
-    body {
-      font-family: "Lato", sans-serif;
-    }
-
-  .sidenav {
-    width: 130px;
-    position: fixed;
-    z-index: 1;
-    top: 100px;
-    left: 10px;
-    background: #eee;
-    overflow-x: hidden;
-    padding: 8px 0;
-
-}
+      <hr class="my-4">
+      <h3 class="text-center">ABOUT US</h3>
+      <p style="color:black;"> Textitor is a web based rich text editor designed as a class project for CS3250 at Metropolitan State University of Denver. Textitor allows its users to save and load rich text documents into its text field and to keep them all in order by organizing files for each user. Try it now!</p>
+    </div>
 
 
-.sidenav background {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #2196F3;
-  display: block;
-}
+<!-- Footer -->
+<footer class="page-footer font-small pt-4">
+    <div class="container">
+      <ul class="list-unstyled list-inline text-center py-2">
+        <li class="list-inline-item">
+          <h5>FOOTER</h5>
+        </li>
+        <li class="list-inline-item">
+          <% if logged_in? %>
+          <%= link_to "Account", '#', class: "btn btn-outline-white btn-rounded" %>
+          <% else %>
+          <%= link_to "Log in", '/users/new', class: "btn btn-outline-white btn-rounded" %>
+          <% end %>
+          <%= link_to "Use Textitor", '/textboxes/textbox', class: "btn btn-outline-white btn-rounded" %>
 
-.sidenav background:hover {
-  color: #064579;
-}
-.main {
-  margin-left: 140px;
-  font-size: 28px;
-  padding: 0px 10px;
-}
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav background {font-size: 18px;}
-}
+        </li>
+      </ul>
+    </div>
+  </footer>
 
-</style>
-</head>
-<body>
-
-<div class="sidenav">
-  <background <li><%= link_to "Log in", '/sessions/new' %></li></background>
-  <background href="#About Us">About Us</background>
-  <background href="#Save">Save</background>
-  <background href="#Load">Load</background>
-</div>
-
-
-<div class="jumbotron"
-  <b style="color:#DC143C; font-size:300%;"> Help page for Textitor </b>
-  <hr style="border: 2px solid #191970;">
-  <b style="color:#DC143C; font-size:70%;"> How do I sign up? </b>
-  <p style="color:black;"> You can sign up by using the Log in button on the left
-    or the Sign Up button on the top right! </p>
-  <b style="color:#DC143C; font-size:70%;"> About Us: </b>
-  <p style="color:black;"> Textitor is a web based rich text editor designed as a
-  class project for CS3250 at Metropolitan State University of Denver. Textitor allows
-its users to save and load rich text documents into its text field and to keep them all
-in order by organizing files for each user. Try it now!</p>
-
-
-
-  </div>
-  </body>
+</body>
+</html>

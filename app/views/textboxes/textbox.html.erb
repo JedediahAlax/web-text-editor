@@ -1,19 +1,123 @@
-<br>
-<br>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Textitor</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-<div class="toolchain">
-    <div class="floatleft">
-        <button type="button" name="button" id="bold" onclick="bold()">Bold</button>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<!-- Button Styling-->
+<style>
+    .btn1 {
+    height:20px;
+    width:30px;
+    border: 1px solid #000000; /* Green */
+    }
+</style>
+<body>
+
+<!-- Buttons -->
+<div class="container-fluid">
+    <div class="row align-self-start">
+        <div class="btn-group one">
+
+            <!-- File drop down -->
+            <div class="dropdown">
+
+            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">File</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#"><i class="far fa-file-alt"></i>  New document</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#"><i class="fas fa-print"></i>  Print</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#"><i class="far fa-save"></i>   Save</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#"><i class="fas fa-download"></i>  Load</a>
+            </div>
+        </div>
+
+        <!-- Edit drop down -->
+        <div class="dropdown">
+
+            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Edit</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#"><i class="fas fa-cut"></i>  Cut</a>
+            <a class="dropdown-item" href="#"><i class="fas fa-copy"></i>  Copy</a>
+            <a class="dropdown-item" href="#"><i class="fas fa-paste"></i>  Paste</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else</a>
+            </div>
+        </div>
+
+        <!-- Insert drop down -->
+        <div class="dropdown">
+
+            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Insert</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#"><i class="fas fa-image"></i>  Image</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#"><i class="fas fa-link"></i>  Link</a>
+            </div>
+        </div>
+
+        <!-- View drop down -->
+        <div class="dropdown">
+
+            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">View</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#"><i class="fas fa-code"></i>  Source Code</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#"><i class="fas fa-eye"></i>  Preview</a>
+            </div>
+        </div>
+
+        <!-- Help drop down -->
+        <div class="dropdown">
+
+            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Help</a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#"><i class="fas fa-info-circle"></i>  Help</a>
+            </div>
+        </div>
+
+
     </div>
-    <div class="floatleft">
-        <button type="button" name="button" id="italics" onclick="italics()">Italics</button>
     </div>
-</div>
+    <div class="row">
 
-<div style="width: 100%; height: 1px;"">
-</div>
+        <div class="btn-group" role="group">
+    <!-- Group -->
+    <button class="btn1" id="bold" onclick="bold();"><i class="fas fa-bold"></i></button>
+    <button class="btn1" id="italics" onclick="italics();"><i class="fas fa-italic"></i></button>
+    <button class="btn1" id="strikeThrough" onclick=""><i class="fas fa-strikethrough"></i></button>
+    </div>
 
-<div class="wrapper">
+    <!-- Group -->
+    <div class="btn-group" role="group">
+        
+        <button class="btn1" id="alignLeft" onclick=""><i class="fas fa-align-left"></i></button>
+        <button class="btn1" id="alighnCenter" onclick=""><i class="fas fa-align-center"></i></button>
+        <button class="btn1" id="alignRight" onclick=""><i class="fas fa-align-right"></i></button>
+    </div>
+
+    <!-- Group -->
+    <div class="btn-group" role="group">
+        
+        <button class="btn1" id="cut" onclick=""><i class="fas fa-cut"></i></button>
+        <button class="btn1" id="copy" onclick=""><i class="fas fa-copy"></i></button>
+        <button class="btn1" id="paste" onclick=""><i class="fas fa-paste"></i></button>
+    </div>
+    </div>
+    
+<div class="row">
+    <div class="wrapper">
     <div class="display">
         <!-- Style="Display: none;"-->
         <textarea id="textbox" name="textbox" placeholder="Sweet Text Box!" value="" autofocus="true"></textarea>
@@ -22,6 +126,8 @@
         <iframe id="display" name="display"></iframe>
     </div>
 </div>
+</div>
+
 
 <script>
     var textbox = document.getElementById('textbox');
@@ -122,5 +228,6 @@
         encode();
         renderDisplay();
     }
-
 </script>
+</body>
+</html>
