@@ -15,3 +15,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 #Rails.application.config.assets.precompile += %w( bootstrap.js )
 
 Rails.application.config.assets.compile = true
+
+Rails.application.config.assets.precompile += %w( bootstrap.js )
