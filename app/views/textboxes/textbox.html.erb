@@ -1,233 +1,234 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Textitor</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <head>
+        <title>Textitor</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-</head>
+        <!-- Button Styling-->
+        <style>
+            .btn1 {
+            height:20px;
+            width:30px;
+            border: 1px solid #000000; /* Green */
+            }
+        </style>
 
-<!-- Button Styling-->
-<style>
-    .btn1 {
-    height:20px;
-    width:30px;
-    border: 1px solid #000000; /* Green */
-    }
-</style>
-<body>
+    </head>
 
-<!-- Buttons -->
-<div class="container-fluid">
-    <div class="row align-self-start">
-        <div class="btn-group one">
+    <body>
 
-            <!-- File drop down -->
-            <div class="dropdown">
+        <!-- Buttons -->
+        <div class="container-fluid">
+            <div class="row align-self-start">
+                <div class="btn-group one">
 
-            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">File</a>
+                    <!-- File drop down -->
+                    <div class="dropdown">
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#"><i class="far fa-file-alt"></i>  New document</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#"><i class="fas fa-print"></i>  Print</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#"><i class="far fa-save"></i>   Save</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#"><i class="fas fa-download"></i>  Load</a>
+                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">File</a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#"><i class="far fa-file-alt"></i>  New document</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><i class="fas fa-print"></i>  Print</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><i class="far fa-save"></i>   Save</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><i class="fas fa-download"></i>  Load</a>
+                        </div>
+                    </div>
+
+                    <!-- Edit drop down -->
+                    <div class="dropdown">
+
+                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Edit</a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#"><i class="fas fa-cut"></i>  Cut</a>
+                            <a class="dropdown-item" href="#"><i class="fas fa-copy"></i>  Copy</a>
+                            <a class="dropdown-item" href="#"><i class="fas fa-paste"></i>  Paste</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else</a>
+                        </div>
+                    </div>
+
+                    <!-- Insert drop down -->
+                    <div class="dropdown">
+
+                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Insert</a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#"><i class="fas fa-image"></i>  Image</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><i class="fas fa-link"></i>  Link</a>
+                        </div>
+                    </div>
+
+                    <!-- View drop down -->
+                    <div class="dropdown">
+
+                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">View</a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#"><i class="fas fa-code"></i>  Source Code</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><i class="fas fa-eye"></i>  Preview</a>
+                        </div>
+                    </div>
+
+                    <!-- Help drop down -->
+                    <div class="dropdown">
+
+                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Help</a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#"><i class="fas fa-info-circle"></i>  Help</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="btn-group" role="group">
+                    <!-- Group -->
+                    <button class="btn1" id="bold" onclick="bold();"><i class="fas fa-bold"></i></button>
+                    <button class="btn1" id="italics" onclick="italics();"><i class="fas fa-italic"></i></button>
+                    <button class="btn1" id="strikeThrough" onclick=""><i class="fas fa-strikethrough"></i></button>
+                </div>
+
+                <!-- Group -->
+                <div class="btn-group" role="group">
+
+                    <button class="btn1" id="alignLeft" onclick=""><i class="fas fa-align-left"></i></button>
+                    <button class="btn1" id="alighnCenter" onclick=""><i class="fas fa-align-center"></i></button>
+                    <button class="btn1" id="alignRight" onclick=""><i class="fas fa-align-right"></i></button>
+                </div>
+
+                <!-- Group -->
+                <div class="btn-group" role="group">
+
+                    <button class="btn1" id="cut" onclick=""><i class="fas fa-cut"></i></button>
+                    <button class="btn1" id="copy" onclick=""><i class="fas fa-copy"></i></button>
+                    <button class="btn1" id="paste" onclick=""><i class="fas fa-paste"></i></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="wrapper">
+                    <div class="display">
+                        <!-- Style="Display: none;"-->
+                        <textarea id="textbox" name="textbox" placeholder="Sweet Text Box!" value="" autofocus="true"></textarea>
+                    </div>
+                    <div class="display">
+                        <iframe id="display" name="display"></iframe>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Edit drop down -->
-        <div class="dropdown">
+        <script>
+            var textbox = document.getElementById('textbox');
+            var richText = "";
+            var style;
 
-            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Edit</a>
+            var state = {
+                "startTag": "",
+                "endTag": "",
+                "start": 0,
+                "end": 0,
+                "plainText": "",
+                "richText": ""
+            };
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#"><i class="fas fa-cut"></i>  Cut</a>
-            <a class="dropdown-item" href="#"><i class="fas fa-copy"></i>  Copy</a>
-            <a class="dropdown-item" href="#"><i class="fas fa-paste"></i>  Paste</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else</a>
-            </div>
-        </div>
+            window.onload = function () {
+                //sets all paragraph tags for 'display' to inline
+                style = document.createElement("div");
+                style.innerHTML = "<br><style>p { display: inline; }</style>";
+                frames['display'].document.head.appendChild(style);
+                //
 
-        <!-- Insert drop down -->
-        <div class="dropdown">
+                document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
+                newState(); //sets the first state
+            }
 
-            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Insert</a>
+            function newState() {
+                state.startTag = "<p>";
+                state.endTag = "</p>";
+                state.start = textbox.selectionStart;
+                state.end = state.start; //nothing is in a new state
+            }
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#"><i class="fas fa-image"></i>  Image</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#"><i class="fas fa-link"></i>  Link</a>
-            </div>
-        </div>
+            textbox.onkeyup = function(e){
+                handleStates(); // on keypress updates states start and end vars, then composes the richStateText vars based on their bounds and their respective start and end tags
+                encode();
+                renderDisplay();
+            }
 
-        <!-- View drop down -->
-        <div class="dropdown">
+            function handleStates() {
+                state.end += 1; //FIXME
+            }
 
-            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">View</a>
+            function renderDisplay() {
+                window.frames['display'].document.body.innerHTML = richText;
+                console.log(richText);
+            }
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#"><i class="fas fa-code"></i>  Source Code</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#"><i class="fas fa-eye"></i>  Preview</a>
-            </div>
-        </div>
+            function encode() {
+                state.plainText = textbox.value.substring(state.start, state.end);
+                state.richText = state.startTag + state.plainText + state.endTag;
+                richText = state.richText; //FIXME
+            }
 
-        <!-- Help drop down -->
-        <div class="dropdown">
+            String.prototype.insert = function (index, string) {
+                if (index > 0) return this.substring(0, index) + string + this.substring(index, this.length);
+                else return string + this;
+            };
 
-            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Help</a>
+            function removeSubstring(string, substring) {
+                var index = string.indexOf(substring);
+                if (index != -1) {
+                    var first = string.substring(0, index);
+                    var last = string.substring(index + substring.length, string.length);
+                    string = first + last;
+                }
+                return string;
+            }
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#"><i class="fas fa-info-circle"></i>  Help</a>
-            </div>
-        </div>
+            function bold() {
+                var startTag = "<b>";
+                var endTag = "</b>";
+                if (!state.startTag.includes(startTag)) { // if the style isn't applied, apply it
+                    state.startTag = state.startTag.insert(state.startTag.length, startTag);
+                    state.endTag = state.endTag.insert(0, endTag);
+                    document.getElementById('bold').style.background = "gray";
+                } else { //if the style is applied, remove it
+                    state.startTag = removeSubstring(state.startTag, startTag);
+                    state.endTag = removeSubstring(state.endTag, endTag);
+                    document.getElementById('bold').style.background = "lightgray";
+                }
+                encode();
+                renderDisplay();
+            }
 
-
-    </div>
-    </div>
-    <div class="row">
-
-        <div class="btn-group" role="group">
-    <!-- Group -->
-    <button class="btn1" id="bold" onclick="bold();"><i class="fas fa-bold"></i></button>
-    <button class="btn1" id="italics" onclick="italics();"><i class="fas fa-italic"></i></button>
-    <button class="btn1" id="strikeThrough" onclick=""><i class="fas fa-strikethrough"></i></button>
-    </div>
-
-    <!-- Group -->
-    <div class="btn-group" role="group">
-        
-        <button class="btn1" id="alignLeft" onclick=""><i class="fas fa-align-left"></i></button>
-        <button class="btn1" id="alighnCenter" onclick=""><i class="fas fa-align-center"></i></button>
-        <button class="btn1" id="alignRight" onclick=""><i class="fas fa-align-right"></i></button>
-    </div>
-
-    <!-- Group -->
-    <div class="btn-group" role="group">
-        
-        <button class="btn1" id="cut" onclick=""><i class="fas fa-cut"></i></button>
-        <button class="btn1" id="copy" onclick=""><i class="fas fa-copy"></i></button>
-        <button class="btn1" id="paste" onclick=""><i class="fas fa-paste"></i></button>
-    </div>
-    </div>
-    
-<div class="row">
-    <div class="wrapper">
-    <div class="display">
-        <!-- Style="Display: none;"-->
-        <textarea id="textbox" name="textbox" placeholder="Sweet Text Box!" value="" autofocus="true"></textarea>
-    </div>
-    <div class="display">
-        <iframe id="display" name="display"></iframe>
-    </div>
-</div>
-</div>
-
-
-<script>
-    var textbox = document.getElementById('textbox');
-    var richText = "";
-    var style;
-
-    var state = {
-        "startTag": "",
-        "endTag": "",
-        "start": 0,
-        "end": 0,
-        "plainText": "",
-        "richText": ""
-    };
-
-    window.onload = function () {
-        //sets all paragraph tags for 'display' to inline
-        style = document.createElement("div");
-        style.innerHTML = "<br><style>p { display: inline; }</style>";
-        frames['display'].document.head.appendChild(style);
-        //
-
-        document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
-        newState(); //sets the first state
-    }
-
-    function newState() {
-        state.startTag = "<p>";
-        state.endTag = "</p>";
-        state.start = textbox.selectionStart;
-        state.end = state.start; //nothing is in a new state
-    }
-
-    textbox.onkeyup = function(e){
-        handleStates(); // on keypress updates states start and end vars, then composes the richStateText vars based on their bounds and their respective start and end tags
-        encode();
-        renderDisplay();
-    }
-
-    function handleStates() {
-        state.end += 1; //FIXME
-    }
-
-    function renderDisplay() {
-        window.frames['display'].document.body.innerHTML = richText;
-        console.log(richText);
-    }
-
-    function encode() {
-        state.plainText = textbox.value.substring(state.start, state.end);
-        state.richText = state.startTag + state.plainText + state.endTag;
-        richText = state.richText; //FIXME
-    }
-
-    String.prototype.insert = function (index, string) {
-        if (index > 0) return this.substring(0, index) + string + this.substring(index, this.length);
-        else return string + this;
-    };
-
-    function removeSubstring(string, substring) {
-        var index = string.indexOf(substring);
-        if (index != -1) {
-            var first = string.substring(0, index);
-            var last = string.substring(index + substring.length, string.length);
-            string = first + last;
-        }
-        return string;
-    }
-
-    function bold() {
-        var startTag = "<b>";
-        var endTag = "</b>";
-        if (!state.startTag.includes(startTag)) { // if the style isn't applied, apply it
-            state.startTag = state.startTag.insert(state.startTag.length, startTag);
-            state.endTag = state.endTag.insert(0, endTag);
-            document.getElementById('bold').style.background = "gray";
-        } else { //if the style is applied, remove it
-            state.startTag = removeSubstring(state.startTag, startTag);
-            state.endTag = removeSubstring(state.endTag, endTag);
-            document.getElementById('bold').style.background = "lightgray";
-        }
-        encode();
-        renderDisplay();
-    }
-
-    function italics() {
-        var startTag = "<i>";
-        var endTag = "</i>";
-        if (!state.startTag.includes(startTag)) {
-            state.startTag = state.startTag.insert(state.startTag.length, startTag);
-            state.endTag = state.endTag.insert(0, endTag);
-            document.getElementById('italics').style.background = "gray";
-        } else {
-            state.startTag = removeSubstring(state.startTag, startTag);
-            state.endTag = removeSubstring(state.endTag, endTag);
-            document.getElementById('italics').style.background = "lightgray";
-        }
-        encode();
-        renderDisplay();
-    }
-</script>
-</body>
+            function italics() {
+                var startTag = "<i>";
+                var endTag = "</i>";
+                if (!state.startTag.includes(startTag)) {
+                    state.startTag = state.startTag.insert(state.startTag.length, startTag);
+                    state.endTag = state.endTag.insert(0, endTag);
+                    document.getElementById('italics').style.background = "gray";
+                } else {
+                    state.startTag = removeSubstring(state.startTag, startTag);
+                    state.endTag = removeSubstring(state.endTag, endTag);
+                    document.getElementById('italics').style.background = "lightgray";
+                }
+                encode();
+                renderDisplay();
+            }
+        </script>
+    </body>
 </html>
