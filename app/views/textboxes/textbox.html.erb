@@ -180,7 +180,9 @@
             }
 
             function handleStates(e) {
-                currentState.endIndex++; //FIXME, only add when a character is inserted
+                if (e.which > 31) {
+                    currentState.endIndex++;
+                }
 
                 if (newState) {
                     states.push(currentState); //FIXME states need to be inserted in order
@@ -191,9 +193,6 @@
             function encode() {
                 richText = "";
                 for (var i = 0; i < states.length; i++) {
-                    console.log(states[i].startIndex);
-                    console.log(states[i].endIndex);
-                    console.log("\n")
                     states[i].plainText = textbox.value.substring(states[i].startIndex, states[i].endIndex); // sets the plain text for all states
                     states[i].richText = states[i].startTag + states[i].plainText + states[i].endTag;
                     richText += states[i].richText;
