@@ -134,6 +134,7 @@
             var textbox = document.getElementById('textbox');
             var states = [];
             var currentState;
+            var newState = false;
             var richText = "";
 
             // kinda like an enumeration for styles
@@ -149,6 +150,7 @@
                 this.endTag = "</p>";
                 this.plainText = textbox.value.substring(startIndex, endIndex);
                 this.richText = this.startTag + this.plainText + this.endTag;
+                newState = true;
 
                 this.addStyle = function(styleType) {
                     this.startTag = this.startTag + styleType.startTag;
@@ -156,8 +158,8 @@
                 }
 
                 this.removeStyle = function(styleType) {
-                    this.startTag = removeSubstring(this.startTag, styleType.startTag);
-                    this.endTag = removeSubstring(this.endTag, styleType.endTag);
+                    this.startTag = this.startTag.removeSubstring(styleType.startTag);
+                    this.endTag = this.endTag.removeSubstring(styleType.endTag);
                 }
             }
 
@@ -168,24 +170,34 @@
                 frames['display'].document.head.appendChild(style);
 
                 document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
-                states.push(new State(0, 0)); //FIXME
-                currentState = states[0];
+                currentState = new State(textbox.selectionStart, textbox.selectionEnd); // creates an initial currentState
             }
 
             textbox.onkeyup = function(e){
-                handleStates();
+                handleStates(e);
                 encode();
                 renderDisplay();
             }
 
-            function handleStates() {
-                currentState.endIndex++; //FIXME
+            function handleStates(e) {
+                currentState.endIndex++; //FIXME, only add when a character is inserted
+
+                if (newState) {
+                    states.push(currentState); //FIXME states need to be inserted in order
+                    newState = false;
+                }
             }
 
             function encode() {
-                currentState.plainText = textbox.value.substring(currentState.startIndex, currentState.endIndex);
-                currentState.richText = currentState.startTag + currentState.plainText + currentState.endTag;
-                richText = currentState.richText; //FIXME
+                richText = "";
+                for (var i = 0; i < states.length; i++) {
+                    console.log(states[i].startIndex);
+                    console.log(states[i].endIndex);
+                    console.log("\n")
+                    states[i].plainText = textbox.value.substring(states[i].startIndex, states[i].endIndex); // sets the plain text for all states
+                    states[i].richText = states[i].startTag + states[i].plainText + states[i].endTag;
+                    richText += states[i].richText;
+                }
             }
 
             function renderDisplay() {
@@ -193,7 +205,24 @@
                 console.log(richText);
             }
 
+            // returns the state that the index is in
+            function getCurrentStateIndex() {
+                var i = 0;
+                for (i; i < states.length; i++) {
+                    if (textbox.selectionStart >= states[i].startIndex && textbox.selectionStart < states[i].endIndex) return i;
+                }
+                return ;
+            }
+
             function styleEvent(styleType) {
+                changeCurrentState(styleType);
+            }
+
+            function changeCurrentState(styleType) {
+                var oldState = currentState;
+                currentState = new State(textbox.selectionStart, textbox.selectionEnd);
+                currentState.startTag = oldState.startTag;
+                currentState.endTag = oldState.endTag;
                 if (currentState.startTag.includes(styleType.startTag)) {
                     currentState.removeStyle(styleType);
                     document.getElementById(styleType.id).style.background = "lightgray"; //temporary
@@ -201,8 +230,6 @@
                     currentState.addStyle(styleType);
                     document.getElementById(styleType.id).style.background = "gray"; //temporary
                 }
-                encode();
-                renderDisplay();
             }
 
             String.prototype.insert = function insert (index, string) {
@@ -210,12 +237,13 @@
                 else return string + this;
             };
 
-            function removeSubstring(string, substring) {
+            String.prototype.removeSubstring = function removeSubstring (substring) {
+                var string = this;
                 var index = string.indexOf(substring);
                 if (index != -1) {
-                    var first = string.substring(0, index);
-                    var last = string.substring(index + substring.length, string.length);
-                    string = first + last;
+                    var before = string.substring(0, index);
+                    var after = string.substring(index + substring.length, string.length);
+                    string = before + after;
                 }
                 return string;
             }
