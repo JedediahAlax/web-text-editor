@@ -158,8 +158,8 @@
                 }
 
                 this.removeStyle = function(styleType) {
-                    this.startTag = this.startTag.removeSubstring(styleType.startTag);
-                    this.endTag = this.endTag.removeSubstring(styleType.endTag);
+                    this.startTag = this.startTag.replaceAll(styleType.startTag, "");
+                    this.endTag = this.endTag.replaceAll(styleType.endTag, "");
                 }
             }
 
@@ -180,22 +180,29 @@
             }
 
             function handleStates(e) {
-                if (e.which > 31) {
-                    currentState.endIndex++;
-                }
-
+                console.log("e.keyCode: " + e.keyCode);
                 if (newState) {
                     states.push(currentState); //FIXME states need to be inserted in order
                     newState = false;
+                }
+
+                if (e.which > 31 || e.which === 13) {
+                    currentState.endIndex++;
+                } else if(e.key === "Backspace") {
+                    currentState.endIndex--;
+                } else if(e.key === "Enter") {
+                    //currentState.richText.insert(textbox.selectionStart + currentState.startTag, "<br>"); // FIXME
                 }
             }
 
             function encode() {
                 richText = "";
                 for (var i = 0; i < states.length; i++) {
-                    states[i].plainText = textbox.value.substring(states[i].startIndex, states[i].endIndex); // sets the plain text for all states
-                    states[i].richText = states[i].startTag + states[i].plainText + states[i].endTag;
+                    states[i].plainText = textbox.value.substring(states[i].startIndex, states[i].endIndex); // sets the plain text for this state
+                    states[i].richText = states[i].plainText.replaceAll("\n", "<br>"); // adds newlines in richtext
+                    states[i].richText = states[i].startTag + states[i].richText + states[i].endTag; // adds the start and end tags to rich text
                     richText += states[i].richText;
+                    console.log(states[i]);
                 }
             }
 
@@ -204,13 +211,18 @@
                 console.log(richText);
             }
 
-            // returns the state that the index is in
-            function getCurrentStateIndex() {
+            // returns the index of the state that the cursor is in
+            function getCursorState() {
                 var i = 0;
                 for (i; i < states.length; i++) {
                     if (textbox.selectionStart >= states[i].startIndex && textbox.selectionStart < states[i].endIndex) return i;
                 }
-                return ;
+                return i;
+            }
+
+            // return the index of a given state from states[]
+            function getStateIndex(myState) {
+
             }
 
             function styleEvent(styleType) {
@@ -231,20 +243,18 @@
                 }
             }
 
-            String.prototype.insert = function insert (index, string) {
-                if (index > 0) return this.substring(0, index) + string + this.substring(index, this.length);
-                else return string + this;
+            // inserts a string into another string based on an index
+            String.prototype.insert = function insert(index, string) {
+                if (index > 0) {
+                    if (index < this.length) return this.substring(0, index) + string + this.substring(index, this.length);
+                    else return this + string;
+                } else return string + this;
             };
 
-            String.prototype.removeSubstring = function removeSubstring (substring) {
-                var string = this;
-                var index = string.indexOf(substring);
-                if (index != -1) {
-                    var before = string.substring(0, index);
-                    var after = string.substring(index + substring.length, string.length);
-                    string = before + after;
-                }
-                return string;
+            // removes the first occurance of a substring
+            String.prototype.replaceAll = function replaceAll(oldSubstring, newSubstring) {
+                var regex = new RegExp(oldSubstring, "g");
+                return this.replace(regex, newSubstring);
             }
 
         </script>
