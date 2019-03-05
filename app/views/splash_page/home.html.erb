@@ -24,8 +24,12 @@
     <div class="carousel-caption">
       <h1 class="display-2">Textitor!</h1>
       <h3>A rich-text web-based editor</h3>
-      <%= link_to "NEW DOCUMENT", '/textboxes/textbox', class: "btn btn-outline-light btn-lrg" %>
+			<%= link_to "NEW DOCUMENT", '/textboxes/textbox', class: "btn btn-outline-light btn-lrg" %>
+			<% if logged_in? %>
       <%= link_to "MY DOCUMENTS", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
+			<% else %>
+			<%= link_to "LOG IN", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
+			<% end %>
   </div>
 </div>
 </div>
@@ -33,8 +37,7 @@
 <!--- Jumbotron -->
 <div class="container-fluid text-center my-5">
 <div class="Jumbotron";>
-  <h1 class="display-4"> Welcome to Textitor</h1>
-   <p class="lead">A simple online text editor made just for you!</p>
+
    <hr class="my-4">
   <p>Built using Ruby on Rails!</p>
 
