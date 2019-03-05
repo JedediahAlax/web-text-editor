@@ -8,10 +8,8 @@
     display: flex;
 }
 
-.display {
-    float: left;
-    display: block;
-    margin: auto;
+.parent {
+    position: relative;
 }
 
 .parent {
@@ -19,32 +17,31 @@
 }
 
 textarea {
-    caret-color: black;
     position: absolute;
-    font-family: courier;
     background-color: transparent;
-    color: rgba(0, 0, 0, 0);
+    color: rgba(0,0,0,0);
+    caret-color: black;
     outline: none;
-    border: none;
+    border: 2px solid black;
+    margin: 0px;
+    padding: 0px;
     display: block;
-    margin: 0;
-    padding: 0;
     resize: none;
     width: 500px;
     height: 400px;
-    top: 0;
-    left: 0;
+    font-family: courier;
+    font-size: 12px;
 }
 
 iframe {
     display: block;
-    margin: 0;
     resize: none;
+    margin: 0px;
+    padding: 0px;
+    display: block;
     width: 500px;
     height: 400px;
-    padding: 0;
-    top: 0;
-    left: 0;
+    border: 2px solid black;
 }
 
 button {

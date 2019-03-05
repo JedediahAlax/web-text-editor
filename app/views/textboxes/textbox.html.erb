@@ -134,11 +134,13 @@
             var currentState;
             var newState = false;
             var richText = "";
+
             // kinda like an enumeration for styles
             var styles = {
                 bold: {startTag: "<b>", endTag: "</b>", id: "bold"},
                 italics: {startTag: "<i>", endTag: "</i>", id: "italics"}
             };
+
             function State(startIndex, endIndex) {
                 this.startIndex = startIndex;
                 this.endIndex = endIndex;
@@ -147,34 +149,37 @@
                 this.plainText = textbox.value.substring(startIndex, endIndex);
                 this.richText = this.startTag + this.plainText + this.endTag;
                 newState = true;
+
                 this.addStyle = function(styleType) {
                     this.startTag = this.startTag + styleType.startTag;
                     this.endTag = styleType.endTag + this.endTag;
                 }
+
                 this.removeStyle = function(styleType) {
                     this.startTag = this.startTag.replaceAll(styleType.startTag, "");
                     this.endTag = this.endTag.replaceAll(styleType.endTag, "");
                 }
             }
+
             window.onload = function() {
-                //sets all paragraph tags for 'display' to inline
-                var style = document.createElement("div");
-                style.innerHTML = "<br><style>p { display: inline; }</style>";
-                frames['display'].document.head.appendChild(style);
+                window.frames['display'].document.head.innerHTML = "<style type='text/css'> * {font-family: courier; font-size: 12px; margin: 0px; padding: 0px; word-wrap: break-word;} p{display: inline;} </style>";
                 document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
-                currentState = new State(textbox.selectionStart, textbox.selectionEnd); // creates an initial currentState
+                currentState = new State(0, textbox.selectionEnd); // creates an initial currentState
             }
+          
             textbox.onkeyup = function(e){
                 handleStates(e);
                 encode();
                 renderDisplay();
             }
+
             function handleStates(e) {
                 console.log("e.keyCode: " + e.keyCode);
                 if (newState) {
                     states.push(currentState); //FIXME states need to be inserted in order
                     newState = false;
                 }
+
                 if (e.which > 31 || e.which === 13) {
                     currentState.endIndex++;
                 } else if(e.key === "Backspace") {
@@ -183,6 +188,7 @@
                     //currentState.richText.insert(textbox.selectionStart + currentState.startTag, "<br>"); // FIXME
                 }
             }
+
             function encode() {
                 richText = "";
                 for (var i = 0; i < states.length; i++) {
@@ -197,6 +203,7 @@
                 window.frames['display'].document.body.innerHTML = richText;
                 console.log(richText);
             }
+
             // returns the index of the state that the cursor is in
             function getCursorState() {
                 var i = 0;
@@ -205,12 +212,16 @@
                 }
                 return i;
             }
+
             // return the index of a given state from states[]
             function getStateIndex(myState) {
+
             }
+
             function styleEvent(styleType) {
                 changeCurrentState(styleType);
             }
+
             function changeCurrentState(styleType) {
                 var oldState = currentState;
                 currentState = new State(textbox.selectionStart, textbox.selectionEnd);
@@ -224,6 +235,7 @@
                     document.getElementById(styleType.id).style.background = "gray"; //temporary
                 }
             }
+
             // inserts a string into another string based on an index
             String.prototype.insert = function insert(index, string) {
                 if (index > 0) {
@@ -231,11 +243,13 @@
                     else return this + string;
                 } else return string + this;
             };
+
             // removes the first occurance of a substring
             String.prototype.replaceAll = function replaceAll(oldSubstring, newSubstring) {
                 var regex = new RegExp(oldSubstring, "g");
                 return this.replace(regex, newSubstring);
             }
+
         </script>
     </body>
 </html>
