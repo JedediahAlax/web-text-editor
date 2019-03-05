@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<!--- Image Slider -->
+
 <div class="container-fluid text-center">
 <div id="slides" class="carousel slide" data-ride="carousel>
     <li data-target="#slides" data-slide-to="0" class="active"></li>
@@ -24,8 +24,10 @@
     <div class="carousel-caption">
       <h1 class="display-2">Textitor!</h1>
       <h3>A rich-text web-based editor</h3>
+			<% if logged_in? %>
       <%= link_to "NEW DOCUMENT", '/textboxes/textbox', class: "btn btn-outline-light btn-lrg" %>
       <%= link_to "MY DOCUMENTS", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
+			<% end %>
   </div>
 </div>
 </div>
