@@ -95,8 +95,8 @@
 
                 <div class="btn-group" role="group">
                     <!-- Group -->
-                    <button class="btn1" id="bold" onclick="bold();"><i class="fas fa-bold"></i></button>
-                    <button class="btn1" id="italics" onclick="italics();"><i class="fas fa-italic"></i></button>
+                    <button class="btn1" id="bold" onclick="styleEvent(styles.bold);"><i class="fas fa-bold"></i></button>
+                    <button class="btn1" id="italics" onclick="styleEvent(styles.italics);"><i class="fas fa-italic"></i></button>
                     <button class="btn1" id="strikeThrough" onclick=""><i class="fas fa-strikethrough"></i></button>
                 </div>
 
@@ -119,12 +119,10 @@
 
             <div class="row">
                 <div class="wrapper">
-                    <div class="display">
-                        <!-- Style="Display: none;"-->
-                        <textarea id="textbox" name="textbox" placeholder="Sweet Text Box!" value="" autofocus="true"></textarea>
-                    </div>
-                    <div class="display">
-                        <iframe id="display" name="display"></iframe>
+                  <div class="parent">
+
+                      <textarea id="textbox" name="textbox" placeholder="box" value="" autofocus="true"></textarea>
+                      <iframe id="display" name="display"></iframe>
                     </div>
                 </div>
             </div>
@@ -132,102 +130,111 @@
 
         <script>
             var textbox = document.getElementById('textbox');
+            var states = [];
+            var currentState;
+            var newState = false;
             var richText = "";
-            var style;
-
-            var state = {
-                "startTag": "",
-                "endTag": "",
-                "start": 0,
-                "end": 0,
-                "plainText": "",
-                "richText": ""
+            // kinda like an enumeration for styles
+            var styles = {
+                bold: {startTag: "<b>", endTag: "</b>", id: "bold"},
+                italics: {startTag: "<i>", endTag: "</i>", id: "italics"}
             };
-
-            window.onload = function () {
+            function State(startIndex, endIndex) {
+                this.startIndex = startIndex;
+                this.endIndex = endIndex;
+                this.startTag = "<p>";
+                this.endTag = "</p>";
+                this.plainText = textbox.value.substring(startIndex, endIndex);
+                this.richText = this.startTag + this.plainText + this.endTag;
+                newState = true;
+                this.addStyle = function(styleType) {
+                    this.startTag = this.startTag + styleType.startTag;
+                    this.endTag = styleType.endTag + this.endTag;
+                }
+                this.removeStyle = function(styleType) {
+                    this.startTag = this.startTag.replaceAll(styleType.startTag, "");
+                    this.endTag = this.endTag.replaceAll(styleType.endTag, "");
+                }
+            }
+            window.onload = function() {
                 //sets all paragraph tags for 'display' to inline
-                style = document.createElement("div");
+                var style = document.createElement("div");
                 style.innerHTML = "<br><style>p { display: inline; }</style>";
                 frames['display'].document.head.appendChild(style);
-                //
-
                 document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
-                newState(); //sets the first state
+                currentState = new State(textbox.selectionStart, textbox.selectionEnd); // creates an initial currentState
             }
-
-            function newState() {
-                state.startTag = "<p>";
-                state.endTag = "</p>";
-                state.start = textbox.selectionStart;
-                state.end = state.start; //nothing is in a new state
-            }
-
             textbox.onkeyup = function(e){
-                handleStates(); // on keypress updates states start and end vars, then composes the richStateText vars based on their bounds and their respective start and end tags
+                handleStates(e);
                 encode();
                 renderDisplay();
             }
-
-            function handleStates() {
-                state.end += 1; //FIXME
+            function handleStates(e) {
+                console.log("e.keyCode: " + e.keyCode);
+                if (newState) {
+                    states.push(currentState); //FIXME states need to be inserted in order
+                    newState = false;
+                }
+                if (e.which > 31 || e.which === 13) {
+                    currentState.endIndex++;
+                } else if(e.key === "Backspace") {
+                    currentState.endIndex--;
+                } else if(e.key === "Enter") {
+                    //currentState.richText.insert(textbox.selectionStart + currentState.startTag, "<br>"); // FIXME
+                }
             }
-
+            function encode() {
+                richText = "";
+                for (var i = 0; i < states.length; i++) {
+                    states[i].plainText = textbox.value.substring(states[i].startIndex, states[i].endIndex); // sets the plain text for this state
+                    states[i].richText = states[i].plainText.replaceAll("\n", "<br>"); // adds newlines in richtext
+                    states[i].richText = states[i].startTag + states[i].richText + states[i].endTag; // adds the start and end tags to rich text
+                    richText += states[i].richText;
+                    console.log(states[i]);
+                }
+            }
             function renderDisplay() {
                 window.frames['display'].document.body.innerHTML = richText;
                 console.log(richText);
             }
-
-            function encode() {
-                state.plainText = textbox.value.substring(state.start, state.end);
-                state.richText = state.startTag + state.plainText + state.endTag;
-                richText = state.richText; //FIXME
-            }
-
-            String.prototype.insert = function (index, string) {
-                if (index > 0) return this.substring(0, index) + string + this.substring(index, this.length);
-                else return string + this;
-            };
-
-            function removeSubstring(string, substring) {
-                var index = string.indexOf(substring);
-                if (index != -1) {
-                    var first = string.substring(0, index);
-                    var last = string.substring(index + substring.length, string.length);
-                    string = first + last;
+            // returns the index of the state that the cursor is in
+            function getCursorState() {
+                var i = 0;
+                for (i; i < states.length; i++) {
+                    if (textbox.selectionStart >= states[i].startIndex && textbox.selectionStart < states[i].endIndex) return i;
                 }
-                return string;
+                return i;
             }
-
-            function bold() {
-                var startTag = "<b>";
-                var endTag = "</b>";
-                if (!state.startTag.includes(startTag)) { // if the style isn't applied, apply it
-                    state.startTag = state.startTag.insert(state.startTag.length, startTag);
-                    state.endTag = state.endTag.insert(0, endTag);
-                    document.getElementById('bold').style.background = "gray";
-                } else { //if the style is applied, remove it
-                    state.startTag = removeSubstring(state.startTag, startTag);
-                    state.endTag = removeSubstring(state.endTag, endTag);
-                    document.getElementById('bold').style.background = "lightgray";
-                }
-                encode();
-                renderDisplay();
+            // return the index of a given state from states[]
+            function getStateIndex(myState) {
             }
-
-            function italics() {
-                var startTag = "<i>";
-                var endTag = "</i>";
-                if (!state.startTag.includes(startTag)) {
-                    state.startTag = state.startTag.insert(state.startTag.length, startTag);
-                    state.endTag = state.endTag.insert(0, endTag);
-                    document.getElementById('italics').style.background = "gray";
+            function styleEvent(styleType) {
+                changeCurrentState(styleType);
+            }
+            function changeCurrentState(styleType) {
+                var oldState = currentState;
+                currentState = new State(textbox.selectionStart, textbox.selectionEnd);
+                currentState.startTag = oldState.startTag;
+                currentState.endTag = oldState.endTag;
+                if (currentState.startTag.includes(styleType.startTag)) {
+                    currentState.removeStyle(styleType);
+                    document.getElementById(styleType.id).style.background = "lightgray"; //temporary
                 } else {
-                    state.startTag = removeSubstring(state.startTag, startTag);
-                    state.endTag = removeSubstring(state.endTag, endTag);
-                    document.getElementById('italics').style.background = "lightgray";
+                    currentState.addStyle(styleType);
+                    document.getElementById(styleType.id).style.background = "gray"; //temporary
                 }
-                encode();
-                renderDisplay();
+            }
+            // inserts a string into another string based on an index
+            String.prototype.insert = function insert(index, string) {
+                if (index > 0) {
+                    if (index < this.length) return this.substring(0, index) + string + this.substring(index, this.length);
+                    else return this + string;
+                } else return string + this;
+            };
+            // removes the first occurance of a substring
+            String.prototype.replaceAll = function replaceAll(oldSubstring, newSubstring) {
+                var regex = new RegExp(oldSubstring, "g");
+                return this.replace(regex, newSubstring);
             }
         </script>
     </body>

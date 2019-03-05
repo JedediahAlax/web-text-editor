@@ -6,39 +6,22 @@
   </head>
   <body>
     <div class="jumbotron">
-      <h1>HELP PAGE</h1>
+      <h1 style=>HELP PAGE</h1>
 
       <hr class="my-4">
-      <h3 class="text-center">HOW DO I SIGN UP?</h3>
+      <h3 class="text-center" style="color:red;">HOW DO I SIGN UP?</h3>
       <p>
-        You can sign up by using the Log in button on the left or the Sign Up button on the top right! 
+        You can sign up by using the Log in button on the left or the Sign Up button on the top right!
       </p>
 
       <hr class="my-4">
-      <h3 class="text-center">ABOUT US</h3>
-      <p style="color:black;"> Textitor is a web based rich text editor designed as a class project for CS3250 at Metropolitan State University of Denver. Textitor allows its users to save and load rich text documents into its text field and to keep them all in order by organizing files for each user. Try it now!</p>
+      <h3 class="text-center" style="color:red;">ABOUT US</h3>
+      <p style="color:black;"> Textitor is a web based rich text editor designed as a class project for
+        CS3250 at Metropolitan State University of Denver. Textitor allows its users to save and load rich text documents into
+        its text field and to keep them all in order by organizing files for each user. Try it now!</p>
+      <hr class="my-4">
+
     </div>
 
-
-<!-- Footer -->
-<footer class="page-footer font-small pt-4">
-    <div class="container">
-      <ul class="list-unstyled list-inline text-center py-2">
-        <li class="list-inline-item">
-          <h5>FOOTER</h5>
-        </li>
-        <li class="list-inline-item">
-          <% if logged_in? %>
-          <%= link_to "Account", '#', class: "btn btn-outline-white btn-rounded" %>
-          <% else %>
-          <%= link_to "Log in", '/users/new', class: "btn btn-outline-white btn-rounded" %>
-          <% end %>
-          <%= link_to "Use Textitor", '/textboxes/textbox', class: "btn btn-outline-white btn-rounded" %>
-
-        </li>
-      </ul>
-    </div>
-  </footer>
-
-</body>
+  </body>
 </html>

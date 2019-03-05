@@ -14,9 +14,21 @@
     margin: auto;
 }
 
+.parent {
+  position: relative;
+}
+
 textarea {
+    caret-color: black;
+    position: absolute;
+    font-family: courier;
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0);
+    outline: none;
+    border: none;
     display: block;
-    margin: 8px;
+    margin: 0;
+    padding: 0;
     resize: none;
     width: 500px;
     height: 400px;
@@ -26,10 +38,11 @@ textarea {
 
 iframe {
     display: block;
-    margin: 8px;
+    margin: 0;
     resize: none;
     width: 500px;
     height: 400px;
+    padding: 0;
     top: 0;
     left: 0;
 }
