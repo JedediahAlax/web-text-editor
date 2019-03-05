@@ -119,12 +119,10 @@
 
             <div class="row">
                 <div class="wrapper">
-                    <div class="display">
-                        <!-- Style="Display: none;"-->
-                        <textarea id="textbox" name="textbox" placeholder="Sweet Text Box!" value="" autofocus="true"></textarea>
-                    </div>
-                    <div class="display">
-                        <iframe id="display" name="display"></iframe>
+                  <div class="parent">
+
+                      <textarea id="textbox" name="textbox" placeholder="box" value="" autofocus="true"></textarea>
+                      <iframe id="display" name="display"></iframe>
                     </div>
                 </div>
             </div>
@@ -164,15 +162,11 @@
             }
 
             window.onload = function() {
-                document.getElementById("yourFile").value = "";
-                //sets all paragraph tags for 'display' to inline
-
                 window.frames['display'].document.head.innerHTML = "<style type='text/css'> * {font-family: courier; font-size: 12px; margin: 0px; padding: 0px; word-wrap: break-word;} p{display: inline;} </style>";
-
                 document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
                 currentState = new State(0, textbox.selectionEnd); // creates an initial currentState
             }
-
+          
             textbox.onkeyup = function(e){
                 handleStates(e);
                 encode();
@@ -205,7 +199,6 @@
                     console.log(states[i]);
                 }
             }
-
             function renderDisplay() {
                 window.frames['display'].document.body.innerHTML = richText;
                 console.log(richText);

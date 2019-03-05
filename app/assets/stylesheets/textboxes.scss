@@ -12,6 +12,10 @@
     position: relative;
 }
 
+.parent {
+  position: relative;
+}
+
 textarea {
     position: absolute;
     background-color: transparent;
@@ -30,6 +34,7 @@ textarea {
 }
 
 iframe {
+    display: block;
     resize: none;
     margin: 0px;
     padding: 0px;
