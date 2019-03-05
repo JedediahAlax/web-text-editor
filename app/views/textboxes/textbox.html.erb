@@ -164,13 +164,13 @@
             }
 
             window.onload = function() {
+                document.getElementById("yourFile").value = "";
                 //sets all paragraph tags for 'display' to inline
-                var style = document.createElement("div");
-                style.innerHTML = "<br><style>p { display: inline; }</style>";
-                frames['display'].document.head.appendChild(style);
+
+                window.frames['display'].document.head.innerHTML = "<style type='text/css'> * {font-family: courier; font-size: 12px; margin: 0px; padding: 0px; word-wrap: break-word;} p{display: inline;} </style>";
 
                 document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
-                currentState = new State(textbox.selectionStart, textbox.selectionEnd); // creates an initial currentState
+                currentState = new State(0, textbox.selectionEnd); // creates an initial currentState
             }
 
             textbox.onkeyup = function(e){
