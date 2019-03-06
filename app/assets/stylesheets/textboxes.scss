@@ -16,7 +16,29 @@
 
 .parent {
   position: relative;
+  width: 70%;
+  margin: 0 auto;
+  padding: 0;
+  line-height: 2em;
 }
+
+.btn1 {
+height:20px;
+width: 40px;
+border: 1px solid #000000; /* Green */
+}
+
+select {
+  height: 20px;
+}
+/*
+attempting to clean up tag styles here.
+.textarea {
+  font-family: courier;
+  font-size: 12px;
+  line-height: normal;
+}
+*/
 
 textarea {
     caret-color: black;
@@ -25,23 +47,24 @@ textarea {
     background-color: transparent;
     color: rgba(0, 0, 0, 0);
     outline: none;
-    border: none;
-    display: block;
+    border: 2px black;
+    display: inline-block;
     margin: 0;
     padding: 0;
     resize: none;
-    width: 500px;
-    height: 400px;
-    top: 0;
+    width: 800px;
+    height: 800px;
+    top: 20px;
     left: 0;
 }
 
 iframe {
-    display: block;
+    display: inline-block;
     margin: 0;
+    overflow: auto;
     resize: none;
-    width: 500px;
-    height: 400px;
+    width: 800px;
+    height: 800px;
     padding: 0;
     top: 0;
     left: 0;

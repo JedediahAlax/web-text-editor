@@ -2,240 +2,190 @@
 <html>
     <head>
         <title>Textitor</title>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <!-- Button Styling-->
-        <style>
-            .btn1 {
-            height:20px;
-            width:30px;
-            border: 1px solid #000000; /* Green */
-            }
-        </style>
-
     </head>
 
     <body>
+          <div class="parent">
+            <div class="btn-group" role="group">
 
-        <!-- Buttons -->
-        <div class="container-fluid">
-            <div class="row align-self-start">
-                <div class="btn-group one">
+                <button class="btn1" id="bold" onclick=""><i class="fas fa-bold"></i></button>
+                <button class="btn1" id="italics" onclick=""><i class="fas fa-italic"></i></button>
+                <button class="btn1" id="strikeThrough" onclick=""><i class="fas fa-strikethrough"></i></button>
+                <button class="btn1" id="alignLeft" onclick=""><i class="fas fa-align-left"></i></button>
+                <button class="btn1" id="alighnCenter" onclick=""><i class="fas fa-align-center"></i></button>
+                <button class="btn1" id="alignRight" onclick=""><i class="fas fa-align-right"></i></button>
 
-                    <!-- File drop down -->
-                    <div class="dropdown">
+              <!-- adds an html dropdown menu, need to add jscript to allow user to choose font size-->
+                <select id = "font">
+                  <option class="non" value ="8">8</option>
+                  <option class="non" value ="9">9</option>
+                  <option class="non" value ="10">10</option>
+                  <option class="non" value ="11">11</option>
+                  <option class="non" value ="12">12</option>
+                  <option class="editable" value ="other">other</option>
+                </select>
+              <!-- maybe a bit too complex to add a user input option here-->
+                <select id = "style">
+                  <option class="non" value ="Times New Roman">Times New Roman</option>
+                  <option class="non" value ="Courier">Courier</option>
+                  <option class="non" value ="Georgia">Georgia</option>
+                  <option class="non" value ="Arial">Arial</option>
+                  <option class="non" value ="Calibri">Calibri</option>
+                </select>
+                <!-- getting odd format issues when using standard html button--->
+                <button class="btn1" id="Save" onclick="">Save</button>
+                <button class="btn1" id="Load" onclick="">Load</button>
 
-                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">File</a>
 
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#"><i class="far fa-file-alt"></i>  New document</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><i class="fas fa-print"></i>  Print</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><i class="far fa-save"></i>   Save</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><i class="fas fa-download"></i>  Load</a>
-                        </div>
-                    </div>
-
-                    <!-- Edit drop down -->
-                    <div class="dropdown">
-
-                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Edit</a>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#"><i class="fas fa-cut"></i>  Cut</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-copy"></i>  Copy</a>
-                            <a class="dropdown-item" href="#"><i class="fas fa-paste"></i>  Paste</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else</a>
-                        </div>
-                    </div>
-
-                    <!-- Insert drop down -->
-                    <div class="dropdown">
-
-                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Insert</a>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#"><i class="fas fa-image"></i>  Image</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><i class="fas fa-link"></i>  Link</a>
-                        </div>
-                    </div>
-
-                    <!-- View drop down -->
-                    <div class="dropdown">
-
-                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">View</a>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#"><i class="fas fa-code"></i>  Source Code</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><i class="fas fa-eye"></i>  Preview</a>
-                        </div>
-                    </div>
-
-                    <!-- Help drop down -->
-                    <div class="dropdown">
-
-                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown">Help</a>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="#"><i class="fas fa-info-circle"></i>  Help</a>
-                        </div>
-
-                    </div>
-                </div>
             </div>
 
-            <div class="row">
+                <textarea id="textbox" name="textbox" placeholder="box" value="" autofocus="true" style="font-family: courier; font-size: 12px; line-height: normal;"></textarea>
+                <iframe id="display" name="display"></iframe>
+          </div>
 
-                <div class="btn-group" role="group">
-                    <!-- Group -->
-                    <button class="btn1" id="bold" onclick="styleEvent(styles.bold);"><i class="fas fa-bold"></i></button>
-                    <button class="btn1" id="italics" onclick="styleEvent(styles.italics);"><i class="fas fa-italic"></i></button>
-                    <button class="btn1" id="strikeThrough" onclick=""><i class="fas fa-strikethrough"></i></button>
-                </div>
 
-                <!-- Group -->
-                <div class="btn-group" role="group">
 
-                    <button class="btn1" id="alignLeft" onclick=""><i class="fas fa-align-left"></i></button>
-                    <button class="btn1" id="alighnCenter" onclick=""><i class="fas fa-align-center"></i></button>
-                    <button class="btn1" id="alignRight" onclick=""><i class="fas fa-align-right"></i></button>
-                </div>
 
-                <!-- Group -->
-                <div class="btn-group" role="group">
 
-                    <button class="btn1" id="cut" onclick=""><i class="fas fa-cut"></i></button>
-                    <button class="btn1" id="copy" onclick=""><i class="fas fa-copy"></i></button>
-                    <button class="btn1" id="paste" onclick=""><i class="fas fa-paste"></i></button>
-                </div>
-            </div>
+          <script>
+              var textbox = document.getElementById('textbox');
+              var states = [];
+              var currentState;
+              var newState = false;
+              var richText = "";
 
-            <div class="row">
-                <div class="wrapper">
-                  <div class="parent">
+              // kinda like an enumeration for styles
+              var styles = {
+                  bold: {startTag: "<b>", endTag: "</b>", id: "bold"},
+                  italics: {startTag: "<i>", endTag: "</i>", id: "italics"}
+              };
 
-                      <textarea id="textbox" name="textbox" placeholder="box" value="" autofocus="true"></textarea>
-                      <iframe id="display" name="display"></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
+              function State(startIndex, endIndex) {
+                  this.startIndex = startIndex;
+                  this.endIndex = endIndex;
+                  this.startTag = "<p>";
+                  this.endTag = "</p>";
+                  this.plainText = textbox.value.substring(startIndex, endIndex);
+                  this.richText = this.startTag + this.plainText + this.endTag;
+                  newState = true;
 
-        <script>
-            var textbox = document.getElementById('textbox');
-            var states = [];
-            var currentState;
-            var newState = false;
-            var richText = "";
-            // kinda like an enumeration for styles
-            var styles = {
-                bold: {startTag: "<b>", endTag: "</b>", id: "bold"},
-                italics: {startTag: "<i>", endTag: "</i>", id: "italics"}
-            };
-            function State(startIndex, endIndex) {
-                this.startIndex = startIndex;
-                this.endIndex = endIndex;
-                this.startTag = "<p>";
-                this.endTag = "</p>";
-                this.plainText = textbox.value.substring(startIndex, endIndex);
-                this.richText = this.startTag + this.plainText + this.endTag;
-                newState = true;
-                this.addStyle = function(styleType) {
-                    this.startTag = this.startTag + styleType.startTag;
-                    this.endTag = styleType.endTag + this.endTag;
-                }
-                this.removeStyle = function(styleType) {
-                    this.startTag = this.startTag.replaceAll(styleType.startTag, "");
-                    this.endTag = this.endTag.replaceAll(styleType.endTag, "");
-                }
-            }
-            window.onload = function() {
-                //sets all paragraph tags for 'display' to inline
-                var style = document.createElement("div");
-                style.innerHTML = "<br><style>p { display: inline; }</style>";
-                frames['display'].document.head.appendChild(style);
-                document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
-                currentState = new State(textbox.selectionStart, textbox.selectionEnd); // creates an initial currentState
-            }
-            textbox.onkeyup = function(e){
-                handleStates(e);
-                encode();
-                renderDisplay();
-            }
-            function handleStates(e) {
-                console.log("e.keyCode: " + e.keyCode);
-                if (newState) {
-                    states.push(currentState); //FIXME states need to be inserted in order
-                    newState = false;
-                }
-                if (e.which > 31 || e.which === 13) {
-                    currentState.endIndex++;
-                } else if(e.key === "Backspace") {
-                    currentState.endIndex--;
-                } else if(e.key === "Enter") {
-                    //currentState.richText.insert(textbox.selectionStart + currentState.startTag, "<br>"); // FIXME
-                }
-            }
-            function encode() {
-                richText = "";
-                for (var i = 0; i < states.length; i++) {
-                    states[i].plainText = textbox.value.substring(states[i].startIndex, states[i].endIndex); // sets the plain text for this state
-                    states[i].richText = states[i].plainText.replaceAll("\n", "<br>"); // adds newlines in richtext
-                    states[i].richText = states[i].startTag + states[i].richText + states[i].endTag; // adds the start and end tags to rich text
-                    richText += states[i].richText;
-                    console.log(states[i]);
-                }
-            }
-            function renderDisplay() {
-                window.frames['display'].document.body.innerHTML = richText;
-                console.log(richText);
-            }
-            // returns the index of the state that the cursor is in
-            function getCursorState() {
-                var i = 0;
-                for (i; i < states.length; i++) {
-                    if (textbox.selectionStart >= states[i].startIndex && textbox.selectionStart < states[i].endIndex) return i;
-                }
-                return i;
-            }
-            // return the index of a given state from states[]
-            function getStateIndex(myState) {
-            }
-            function styleEvent(styleType) {
-                changeCurrentState(styleType);
-            }
-            function changeCurrentState(styleType) {
-                var oldState = currentState;
-                currentState = new State(textbox.selectionStart, textbox.selectionEnd);
-                currentState.startTag = oldState.startTag;
-                currentState.endTag = oldState.endTag;
-                if (currentState.startTag.includes(styleType.startTag)) {
-                    currentState.removeStyle(styleType);
-                    document.getElementById(styleType.id).style.background = "lightgray"; //temporary
-                } else {
-                    currentState.addStyle(styleType);
-                    document.getElementById(styleType.id).style.background = "gray"; //temporary
-                }
-            }
-            // inserts a string into another string based on an index
-            String.prototype.insert = function insert(index, string) {
-                if (index > 0) {
-                    if (index < this.length) return this.substring(0, index) + string + this.substring(index, this.length);
-                    else return this + string;
-                } else return string + this;
-            };
-            // removes the first occurance of a substring
-            String.prototype.replaceAll = function replaceAll(oldSubstring, newSubstring) {
-                var regex = new RegExp(oldSubstring, "g");
-                return this.replace(regex, newSubstring);
-            }
-        </script>
-    </body>
-</html>
+                  this.addStyle = function(styleType) {
+                      this.startTag = this.startTag + styleType.startTag;
+                      this.endTag = styleType.endTag + this.endTag;
+                  }
+
+                  this.removeStyle = function(styleType) {
+                      this.startTag = this.startTag.replaceAll(styleType.startTag, "");
+                      this.endTag = this.endTag.replaceAll(styleType.endTag, "");
+                  }
+              }
+
+              window.onload = function() {
+                  window.frames['display'].document.head.innerHTML = "<style type='text/css'> *{margin: 0px; padding: 0px;font-family: courier; font-size: 12px; line-height: normal; word-wrap: break-word;} p{display:inline;} </style>";
+
+                  document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
+                  currentState = new State(0, textbox.selectionEnd); // creates an initial currentState
+              }
+
+              textbox.onkeyup = function(e){
+                  handleStates(e);
+                  encode();
+                  renderDisplay();
+              }
+
+              function handleStates(e) {
+                  console.log("e.keyCode: " + e.keyCode);
+                  if (newState) {
+                      states.push(currentState); //FIXME states need to be inserted in order
+                      newState = false;
+                  }
+
+                  if (e.which > 31 || e.which === 13) {
+                      currentState.endIndex++;
+                  } else if(e.key === "Backspace") {
+                      currentState.endIndex--;
+                  } else if(e.key === "Enter") {
+                      //currentState.richText.insert(textbox.selectionStart + currentState.startTag, "<br>"); // FIXME
+                  }
+              }
+
+              function encode() {
+                  richText = "";
+                  for (var i = 0; i < states.length; i++) {
+                      states[i].plainText = textbox.value.substring(states[i].startIndex, states[i].endIndex); // sets the plain text for this state
+                      states[i].richText = states[i].plainText.replaceAll("\n", "<br>"); // adds newlines in richtext
+                      states[i].richText = states[i].startTag + states[i].richText + states[i].endTag; // adds the start and end tags to rich text
+                      richText += states[i].richText;
+                      console.log(states[i]);
+                  }
+              }
+
+              function renderDisplay() {
+                  window.frames['display'].document.body.innerHTML = richText;
+                  console.log(richText);
+              }
+
+              // returns the index of the state that the cursor is in
+              function getCursorState() {
+                  var i = 0;
+                  for (i; i < states.length; i++) {
+                      if (textbox.selectionStart >= states[i].startIndex && textbox.selectionStart < states[i].endIndex) return i;
+                  }
+                  return i;
+              }
+
+              // return the index of a given state from states[]
+              function getStateIndex(myState) {
+
+              }
+
+              function styleEvent(styleType) {
+                  changeCurrentState(styleType);
+              }
+
+              function changeCurrentState(styleType) {
+                  var oldState = currentState;
+                  currentState = new State(textbox.selectionStart, textbox.selectionEnd);
+                  currentState.startTag = oldState.startTag;
+                  currentState.endTag = oldState.endTag;
+                  if (currentState.startTag.includes(styleType.startTag)) {
+                      currentState.removeStyle(styleType);
+                      document.getElementById(styleType.id).style.background = "lightgray"; //temporary
+                  } else {
+                      currentState.addStyle(styleType);
+                      document.getElementById(styleType.id).style.background = "gray"; //temporary
+                  }
+              }
+
+              function handleFiles(files) {
+                  var file = files[0];
+                  if (file) {
+                      var reader = new FileReader();
+                      reader.readAsText(file, "UTF-8");
+                      reader.onload = function (evt) {
+                          document.getElementById("textbox").value = evt.target.result;
+                      }
+                      reader.onerror = function (evt) {
+                          document.getElementById("textbox").value = "error reading file";
+                      }
+                  }
+              }
+
+              // inserts a string into another string based on an index
+              String.prototype.insert = function insert(index, string) {
+                  if (index > 0) {
+                      if (index < this.length) return this.substring(0, index) + string + this.substring(index, this.length);
+                      else return this + string;
+                  } else return string + this;
+              };
+
+              // removes the first occurance of a substring
+              String.prototype.replaceAll = function replaceAll(oldSubstring, newSubstring) {
+                  var regex = new RegExp(oldSubstring, "g");
+                  return this.replace(regex, newSubstring);
+              }
+
+          </script>
+
+      </body>
+  </html>
