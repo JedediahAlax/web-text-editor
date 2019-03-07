@@ -5,6 +5,11 @@ module SessionsHelper
     session[:user_id] = user.id
   end
 
+  # return true if the given user is the current users
+  def current_user?(user)
+    user == current_user
+  end
+
   # return current logged in user (if any)
   def current_user
     # will return nil if the id is invalid
@@ -24,6 +29,6 @@ module SessionsHelper
     session.delete(:user_id)
     @current_user = nil
   end
-  
+
 
 end

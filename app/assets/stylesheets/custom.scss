@@ -5,8 +5,6 @@
 // Sass supports variables
 $gray-light: #777;
 
-
-
 @mixin box_sizing {
   -moz-box-sizing:  border-box;
   -webkit-box-sizing: border-box;
@@ -27,7 +25,9 @@ $gray-light: #777;
   <var> indicates a HTML tag
   #<var> indicates a CSS id
 */
-
+.btn {
+  width: 100px;
+}
 
 // Header styles
 #logo {

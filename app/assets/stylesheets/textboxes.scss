@@ -8,10 +8,8 @@
     display: flex;
 }
 
-.display {
-    float: left;
-    display: block;
-    margin: auto;
+.parent {
+    position: relative;
 }
 
 .parent {
@@ -41,12 +39,12 @@ attempting to clean up tag styles here.
 */
 
 textarea {
-    caret-color: black;
     position: absolute;
-    font-family: courier;
     background-color: transparent;
-    color: rgba(0, 0, 0, 0);
+    color: rgba(0,0,0,0);
+    caret-color: black;
     outline: none;
+
     border: 2px black;
     display: inline-block;
     margin: 0;
