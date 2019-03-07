@@ -22,9 +22,9 @@
     <% end %>
 
 
-# -- come back to this --> 
-  <div class = "btn btn-danger, danger">  <%= link_to "delete", @user, method: :delete, data: { confirms: "You sure?" } %>
-  </div>
+
+   <%= link_to "Delete Account", @user, method: :delete, data: { confirms: "You sure?" }, class: "btn btn-outline btn-lrg btn-danger" %>
+
 
     <div class="gravatar_edit">
       <%= gravatar_for @user %>
