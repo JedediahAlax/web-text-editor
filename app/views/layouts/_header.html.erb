@@ -36,52 +36,25 @@
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 	      data-traget="#navbarResponsive">
 
- <!-- Can this be removed? -->
-	<!-- <span class="navbar-toggler-icon"></span> -->
+ 			<!-- Can this be removed? -->
+			<!-- <span class="navbar-toggler-icon"></span> -->
 			</button>
 
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-          </li>
 
 
-          <li class="nav-item">
-            <a class="nav-link" href="/splash_page/help">Help</a>
-					</li>
-
-
-
-          <li class="nav-item">
-
-            <% if logged_in? %>
-						<li class="nav-item">
-	            <a class="nav-link" href="">My Documents</a>
-	          </li>
-						<li class="nav-item">
-            <a class="nav-link" href="/textboxes/textbox">Use Textitor</a>
-						</li>
-            <li class="nav-item">
-              <li class="dropdown">
-                <a class="nav-link" href="" class="dropdown-toggle" data-toggle="dropdown">Account<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li class="dropdown-item"><%= link_to "Profile", edit_user_path(current_user) %></li>
-                  <li class="dropdown-item"><%= link_to "Settings", "" %> </li>
-                  <li class="divider"></li>
-                  <li class="dropdown-item">
-                    <%= link_to "Log out", logout_path, method: :delete %>
-                  </li>
-                </ul>
-              </li>
-            </li>
-
-            <% else %>
-                <li class="nav-item">
-                 <a class="nav-link" href="/sessions/new">Sign In</a>
-              </li>
-            <% end %>
+					<% if logged_in? %>
+						<li class ="nav-item"> <%=link_to "Home", users_path, class: "nav-link"%> </li>
+						<li class="nav-item"> <%= link_to  "Use Texitor", "/textboxes/textbox", class: "nav-link"%> </li>
+						<li class="nav-item"> <%= link_to  "Help", "/splash_page/help", class: "nav-link"%> </li>
+						<li class="nav-item"><%= link_to "Log out", logout_path, method: :delete, class: "nav-link" %>
+					<% else %>
+					<li class="nav-item"> <%= link_to  "Use Texitor", "/textboxes/textbox", class: "nav-link"%> </li>
+					<li class="nav-item"> <%= link_to  "Help", "/splash_page/help", class: "nav-link"%> </li>
+					<li class="nav-item"> <%= link_to  "Sign In", "/sessions/new", class: "nav-link"%> </li>
+					<% end %>
 
           </ul>
       </div>
