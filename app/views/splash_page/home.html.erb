@@ -31,23 +31,17 @@
     <img src="assets/background.png">
     <div class="carousel-caption">
       <h1 class="display-2">Textitor!</h1>
-<<<<<<< HEAD
-      <h3>A rich-text web-based editor</h3>
-			<% if logged_in? %>
-      <%= link_to "NEW DOCUMENT", '/textboxes/textbox', class: "btn btn-outline-light btn-lrg" %>
-      <%= link_to "MY DOCUMENTS", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
-			<% end %>
-=======
-      <h2>A web-based rich-text editor</h2>
+
+			<h2>A web-based rich-text editor</h2>
 			<%= link_to "NEW DOCUMENT", '/textboxes/textbox', class: "btn btn-outline-light btn-lrg" %>
 			<% if logged_in? %>
       <%= link_to "MY DOCUMENTS", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
 			<% else %>
 			<%= link_to "LOG IN", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
 			<% end %>
-			<p> If you don't have an account you can create on from the log in page! </p>
+			<p> If you don't have an account you can create one from the log in page! </p>
 
->>>>>>> usersDelete
+
   </div>
 </div>
 </div>

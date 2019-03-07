@@ -1,5 +1,5 @@
 <% provide(:title, "Edit user") %>
-<h1>Update your profile</h1>
+<h1>Edit or delete your account here.</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
@@ -25,9 +25,6 @@
 
    <%= link_to "Delete Account", @user, method: :delete, data: { confirms: "You sure?" }, class: "btn btn-outline btn-lrg btn-danger" %>
 
-
-    <div class="gravatar_edit">
-      <%= gravatar_for @user %>
 
     </div>
   </div>
