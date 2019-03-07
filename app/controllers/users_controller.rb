@@ -4,6 +4,10 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :show, :destroy]
 
 
+  def index
+    @user = User.find(params[:id])
+  end
+
 
   def show
     @user = User.find(params[:id])
