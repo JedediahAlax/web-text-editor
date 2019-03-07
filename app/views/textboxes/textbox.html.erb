@@ -40,7 +40,7 @@
             </div>
 
 
-                <textarea id="textbox" name="textbox" placeholder="box" value="" autofocus="true" style="font-family: courier; font-size: 12px; line-height: normal;"></textarea>
+                <textarea id="textbox" name="textbox" placeholder="box" value="" autofocus="true" style="font-family: courier; font-size: 14px; line-height: normal;"></textarea>
                 <iframe id="display" name="display"></iframe>
           </div>
 
@@ -51,9 +51,12 @@
           <script>
               var textbox = document.getElementById('textbox');
               var states = [];
-              var currentState;
-              var newState = false;
+              var currentState = new State(0, 0);
               var richText = "";
+              var oldSelectionStart = 0;
+              var oldSelectionEnd = 0;
+              var lastTextLength = 0;
+              var key;
 
               // kinda like an enumeration for styles
               var styles = {
@@ -68,7 +71,6 @@
                   this.endTag = "</p>";
                   this.plainText = textbox.value.substring(startIndex, endIndex);
                   this.richText = this.startTag + this.plainText + this.endTag;
-                  newState = true;
 
                   this.addStyle = function(styleType) {
                       this.startTag = this.startTag + styleType.startTag;
@@ -79,34 +81,59 @@
                       this.startTag = this.startTag.replaceAll(styleType.startTag, "");
                       this.endTag = this.endTag.replaceAll(styleType.endTag, "");
                   }
+
+                  this.setButtons = function() {
+                      if (this.startTag.includes(styles.bold.startTag)) {
+                          document.getElementById('bold').style.background = "gray"; //temporary
+                      } else {
+                          document.getElementById('bold').style.background = "lightgray"; //temporary
+                      }
+                  }
               }
 
               window.onload = function() {
-                  window.frames['display'].document.head.innerHTML = "<style type='text/css'> *{margin: 0px; padding: 0px;font-family: courier; font-size: 12px; line-height: normal; word-wrap: break-word;} p{display:inline;} </style>";
+                  window.frames['display'].document.head.innerHTML = "<style type='text/css'> * {font-family: courier; font-size: 14px; margin: 0px; padding: 0px; line-height: normal; word-wrap: break-word;} p{display: inline;} </style>";
 
+                  // add load code here // if (docLoaded) currentState = getCursorState... else
                   document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
-                  currentState = new State(0, textbox.selectionEnd); // creates an initial currentState
+                  states.push(currentState);
               }
 
-              textbox.onkeyup = function(e){
-                  handleStates(e);
+              textbox.onkeydown = function(e) {
+                  key = e;
+                  oldSelectionStart = textbox.selectionStart;
+                  oldSelectionEnd = textbox.selectionEnd;
+                  lastTextLength = textbox.value.length;
+              }
+
+
+              textbox.oninput = function() {
+                  updateStates();
                   encode();
                   renderDisplay();
               }
 
-              function handleStates(e) {
-                  console.log("e.keyCode: " + e.keyCode);
-                  if (newState) {
-                      states.push(currentState); //FIXME states need to be inserted in order
-                      newState = false;
-                  }
+              textbox.onkeyup = function() {
+              }
 
-                  if (e.which > 31 || e.which === 13) {
-                      currentState.endIndex++;
-                  } else if(e.key === "Backspace") {
-                      currentState.endIndex--;
-                  } else if(e.key === "Enter") {
-                      //currentState.richText.insert(textbox.selectionStart + currentState.startTag, "<br>"); // FIXME
+              textbox.onclick = function() {
+              }
+
+              function updateStates() {
+                  if (currentState != getCursorState(oldSelectionStart)) states.push(currentState); //FIXME states need to be inserted in order
+
+                  //currentState.endIndex += -(oldSelectionEnd - oldSelectionStart) + (textbox.selectionStart - oldSelectionStart);
+                  currentState.endIndex += textbox.value.length - lastTextLength; // FIXME: do this for all states effected
+
+                  console.log("states length: " + states.length); // why doesn't states length decrease?
+                  for (var i = 0; i < states.length; i++) { // fixme: only for states effected
+                      console.log(states[i].startIndex);
+                      console.log(states[i].endIndex);
+                      if (states[i].endIndex <= states[i].startIndex) {
+                          states.splice(i, 1);
+                          states = states.remove(i);
+                          console.log("delete!");
+                      }
                   }
               }
 
@@ -126,13 +153,21 @@
                   console.log(richText);
               }
 
-              // returns the index of the state that the cursor is in
-              function getCursorState() {
-                  var i = 0;
-                  for (i; i < states.length; i++) {
-                      if (textbox.selectionStart >= states[i].startIndex && textbox.selectionStart < states[i].endIndex) return i;
+              // returns the state that the cursor is in
+              function getCursorState(cursorIndex) {
+                  if (cursorIndex === 0) return states[0]; // returns fist state at very beginning
+                  else if (cursorIndex === textbox.value.length - 1) return states[states.length - 1]; // returns last state at very end
+                  for (var i = 0; i < states.length; i++) {
+                      if (cursorIndex > states[i].startIndex && cursorIndex <= states[i].endIndex) return states[i];
                   }
-                  return i;
+              }
+
+              // returns the state that the cursor is in
+              function getCursorStateIndex() {
+                  for (var i = 0; i < states.length; i++) {
+                      if (textbox.selectionStart > states[i].startIndex && textbox.selectionStart <= states[i].endIndex) return i;
+                  }
+                  return -1;
               }
 
               // return the index of a given state from states[]
@@ -146,30 +181,15 @@
 
               function changeCurrentState(styleType) {
                   var oldState = currentState;
-                  currentState = new State(textbox.selectionStart, textbox.selectionEnd);
+                  currentState = new State(textbox.selectionStart, textbox.selectionStart);
                   currentState.startTag = oldState.startTag;
                   currentState.endTag = oldState.endTag;
                   if (currentState.startTag.includes(styleType.startTag)) {
                       currentState.removeStyle(styleType);
-                      document.getElementById(styleType.id).style.background = "lightgray"; //temporary
                   } else {
                       currentState.addStyle(styleType);
-                      document.getElementById(styleType.id).style.background = "gray"; //temporary
                   }
-              }
-
-              function handleFiles(files) {
-                  var file = files[0];
-                  if (file) {
-                      var reader = new FileReader();
-                      reader.readAsText(file, "UTF-8");
-                      reader.onload = function (evt) {
-                          document.getElementById("textbox").value = evt.target.result;
-                      }
-                      reader.onerror = function (evt) {
-                          document.getElementById("textbox").value = "error reading file";
-                      }
-                  }
+                  currentState.setButtons();
               }
 
               // inserts a string into another string based on an index
