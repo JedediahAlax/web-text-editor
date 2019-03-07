@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  # require users to be logged in to access edit and update actions
-  before_action :logged_in_user, only: [:edit, :update, :show]
-  before_action :correct_user, only: [:edit, :update, :show]
+  # require users to be logged in AND to be correct user to access edit and update actions
+  before_action :logged_in_user, only: [:edit, :update, :show, :destroy]
+  before_action :correct_user, only: [:edit, :update, :show, :destroy]
 
 
 
@@ -40,6 +40,13 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  # This will find the user by ID and delete from the database. Redirect to splash page
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "You have successfully deleted your account."
+    redirect_to root_url
   end
 
 

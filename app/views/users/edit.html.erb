@@ -21,9 +21,14 @@
       <%= f.submit "Save changes", class: "btn btn-primary" %>
     <% end %>
 
+
+# -- come back to this --> 
+  <div class = "btn btn-danger, danger">  <%= link_to "delete", @user, method: :delete, data: { confirms: "You sure?" } %>
+  </div>
+
     <div class="gravatar_edit">
       <%= gravatar_for @user %>
-    
+
     </div>
   </div>
 </div>
