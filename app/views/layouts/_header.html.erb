@@ -26,25 +26,28 @@
           <li class="nav-item">
             <a class="nav-link" href="/">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">My Documents</a>
-          </li>
-          
+
+
           <li class="nav-item">
             <a class="nav-link" href="/splash_page/help">Help</a>
+					</li>
 
-          </li>
 
 
           <li class="nav-item">
-            
+
             <% if logged_in? %>
-            <a class="nav-link" href="../textboxes/textbox">Use Textitor</a>
+						<li class="nav-item">
+	            <a class="nav-link" href="">My Documents</a>
+	          </li>
+						<li class="nav-item">
+            <a class="nav-link" href="/textboxes/textbox">Use Textitor</a>
+						</li>
             <li class="nav-item">
               <li class="dropdown">
                 <a class="nav-link" href="" class="dropdown-toggle" data-toggle="dropdown">Account<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li class="dropdown-item"><%= link_to "Profile", current_user %></li>
+                  <li class="dropdown-item"><%= link_to "Profile", edit_user_path(current_user) %></li>
                   <li class="dropdown-item"><%= link_to "Settings", "" %> </li>
                   <li class="divider"></li>
                   <li class="dropdown-item">
@@ -53,16 +56,15 @@
                 </ul>
               </li>
             </li>
-              
+
             <% else %>
                 <li class="nav-item">
                  <a class="nav-link" href="/sessions/new">Sign In</a>
               </li>
             <% end %>
-    
+
           </ul>
       </div>
   </div>
 </nav>
 </body>
-
