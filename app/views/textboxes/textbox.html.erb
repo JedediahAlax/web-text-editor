@@ -8,8 +8,8 @@
           <div class="parent">
             <div class="btn-group" role="group">
 
-                <button class="btn1" id="bold" onclick=""><i class="fas fa-bold"></i></button>
-                <button class="btn1" id="italics" onclick=""><i class="fas fa-italic"></i></button>
+                <button class="btn1" id="bold" onclick="styleEvent(styles.bold)"><i class="fas fa-bold"></i></button>
+                <button class="btn1" id="italics" onclick="styleEvent(styles.italics)"><i class="fas fa-italic"></i></button>
                 <button class="btn1" id="strikeThrough" onclick=""><i class="fas fa-strikethrough"></i></button>
                 <button class="btn1" id="alignLeft" onclick=""><i class="fas fa-align-left"></i></button>
                 <button class="btn1" id="alighnCenter" onclick=""><i class="fas fa-align-center"></i></button>
@@ -43,10 +43,6 @@
                 <textarea id="textbox" name="textbox" placeholder="box" value="" autofocus="true" style="font-family: courier; font-size: 14px; line-height: normal;"></textarea>
                 <iframe id="display" name="display"></iframe>
           </div>
-
-
-
-
 
           <script>
               var textbox = document.getElementById('textbox');
@@ -96,7 +92,6 @@
 
                   // add load code here // if (docLoaded) currentState = getCursorState... else
                   document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
-                  states.push(currentState);
               }
 
               textbox.onkeydown = function(e) {
@@ -106,33 +101,40 @@
                   lastTextLength = textbox.value.length;
               }
 
-
-              textbox.oninput = function() {
+              textbox.oninput = function() { // as soon as value of textbox changes
                   updateStates();
                   encode();
                   renderDisplay();
               }
 
               textbox.onkeyup = function() {
+                  currentState = getCursorState(textbox.selectionStart); // FIXME: seemes to be a problem here. not assigning proporly
+                  currentState.setButtons();
               }
 
-              textbox.onclick = function() {
+              textbox.onmousedown = function() {
+                  oldSelectionStart = textbox.selectionStart;
+                  oldSelectionEnd = textbox.selectionEnd;
+              }
+
+              textbox.onclick = function() { // when click is released
+                  currentState = getCursorState(textbox.selectionStart); // FIXME: seemes to be a problem here. not assigning proporly
+                  currentState.setButtons();
               }
 
               function updateStates() {
-                  if (currentState != getCursorState(oldSelectionStart)) states.push(currentState); //FIXME states need to be inserted in order
+                  if (currentState.plainText.length === 0) {
+                      console.log("pushed");
+                      states.push(currentState); //FIXME states need to be inserted in order
+                  }
 
                   //currentState.endIndex += -(oldSelectionEnd - oldSelectionStart) + (textbox.selectionStart - oldSelectionStart);
                   currentState.endIndex += textbox.value.length - lastTextLength; // FIXME: do this for all states effected
 
-                  console.log("states length: " + states.length); // why doesn't states length decrease?
                   for (var i = 0; i < states.length; i++) { // fixme: only for states effected
-                      console.log(states[i].startIndex);
-                      console.log(states[i].endIndex);
                       if (states[i].endIndex <= states[i].startIndex) {
+                          states[i].plainText = ""; // so that i can push states based on their plain text
                           states.splice(i, 1);
-                          states = states.remove(i);
-                          console.log("delete!");
                       }
                   }
               }
@@ -153,14 +155,26 @@
                   console.log(richText);
               }
 
-              // returns the state that the cursor is in
-              function getCursorState(cursorIndex) {
-                  if (cursorIndex === 0) return states[0]; // returns fist state at very beginning
-                  else if (cursorIndex === textbox.value.length - 1) return states[states.length - 1]; // returns last state at very end
-                  for (var i = 0; i < states.length; i++) {
-                      if (cursorIndex > states[i].startIndex && cursorIndex <= states[i].endIndex) return states[i];
-                  }
-              }
+              function getCursorState(cursorIndex) { //DELETEME
+                  if (cursorIndex === 0) { // handles cursor at index 0
+                      if (states.length === 0) {
+                          return currentState; // for empty textbox, should be the last state at states[0] or initial currentState
+                      } else {
+                          return states[0]; // when cursor is at beginning of text
+                      }
+                  } else {
+                      for (var i = 0; i < states.length; i++) {
+                          if (cursorIndex > states[i].startIndex && cursorIndex <= states[i].endIndex) {
+                              if (currentState !== states[i] && textbox.selectionStart === oldSelectionStart) {
+                                  return currentState; // FIXME: currentState !== states[i]             currentState.plainText === 0         !states.includes(currentState)
+                              } else {
+                                  return states[i]; // return the state at the cursor if no changes were made
+                              }
+                          } // end of if
+                      } // end of for
+                  } // end of else
+                  // console.log("shit!! check getCursorState()");
+              } // end of method
 
               // returns the state that the cursor is in
               function getCursorStateIndex() {
