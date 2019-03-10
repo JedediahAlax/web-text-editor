@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     get '/sessions/new', to: 'users#new'
     get  '/sessions/users/new', to: 'sessions#new'
     post '/login', to: 'sessions#create'
+    # for local server logout to work
+    get '/logout', to: 'sessions#destroy'
+    # for heroku logout to work
     delete '/logout', to: 'sessions#destroy'
     get 'users/show', to: 'users#show'
 
