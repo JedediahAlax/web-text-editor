@@ -9,10 +9,6 @@
 }
 
 .parent {
-    position: relative;
-}
-
-.parent {
   position: relative;
   width: 70%;
   margin: 0 auto;
@@ -23,7 +19,8 @@
 .btn1 {
 height:20px;
 width: 40px;
-border: 1px solid #000000; /* Green */
+border: 1px solid #000000;
+border-radius: 6px;
 }
 
 select {
@@ -52,8 +49,9 @@ textarea {
     resize: none;
     width: 800px;
     height: 800px;
-    top: 20px;
+    top: 21px;
     left: 0;
+    border: 5px solid red;
 }
 
 iframe {
@@ -66,6 +64,7 @@ iframe {
     padding: 0;
     top: 0;
     left: 0;
+    border: 5px solid black;
 }
 
 button {
