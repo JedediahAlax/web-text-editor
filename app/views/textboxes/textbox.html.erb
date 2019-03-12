@@ -250,7 +250,8 @@
               }
 
               function styleEvent(styleType) {
-                  changeCurrentState(styleType); // check if there is text highlited
+                  changeCurrentState(styleType);
+                  document.getElementById("textbox").focus(); // check if there is text highlited
               }
 
               function changeCurrentState(styleType) {
