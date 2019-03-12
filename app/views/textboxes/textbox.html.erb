@@ -41,13 +41,14 @@
 
 
                 <textarea id="textbox" name="textbox" placeholder="box" value="" autofocus="true" style="font-family: courier; font-size: 14px; line-height: normal; margin: 0; padding: 0;"></textarea>
-                <iframe id="display" name="display"></iframe>
+                <iframe id="display" name="display" style="margin: 0; padding: 0;" ></iframe>
           </div>
 
           <script>
               var textbox = document.getElementById('textbox');
               var states = [];
               var currentState = new State(0, 0);
+              var nullState = new State(-1, -1);
               var richText = "";
               var oldSelectionStart = 0;
               var oldSelectionEnd = 0;
@@ -68,6 +69,17 @@
                   this.plainText = textbox.value.substring(startIndex, endIndex);
                   this.richText = this.startTag + this.plainText + this.endTag;
 
+                  this.cloneState = function() {
+                      var clone = new State();
+                      clone.startIndex = this.startIndex;
+                      clone.endIndex = this.endIndex;
+                      clone.startTag = this.startTag;
+                      clone.endTag = this.endTag;
+                      clone.plainText = this.plainText;
+                      clone.richText = this.richText;
+                      return clone;
+                  }
+
                   this.addStyle = function(styleType) {
                       this.startTag = this.startTag + styleType.startTag;
                       this.endTag = styleType.endTag + this.endTag;
@@ -84,12 +96,18 @@
                       } else {
                           document.getElementById('bold').style.background = "lightgray"; //temporary
                       }
+                      if (this.startTag.includes(styles.italics.startTag)) {
+                          document.getElementById('italics').style.background = "gray"; //temporary
+                      } else {
+                          document.getElementById('italics').style.background = "lightgray"; //temporary
+                      }
                   }
               }
 
               window.onload = function() {
                   window.frames['display'].document.head.innerHTML = "<style type='text/css'> * {font-family: courier; font-size: 14px; margin: 0px; padding: 0px; line-height: normal; word-wrap: break-word;} p{display: inline;} </style>";
-
+                  nullState.startTag = ""; // zeroes out nullState
+                  nullState.endTag = "";
                   // add load code here // if (docLoaded) currentState = getCursorState... else
                   document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
               }
@@ -108,7 +126,7 @@
               }
 
               textbox.onkeyup = function() {
-                  currentState = getCursorState(textbox.selectionStart); // FIXME: seemes to be a problem here. not assigning proporly
+                  if (getCursorState(textbox.selectionStart) !== nullState) currentState = getCursorState(textbox.selectionStart); // make sure currentState is synced with cursorState
                   currentState.setButtons();
               }
 
@@ -117,21 +135,27 @@
                   oldSelectionEnd = textbox.selectionEnd;
               }
 
-              textbox.onclick = function() { // when click is released
-                  currentState = getCursorState(textbox.selectionStart); // FIXME: seemes to be a problem here. not assigning proporly
+              textbox.onmouseup = function() { // when click is released
+                  if (getCursorState(textbox.selectionStart) !== nullState && textbox.selectionStart !== oldSelectionStart) currentState = getCursorState(textbox.selectionStart); // make sure currentState is synced with cursorState
                   currentState.setButtons();
               }
 
               function updateStates() {
-                  if (currentState.plainText.length === 0) {
-                      console.log("pushed");
-                      states.push(currentState); //FIXME states need to be inserted in order
+                  if (getStateIndex(currentState) === -1) { // if its a new state
+                      handleNewState(); // inserts a new state if it doesn't match neighboring states
                   }
 
                   //currentState.endIndex += -(oldSelectionEnd - oldSelectionStart) + (textbox.selectionStart - oldSelectionStart);
-                  currentState.endIndex += textbox.value.length - lastTextLength; // FIXME: do this for all states effected
+                  currentState.endIndex += textbox.value.length - lastTextLength; // NOTE: make this better
+                  for (var i = getStateIndex(currentState) + 1; i < states.length; i++) {
+                      console.log("in here");
+                      states[i].startIndex += textbox.value.length - lastTextLength;
+                      states[i].endIndex += textbox.value.length - lastTextLength;
+                  }
 
+                  //console.log("states length: " + states.length); // why doesn't states length decrease?
                   for (var i = 0; i < states.length; i++) { // fixme: only for states effected
+                      //console.log("i: " + i);
                       if (states[i].endIndex <= states[i].startIndex) {
                           states[i].plainText = ""; // so that i can push states based on their plain text
                           states.splice(i, 1);
@@ -139,11 +163,37 @@
                   }
               }
 
+              function handleNewState() {
+                  if (indexOnBorder(currentState.startIndex)) { // new state is not in another state
+                      if (getCursorState(oldSelectionStart) !== nullState && currentState.startTag === getCursorState(oldSelectionStart).startTag) { // if prior state exists and matches current state
+                          currentState = getCursorState(oldSelectionStart);
+                      } else if (getCursorState(oldSelectionStart + 1) !== nullState && currentState.startTag === getCursorState(oldSelectionStart + 1).startTag) { // if next state exists and matches current state
+                          currentState = getCursorState(oldSelectionStart + 1);
+                          currentState.startIndex -= textbox.value.length - lastTextLength; // correct start bound
+                          currentState.startIndex -= textbox.value.length - lastTextLength; // move end bound which will be moved back when all bounds are corrected
+                      } else {
+                          insertState(currentState);
+                      }
+                  } else { // new state is in another state
+                      var firstHalf = getCursorState(oldSelectionStart);
+                      var secondHalf = firstHalf.cloneState(); // not in states[] yet
+                      firstHalf.endIndex -= firstHalf.endIndex - oldSelectionStart;
+                      secondHalf.startIndex = currentState.startIndex;
+                      insertState(currentState);
+                      insertState(secondHalf);
+                  }
+              }
+
+              function indexOnBorder(index) {
+                  if (index > 0 && getCursorState(index) === getCursorState(index - 1) && getCursorState(index) === getCursorState(index + 1)) return false;
+                  else return true;
+              }
+
               function encode() {
                   richText = "";
                   for (var i = 0; i < states.length; i++) {
                       states[i].plainText = textbox.value.substring(states[i].startIndex, states[i].endIndex); // sets the plain text for this state
-                      states[i].richText = states[i].plainText.replaceAll("\n", "<br>"); // adds newlines in richtext
+                      states[i].richText = states[i].plainText.replaceAll("\n", "<br>"); // adds newlines in richtext NOTE: do the same for <, >, ect...
                       states[i].richText = states[i].startTag + states[i].richText + states[i].endTag; // adds the start and end tags to rich text
                       richText += states[i].richText;
                       console.log(states[i]);
@@ -155,42 +205,42 @@
                   console.log(richText);
               }
 
-              function getCursorState(cursorIndex) { //DELETEME
-                  if (cursorIndex === 0) { // handles cursor at index 0
-                      if (states.length === 0) {
-                          return currentState; // for empty textbox, should be the last state at states[0] or initial currentState
-                      } else {
-                          return states[0]; // when cursor is at beginning of text
-                      }
-                  } else {
+              function getCursorState(cursorIndex) {
+                  if (cursorIndex === 0 && states.length > 0) { // handles cursor at index 0 if states has a state
+                      return states[0]; // when cursor is at beginning of text and that state exists
+                  } else { // if cursor is not at index 0
                       for (var i = 0; i < states.length; i++) {
                           if (cursorIndex > states[i].startIndex && cursorIndex <= states[i].endIndex) {
-                              if (currentState !== states[i] && textbox.selectionStart === oldSelectionStart) {
-                                  return currentState; // FIXME: currentState !== states[i]             currentState.plainText === 0         !states.includes(currentState)
-                              } else {
-                                  return states[i]; // return the state at the cursor if no changes were made
-                              }
+                              return states[i]; // return the state at the cursor if no changes were made
                           } // end of if
                       } // end of for
                   } // end of else
-                  // console.log("shit!! check getCursorState()");
+                  //console.log("index below or above bounds for a state");
+                  return nullState;
               } // end of method
 
-              // returns the state that the cursor is in
-              function getCursorStateIndex() {
+              // return the index of a given state from states[]
+              function getStateIndex(state) {
                   for (var i = 0; i < states.length; i++) {
-                      if (textbox.selectionStart > states[i].startIndex && textbox.selectionStart <= states[i].endIndex) return i;
+                      if (state === states[i]) return i;
                   }
-                  return -1;
+                  return -1; // state not in states array
               }
 
-              // return the index of a given state from states[]
-              function getStateIndex(myState) {
-
+              // inserts current states into states array based on relative position of that state to other states
+              // inserts it after the last occerance where its index is >= the previous state
+              function insertState(state) {
+                  if (states.length < 1) { // if states[] is empty
+                      states.push(state);
+                  } else {
+                      var i = 0;
+                      for (i; i < states.length && states[i].endIndex <= state.startIndex; i++);
+                      states.splice(i, 0, state);
+                  }
               }
 
               function styleEvent(styleType) {
-                  changeCurrentState(styleType);
+                  changeCurrentState(styleType); // check if there is text highlited
               }
 
               function changeCurrentState(styleType) {
@@ -204,6 +254,16 @@
                       currentState.addStyle(styleType);
                   }
                   currentState.setButtons();
+              }
+
+              function printCurrentState() {
+                  console.log(currentState);
+              }
+
+              function printStates() {
+                  for (var i = 0; i < states.length; i++) {
+                      console.log(states[i]);
+                  }
               }
 
               // inserts a string into another string based on an index
