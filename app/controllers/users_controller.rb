@@ -1,15 +1,16 @@
 class UsersController < ApplicationController
   # require users to be logged in AND to be correct user to access edit and update actions
-  before_action :logged_in_user, only: [:edit, :update, :show, :destroy]
-  before_action :correct_user, only: [:edit, :update, :show, :destroy]
+  before_action :logged_in_user, only: [:index, :edit, :update, :show, :destroy]
+  before_action :correct_user, only: [:index, :edit, :update, :show, :destroy]
 
 
   def index
-    @user = current_user
+    redirect_to current_user
   end
 
 
   def show
+
     @user = User.find(params[:id])
     #debugger
   end
