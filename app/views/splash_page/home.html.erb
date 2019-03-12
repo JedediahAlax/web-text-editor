@@ -7,23 +7,50 @@
 	<title>Textitor</title>
 </head>
 <body>
+<style>
+
+	body {
+		background-image: url(../assets/5021.png);
+	}
+	
+	h1, h2, #carouselText {
+		color: white;
+  		text-shadow: 2px 2px 4px black;
+	}
+
+	.container {
+		position: center;
+		min-width: 100%;
+		padding: 0;
+		margin: 0;
+	}
+
+	.carousel-caption {
+		top: 50%;
+		transform: translateY(-50%);
+		bottom: initial;
+	}
+
+</style>
+
 
 <!-- Carasoul -->
 
 <div class="container text-center">
-<div class="carousel-inner text-center">
+<div class="carousel text-center" id="heroCarousel" data-ride="carousel">
   <div class="carousel-item active">
-    <img src="assets/background.png">
+    <img src="assets/background.png" class="d-block w-100">
     <div class="carousel-caption">
-      <h1 class="display-2">Textitor!</h1>
-      <h2>A web-based rich-text editor</h2>
+      <h1 class="display-2" style="font-size: 100px;">Textitor!</h1>
+      <h2 style="font-size: 25px;">A web-based rich-text editor</h2>
 			<%= link_to "NEW DOCUMENT", '/textboxes/textbox', class: "btn btn-outline-light btn-lrg" %>
 			<% if logged_in? %>
      		<%= link_to "MY DOCUMENTS", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
+     		<p style="font-size: 15px;" id="carouselText"> Welcome back to textitor!</p>
 			<% else %>
 			<%= link_to "LOG IN", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
+			<p style="font-size: 15px;" id="carouselText"> If you don't have an account you can create one from the log in page! </p>
 			<% end %>
-			<p> If you don't have an account you can create one from the log in page! </p>
 		</div>
 	</div>
 </div>
