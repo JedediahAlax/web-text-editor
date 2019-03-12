@@ -277,7 +277,8 @@
               }
 
               function styleEvent(styleType) {
-                  changeCurrentState(styleType); // check if there is text highlited
+                  changeCurrentState(styleType);
+                  document.getElementById("textbox").focus(); // check if there is text highlited
               }
 
               function changeCurrentState(styleType) {
@@ -331,6 +332,19 @@
                 document.body.removeChild(anchor);
               }
               //switches focus from select field to input in font size selector.
+              function handleFiles(files) {
+                  var file = files[0];
+                  if (file) {
+                      var reader = new FileReader();
+                      reader.readAsText(file, "UTF-8");
+                      reader.onload = function (evt) {
+                          document.getElementById("textbox").value = evt.target.result;
+                      }
+                      reader.onerror = function (evt) {
+                          document.getElementById("textbox").value = "error reading file";
+                      }
+                  }
+              }
               function toggleField(hideObj,showObj){
                 hideObj.disabled=true;
                 hideObj.style.display='none';

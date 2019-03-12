@@ -2,15 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.toolchain {
-    width: 100%;
-    border: none;
-    display: flex;
+.btn-group {
+    margin: 0;
+    padding: 0;
+    height: 22px;
 }
 
 .parent {
   position: relative;
-  width: 70%;
+  width: 800px;
   margin: 0 auto;
   padding: 0;
   line-height: 2em;
@@ -21,6 +21,8 @@ height:20px;
 width: 40px;
 border: 1px solid #000000;
 border-radius: 6px;
+margin: 0;
+padding: 0px;
 }
 
 select {
@@ -34,7 +36,6 @@ attempting to clean up tag styles here.
   line-height: normal;
 }
 */
-
 textarea {
     position: absolute;
     background-color: transparent;
@@ -48,9 +49,9 @@ textarea {
     resize: none;
     width: 800px;
     height: 800px;
-    top: 21px;
+    top: 22px;
     left: 0;
-    border: 5px solid red;
+    border: 2px solid black;
 }
 
 iframe {
@@ -63,7 +64,7 @@ iframe {
     padding: 0;
     top: 0;
     left: 0;
-    border: 5px solid black;
+    border: 2px solid black;
 }
 
 button {
