@@ -5,10 +5,6 @@
         <script src="https://use.fontawesome.com/aac5c45839.js"></script>
     </head>
 
-    <body>
-
-
-
             <div class="parent">
 
                 <div class="btn-group">
@@ -26,8 +22,7 @@
 
                   Font: <select name="font" style="width:80px;" onchange="if(this.options[this.selectedIndex].value=='customOption'){
                                 toggleField(this,this.nextSibling);
-                                this.selectedIndex='0';
-                            }">
+                                this.selectedIndex='0';}">
                       <option></option>
                       <option class="non" value ="8">8</option>
                       <option class="non" value ="9">9</option>
@@ -49,10 +44,8 @@
                     <button class="btn1" id="Save" onclick="download()">Save</button>
                     <input class="btn1" style="padding: 0px; line-height: 13px; width: 140px;" type="file" id="yourFile" name="load" onchange="handleFiles(this.files)" accept="text/plain">
 
-                    <!-- need to restlyle the divs in this section-->
-
                 </div>
-                
+
                 <textarea id="textbox" name="textbox" placeholder="box" value="" autofocus="true" style="font-family: courier; font-size: 14px; line-height: normal; margin: 0; padding: 0;"></textarea>
                 <iframe id="display" name="display" style="margin: 0; padding: 0;" ></iframe>
             </div>
@@ -308,6 +301,19 @@
                 document.body.removeChild(anchor);
               }
               //switches focus from select field to input in font size selector.
+              function handleFiles(files) {
+                  var file = files[0];
+                  if (file) {
+                      var reader = new FileReader();
+                      reader.readAsText(file, "UTF-8");
+                      reader.onload = function (evt) {
+                          document.getElementById("textbox").value = evt.target.result;
+                      }
+                      reader.onerror = function (evt) {
+                          document.getElementById("textbox").value = "error reading file";
+                      }
+                  }
+              }
               function toggleField(hideObj,showObj){
                 hideObj.disabled=true;
                 hideObj.style.display='none';
