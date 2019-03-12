@@ -5,45 +5,27 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Textitor</title>
-
-	<!-- I don't think this needs to be here. These already exist in the _header.html.erb file
-
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-	<link href="style.css" rel="stylesheet">
-
--->
-
-
 </head>
 <body>
 
+<!-- Carasoul -->
 
-<div class="container-fluid text-center">
-<div >
-
+<div class="container text-center">
 <div class="carousel-inner text-center">
   <div class="carousel-item active">
     <img src="assets/background.png">
     <div class="carousel-caption">
       <h1 class="display-2">Textitor!</h1>
-
-			<h2>A web-based rich-text editor</h2>
+      <h2>A web-based rich-text editor</h2>
 			<%= link_to "NEW DOCUMENT", '/textboxes/textbox', class: "btn btn-outline-light btn-lrg" %>
 			<% if logged_in? %>
-      <%= link_to "MY DOCUMENTS", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
+     		<%= link_to "MY DOCUMENTS", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
 			<% else %>
 			<%= link_to "LOG IN", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
 			<% end %>
 			<p> If you don't have an account you can create one from the log in page! </p>
-
-
-  </div>
-</div>
+		</div>
+	</div>
 </div>
 
 <!--- Jumbotron -->
@@ -51,17 +33,7 @@
 <div class="Jumbotron";>
 	<hr class="my-4">
 	<p>Built using Ruby on Rails and Javascript</p>
-
-
-
-
-
 </div>
-
-
 </div>
-
-
-
 </body>
 </html>
