@@ -3,14 +3,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .btn-group {
-    left: 166px;
     margin: 0;
     padding: 0;
+    height: 22px;
 }
 
 .parent {
   position: relative;
-  width: 70%;
+  width: 800px;
   margin: 0 auto;
   padding: 0;
   line-height: 2em;
@@ -21,6 +21,8 @@ height:20px;
 width: 40px;
 border: 1px solid #000000;
 border-radius: 6px;
+margin: 0;
+padding: 0px;
 }
 
 select {
@@ -48,7 +50,7 @@ textarea {
     resize: none;
     width: 800px;
     height: 800px;
-    top: 0;
+    top: 22px;
     left: 0;
     border: 5px solid red;
 }

@@ -7,52 +7,55 @@
 
     <body>
 
-            <div class="btn-group">
 
-                <button style="font-size: 12px; font-weight: bold;" class="btn1" id="bold" onclick="styleEvent(styles.bold)">B</button>
-                <button style="font-weight: bold; font-style: italic; font-family: Times;" class="btn1" id="italics" onclick="styleEvent(styles.italics)">I</button>
-                <button class="btn1" id="strikeThrough" onclick=""><i class="fa fa-strikethrough"></i></button>
-                <button class="btn1" id="alignLeft" onclick=""><i class="fa fa-align-left"></i></button>
-                <button class="btn1" id="alighnCenter" onclick=""><i class="fa fa-align-center"></i></button>
-                <button class="btn1" id="alignRight" onclick=""><i class="fa fa-align-right"></i></button>
-                <button class="btn1" onclick=""><i class="fa fa-list-ul"></i></button>
-                <button class="btn1" onclick=""><i class="fa fa-list-ol"></i></button>
-
-              <!-- adds an html dropdown menu, allows user to choose font size-->
-
-              Font: <select name="font" style="width:80px;" onchange="if(this.options[this.selectedIndex].value=='customOption'){
-                            toggleField(this,this.nextSibling);
-                            this.selectedIndex='0';
-                        }">
-                  <option></option>
-                  <option class="non" value ="8">8</option>
-                  <option class="non" value ="9">9</option>
-                  <option class="non" value ="10">10</option>
-                  <option class="non" value ="11">11</option>
-                  <option class="non" value ="12">12</option>
-                  <option class="editable" value ="customOption">Custom Font</option></select><input name="font" style="display:none; width: 80px; padding: 0px; line-height: 13px;"
-                  disabled="disabled" onblur="if(this.value==''){toggleField(this,this.previousSibling);}">
-
-              <!-- maybe a bit too complex to add a user input option here-->
-              Type:  <select id = "fontstyle" style="width:130px;">
-                  <option class="non" value ="Times New Roman">Times New Roman</option>
-                  <option class="non" value ="Courier">Courier</option>
-                  <option class="non" value ="Georgia">Georgia</option>
-                  <option class="non" value ="Arial">Arial</option>
-                  <option class="non" value ="Calibri">Calibri</option>
-                </select>
-
-                <button class="btn1" id="Save" onclick="download()">Save</button>
-                <input class="btn1" style="padding: 0px; line-height: 13px; width: 140px;" type="file" id="yourFile" name="load" onchange="handleFiles(this.files)" accept="text/plain">
-
-                <!-- need to restlyle the divs in this section-->
-
-            </div>
 
             <div class="parent">
+
+                <div class="btn-group">
+
+                    <button style="font-size: 12px; font-weight: bold;" class="btn1" id="bold" onclick="styleEvent(styles.bold)">B</button>
+                    <button style="font-weight: bold; font-style: italic; font-family: Times;" class="btn1" id="italics" onclick="styleEvent(styles.italics)">I</button>
+                    <button class="btn1" id="strikeThrough" onclick=""><i class="fa fa-strikethrough"></i></button>
+                    <button class="btn1" id="alignLeft" onclick=""><i class="fa fa-align-left"></i></button>
+                    <button class="btn1" id="alighnCenter" onclick=""><i class="fa fa-align-center"></i></button>
+                    <button class="btn1" id="alignRight" onclick=""><i class="fa fa-align-right"></i></button>
+                    <button class="btn1" onclick=""><i class="fa fa-list-ul"></i></button>
+                    <button class="btn1" onclick=""><i class="fa fa-list-ol"></i></button>
+
+                  <!-- adds an html dropdown menu, allows user to choose font size-->
+
+                  Font: <select name="font" style="width:80px;" onchange="if(this.options[this.selectedIndex].value=='customOption'){
+                                toggleField(this,this.nextSibling);
+                                this.selectedIndex='0';
+                            }">
+                      <option></option>
+                      <option class="non" value ="8">8</option>
+                      <option class="non" value ="9">9</option>
+                      <option class="non" value ="10">10</option>
+                      <option class="non" value ="11">11</option>
+                      <option class="non" value ="12">12</option>
+                      <option class="editable" value ="customOption">Custom Font</option></select><input name="font" style="display:none; width: 80px; padding: 0px; line-height: 13px;"
+                      disabled="disabled" onblur="if(this.value==''){toggleField(this,this.previousSibling);}">
+
+                  <!-- maybe a bit too complex to add a user input option here-->
+                  Type:  <select id = "fontstyle" style="width:130px;">
+                      <option class="non" value ="Times New Roman">Times New Roman</option>
+                      <option class="non" value ="Courier">Courier</option>
+                      <option class="non" value ="Georgia">Georgia</option>
+                      <option class="non" value ="Arial">Arial</option>
+                      <option class="non" value ="Calibri">Calibri</option>
+                    </select>
+
+                    <button class="btn1" id="Save" onclick="download()">Save</button>
+                    <input class="btn1" style="padding: 0px; line-height: 13px; width: 140px;" type="file" id="yourFile" name="load" onchange="handleFiles(this.files)" accept="text/plain">
+
+                    <!-- need to restlyle the divs in this section-->
+
+                </div>
+                
                 <textarea id="textbox" name="textbox" placeholder="box" value="" autofocus="true" style="font-family: courier; font-size: 14px; line-height: normal; margin: 0; padding: 0;"></textarea>
                 <iframe id="display" name="display" style="margin: 0; padding: 0;" ></iframe>
-          </div>
+            </div>
 
           <script>
               var textbox = document.getElementById('textbox');
