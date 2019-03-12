@@ -2,10 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.toolchain {
-    width: 100%;
-    border: none;
-    display: flex;
+.btn-group {
+    left: 166px;
+    margin: 0;
+    padding: 0;
 }
 
 .parent {
@@ -48,7 +48,7 @@ textarea {
     resize: none;
     width: 800px;
     height: 800px;
-    top: 21px;
+    top: 0;
     left: 0;
     border: 5px solid red;
 }
