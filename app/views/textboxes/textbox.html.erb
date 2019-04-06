@@ -4,49 +4,18 @@
         <title>Textitor</title>
         <script src="https://use.fontawesome.com/aac5c45839.js"></script>
     </head>
-    <style>
-      
 
-
-    /* Text Area Styling */
-
-    textarea {
-      font-size: 14px;
-      color: black;
-      margin: 0px;
-      box-shadow: 5px 5px 1px #999;
-      padding: 40px;
-      resize: none;
-    }
-
-    iframe {
-      font-size: 14px;
-      background-color: white;
-      margin: 0px;
-      line-height: normal;
-      padding: 40px;
-      resize: none;
-    }
-
-    .container{
-      margin: 0px;
-      min-width: 100vw;
-      padding: 0px;
-      background-color: #eee;
-      align-items: center;
-    }
-
-  
-    </style>
     <body>
     <div class="parent">
       <div class="btn-group" role="group">
-        <button style="font-size: 12px; font-weight: bold;" class="btn1" id="bold" onclick="styleEvent(styles.bold)">B</button>
-        <button style="font-weight: bold; font-style: italic; font-family: Times;" class="btn1" id="italics" onclick="styleEvent(styles.italics)">I</button>
-        <button class="btn1" id="strikeThrough" onclick=""><i class="fa fa-strikethrough"></i></button>
-        <button class="btn1" id="alignLeft" onclick=""><i class="fa fa-align-left"></i></button>
-        <button class="btn1" id="alighnCenter" onclick=""><i class="fa fa-align-center"></i></button>
-        <button class="btn1" id="alignRight" onclick=""><i class="fa fa-align-right"></i></button>
+        <button style="font-size: 12px; font-weight: bold; background-color: lightgrey;" class="btn1" id="bold" onclick="execCmd(this, 'bold');">B</button>
+        <button style="font-weight: bold; font-style: italic; font-family: Times;" class="btn1" id="italics" onclick="execCmd(this, 'italic');">I</button>
+        <button class="btn1" id="strikeThrough" onclick="execCmd(this, 'strikethrough');"><i class="fa fa-strikethrough"></i></button>
+        <button class="btn1" id="alignLeft" onclick="execCmd(this, 'justifyleft');"><i class="fa fa-align-left"></i></button>
+        <button class="btn1" id="alighnCenter" onclick="execCmd(this, 'justifycenter');"><i class="fa fa-align-center"></i></button>
+        <button class="btn1" id="alignRight" onclick="execCmd(this, 'justifyright');"><i class="fa fa-align-right"></i></button>
+        <button class="btn1" id="subscript" onclick="execCmd(this, 'subscript');"><i class="fa fa-subscript"></i></button>
+        <button class="btn1" id="superscript" onclick="execCmd(this, 'superscript');"><i class="fa fa-superscript"></i></button>
         <button class="btn1" onclick=""><i class="fa fa-list-ul"></i></button>
         <button class="btn1" onclick=""><i class="fa fa-list-ol"></i></button>
 
@@ -59,6 +28,12 @@
         <option class="non" value ="10">10</option>
         <option class="non" value ="11">11</option>
         <option class="non" value ="12">12</option>
+        <option class="non" value ="13">8</option>
+        <option class="non" value ="14">9</option>
+        <option class="non" value ="15">10</option>
+        <option class="non" value ="16">11</option>
+        <option class="non" value ="17">12</option>
+        <option class="non" value ="18">12</option>
         <option class="editable" value ="customOption">Custom Font</option></select><input name="font" style="display:none; width: 80px; padding: 0px; line-height: 13px;"disabled="disabled" onblur="if(this.value==''){toggleField(this,this.previousSibling);}">
 
         <!-- maybe a bit too complex to add a user input option here-->
@@ -75,283 +50,37 @@
 
         <!-- need to restlyle the divs in this section-->
       </div>
-      
-      <textarea id="textbox" name="textbox" placeholder="box" value="" autofocus="true" style="font-family: courier; font-size: 14px; line-height: normal;"></textarea>
-      <iframe id="display" name="display" style="margin: 0; padding: 40;"></iframe>
+
+      <iframe id="richTE"></iframe>
     </div>
 
-          <script>
-              var textbox = document.getElementById('textbox');
-              var states = [];
-              var currentState = new State(0, 0);
-              var nullState = new State(-1, -1);
-              var richText = "";
-              var oldSelectionStart = 0;
-              var oldSelectionEnd = 0;
-              var lastTextLength = 0;
-              var key;
+          <script type="text/javascript">
+              var iframe = document.getElementById("richTE").contentWindow;
+              var textbox;
 
-              // kinda like an enumeration for styles
-              var styles = {
-                  bold: {startTag: "<b>", endTag: "</b>", id: "bold"},
-                  italics: {startTag: "<i>", endTag: "</i>", id: "italics"}
-              };
-
-              function State(startIndex, endIndex) {
-                  this.startIndex = startIndex;
-                  this.endIndex = endIndex;
-                  this.startTag = "<p>";
-                  this.endTag = "</p>";
-                  this.plainText = textbox.value.substring(startIndex, endIndex);
-                  this.richText = this.startTag + this.plainText + this.endTag;
-
-                  this.cloneState = function() {
-                      var clone = new State();
-                      clone.startIndex = this.startIndex;
-                      clone.endIndex = this.endIndex;
-                      clone.startTag = this.startTag;
-                      clone.endTag = this.endTag;
-                      clone.plainText = this.plainText;
-                      clone.richText = this.richText;
-                      return clone;
-                  }
-
-                  this.addStyle = function(styleType) {
-                      this.startTag = this.startTag + styleType.startTag;
-                      this.endTag = styleType.endTag + this.endTag;
-                  }
-
-                  this.removeStyle = function(styleType) {
-                      this.startTag = this.startTag.replaceAll(styleType.startTag, "");
-                      this.endTag = this.endTag.replaceAll(styleType.endTag, "");
-                  }
-
-                  this.setButtons = function() {
-                      if (this.startTag.includes(styles.bold.startTag)) {
-                          document.getElementById('bold').style.background = "gray"; //temporary
-                      } else {
-                          document.getElementById('bold').style.background = "lightgray"; //temporary
-                      }
-                      if (this.startTag.includes(styles.italics.startTag)) {
-                          document.getElementById('italics').style.background = "gray"; //temporary
-                      } else {
-                          document.getElementById('italics').style.background = "lightgray"; //temporary
-                      }
-                  }
+              iframe.onload = function() {
+                  iframe.document.designMode = "On";
+                  textbox = iframe.document.body;
+                  textbox.innerText = "";
+                  iframe.focus();
+                  logValues();
               }
 
-              window.onload = function() {
-                  window.frames['display'].document.head.innerHTML = "<style type='text/css'> * {font-family: courier; font-size: 14px; margin: 0px; padding: 0px; line-height: normal; word-wrap: break-word;} p{display: inline;} </style>";
-                  nullState.startTag = ""; // zeroes out nullState
-                  nullState.endTag = "";
-                  // add load code here // if (docLoaded) currentState = getCursorState... else
-                  document.getElementById('textbox').value = ""; //sets the value of the textbox to nothing on page load
+              iframe.oninput = function() {
+                  logValues();
               }
 
-              textbox.onkeydown = function(e) {
-                  key = e;
-                  oldSelectionStart = textbox.selectionStart;
-                  oldSelectionEnd = textbox.selectionEnd;
-                  lastTextLength = textbox.value.length;
+              function execCmd(element, command) {
+                  iframe.document.execCommand(command, false, null);
+                  if (element.style.backgroundColor == "lightgrey" || element.style.backgroundColor == "") element.style.backgroundColor = "grey";
+                  else if (element.style.backgroundColor == "grey") element.style.backgroundColor = "lightgrey";
+                  else console.log("error in execCmd");
+                  iframe.focus();
               }
 
-              textbox.oninput = function() { // as soon as value of textbox changes
-                  updateStates();
-                  encode();
-                  renderDisplay();
+              function logValues() {
+                  console.log({"text": textbox.innerText, "html": textbox.innerHTML});
               }
-
-              textbox.onkeyup = function() {
-                  if (getCursorState(textbox.selectionStart) !== nullState) currentState = getCursorState(textbox.selectionStart); // make sure currentState is synced with cursorState
-                  currentState.setButtons();
-              }
-
-              textbox.onmousedown = function() {
-                  oldSelectionStart = textbox.selectionStart;
-                  oldSelectionEnd = textbox.selectionEnd;
-              }
-
-              textbox.onmouseup = function() { // when click is released
-                  if (getCursorState(textbox.selectionStart) !== nullState && textbox.selectionStart !== oldSelectionStart) currentState = getCursorState(textbox.selectionStart); // make sure currentState is synced with cursorState
-                  currentState.setButtons();
-              }
-
-              function updateStates() {
-                  if (getStateIndex(currentState) === -1) { // if its a new state
-                      handleNewState(); // inserts a new state if it doesn't match neighboring states
-                  }
-
-                  //currentState.endIndex += -(oldSelectionEnd - oldSelectionStart) + (textbox.selectionStart - oldSelectionStart);
-                  currentState.endIndex += textbox.value.length - lastTextLength; // NOTE: make this better
-                  for (var i = getStateIndex(currentState) + 1; i < states.length; i++) {
-                      console.log("in here");
-                      states[i].startIndex += textbox.value.length - lastTextLength;
-                      states[i].endIndex += textbox.value.length - lastTextLength;
-                  }
-
-                  //console.log("states length: " + states.length); // why doesn't states length decrease?
-                  for (var i = 0; i < states.length; i++) { // fixme: only for states effected
-                      //console.log("i: " + i);
-                      if (states[i].endIndex <= states[i].startIndex) {
-                          states[i].plainText = ""; // so that i can push states based on their plain text
-                          states.splice(i, 1);
-                      }
-                  }
-              }
-
-              function handleNewState() {
-                  if (indexOnBorder(currentState.startIndex)) { // new state is not in another state
-                      if (getCursorState(oldSelectionStart) !== nullState && currentState.startTag === getCursorState(oldSelectionStart).startTag) { // if prior state exists and matches current state
-                          currentState = getCursorState(oldSelectionStart);
-                      } else if (getCursorState(oldSelectionStart + 1) !== nullState && currentState.startTag === getCursorState(oldSelectionStart + 1).startTag) { // if next state exists and matches current state
-                          currentState = getCursorState(oldSelectionStart + 1);
-                          currentState.startIndex -= textbox.value.length - lastTextLength; // correct start bound
-                          currentState.startIndex -= textbox.value.length - lastTextLength; // move end bound which will be moved back when all bounds are corrected
-                      } else {
-                          insertState(currentState);
-                      }
-                  } else { // new state is in another state
-                      var firstHalf = getCursorState(oldSelectionStart);
-                      var secondHalf = firstHalf.cloneState(); // not in states[] yet
-                      firstHalf.endIndex -= firstHalf.endIndex - oldSelectionStart;
-                      secondHalf.startIndex = currentState.startIndex;
-                      insertState(currentState);
-                      insertState(secondHalf);
-                  }
-              }
-
-              function indexOnBorder(index) {
-                  if (index > 0 && getCursorState(index) === getCursorState(index - 1) && getCursorState(index) === getCursorState(index + 1)) return false;
-                  else return true;
-              }
-
-              function encode() {
-                  richText = "";
-                  for (var i = 0; i < states.length; i++) {
-                      states[i].plainText = textbox.value.substring(states[i].startIndex, states[i].endIndex); // sets the plain text for this state
-                      states[i].richText = states[i].plainText.replaceAll("\n", "<br>"); // adds newlines in richtext NOTE: do the same for <, >, ect...
-                      states[i].richText = states[i].startTag + states[i].richText + states[i].endTag; // adds the start and end tags to rich text
-                      richText += states[i].richText;
-                      console.log(states[i]);
-                  }
-              }
-
-              function renderDisplay() {
-                  window.frames['display'].document.body.innerHTML = richText;
-                  console.log(richText);
-              }
-
-              function getCursorState(cursorIndex) {
-                  if (cursorIndex === 0 && states.length > 0) { // handles cursor at index 0 if states has a state
-                      return states[0]; // when cursor is at beginning of text and that state exists
-                  } else { // if cursor is not at index 0
-                      for (var i = 0; i < states.length; i++) {
-                          if (cursorIndex > states[i].startIndex && cursorIndex <= states[i].endIndex) {
-                              return states[i]; // return the state at the cursor if no changes were made
-                          } // end of if
-                      } // end of for
-                  } // end of else
-                  //console.log("index below or above bounds for a state");
-                  return nullState;
-              } // end of method
-
-              // return the index of a given state from states[]
-              function getStateIndex(state) {
-                  for (var i = 0; i < states.length; i++) {
-                      if (state === states[i]) return i;
-                  }
-                  return -1; // state not in states array
-              }
-
-              // inserts current states into states array based on relative position of that state to other states
-              // inserts it after the last occerance where its index is >= the previous state
-              function insertState(state) {
-                  if (states.length < 1) { // if states[] is empty
-                      states.push(state);
-                  } else {
-                      var i = 0;
-                      for (i; i < states.length && states[i].endIndex <= state.startIndex; i++);
-                      states.splice(i, 0, state);
-                  }
-              }
-
-              function styleEvent(styleType) {
-                  changeCurrentState(styleType);
-                  document.getElementById("textbox").focus(); // check if there is text highlited
-              }
-
-              function changeCurrentState(styleType) {
-                  var oldState = currentState;
-                  currentState = new State(textbox.selectionStart, textbox.selectionStart);
-                  currentState.startTag = oldState.startTag;
-                  currentState.endTag = oldState.endTag;
-                  if (currentState.startTag.includes(styleType.startTag)) {
-                      currentState.removeStyle(styleType);
-                  } else {
-                      currentState.addStyle(styleType);
-                  }
-                  currentState.setButtons();
-              }
-
-              function printCurrentState() {
-                  console.log(currentState);
-              }
-
-              function printStates() {
-                  for (var i = 0; i < states.length; i++) {
-                      console.log(states[i]);
-                  }
-              }
-
-              // inserts a string into another string based on an index
-              String.prototype.insert = function insert(index, string) {
-                  if (index > 0) {
-                      if (index < this.length) return this.substring(0, index) + string + this.substring(index, this.length);
-                      else return this + string;
-                  } else return string + this;
-              };
-
-              // removes the first occurance of a substring
-              String.prototype.replaceAll = function replaceAll(oldSubstring, newSubstring) {
-                  var regex = new RegExp(oldSubstring, "g");
-                  return this.replace(regex, newSubstring);
-              }
-              //saves the plain text in textarea to downloads
-              function download(){
-                var text = document.getElementById("textbox").value;
-                text = text.replace(/\n/g, "\r\n"); // To retain the Line breaks.
-                var blob = new Blob([text], { type: "text/plain"});
-                var anchor = document.createElement("a");
-                anchor.download = "Textitorplain.txt";
-                anchor.href = window.URL.createObjectURL(blob);
-                anchor.target ="_blank";
-                anchor.style.display = "none"; // just to be safe!
-                document.body.appendChild(anchor);
-                anchor.click();
-                document.body.removeChild(anchor);
-              }
-              //switches focus from select field to input in font size selector.
-              function handleFiles(files) {
-                  var file = files[0];
-                  if (file) {
-                      var reader = new FileReader();
-                      reader.readAsText(file, "UTF-8");
-                      reader.onload = function (evt) {
-                          document.getElementById("textbox").value = evt.target.result;
-                      }
-                      reader.onerror = function (evt) {
-                          document.getElementById("textbox").value = "error reading file";
-                      }
-                  }
-              }
-              function toggleField(hideObj,showObj){
-                hideObj.disabled=true;
-                hideObj.style.display='none';
-                showObj.disabled=false;
-                showObj.style.display='inline';
-                showObj.focus();
-              }
-
           </script>
       </body>
   </html>
