@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Textitor</title>
-        <script src="https://use.fontawesome.com/aac5c45839.js"></script>
+    <title>Textitor</title>
+    <script src="https://use.fontawesome.com/aac5c45839.js"></script>
     </head>
 
     <body>
@@ -60,27 +60,28 @@
             var textbox;
 
             iframe.onload = function() {
-                iframe.document.designMode = "On";
-                textbox = iframe.document.body;
-                textbox.innerText = "";
-                iframe.focus();
-                logValues();
+            iframe.document.designMode = "On";
+            textbox = iframe.document.body;
+
+            textbox.innerText = "";
+            iframe.focus();
+            logValues();
             }
 
             iframe.oninput = function() {
-                logValues();
+            logValues();
             }
 
             function execCmd(element, command) {
-                iframe.document.execCommand(command, false, null);
-                if (element.style.backgroundColor == "lightgrey" || element.style.backgroundColor == "") element.style.backgroundColor = "grey";
-                else if (element.style.backgroundColor == "grey") element.style.backgroundColor = "lightgrey";
-                else console.log("error in execCmd");
-                iframe.focus();
+            iframe.document.execCommand(command, false, null);
+            if (element.style.backgroundColor == "lightgrey" || element.style.backgroundColor == "") element.style.backgroundColor = "grey";
+            else if (element.style.backgroundColor == "grey") element.style.backgroundColor = "lightgrey";
+            else console.log("error in execCmd");
+            iframe.focus();
             }
 
             function logValues() {
-                console.log({"text": textbox.innerText, "html": textbox.innerHTML});
+            console.log({"text": textbox.innerText, "html": textbox.innerHTML});
             }
         </script>
     </body>
