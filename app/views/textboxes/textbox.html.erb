@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Textitor</title>
-        <script src="https://use.fontawesome.com/aac5c45839.js"></script>
+    <title>Textitor</title>
+    <script src="https://use.fontawesome.com/aac5c45839.js"></script>
     </head>
 
     <body>
+<<<<<<< HEAD
     <div class="parent">
       <div class="btn-group" role="group">
         <button style="font-size: 12px; font-weight: bold; background-color: lightgrey;" class="btn1" id="bold" onclick="execCmd(this, 'bold');">B</button>
@@ -18,9 +19,24 @@
         <button class="btn1" id="superscript" onclick="execCmd(this, 'superscript');"><i class="fa fa-superscript"></i></button>
         <button class="btn1" onclick="execCmd(this, 'insertUnorderedList')"><i class="fa fa-list-ul"></i></button>
         <button class="btn1" onclick="execCmd(this, 'insertOrderedList')"><i class="fa fa-list-ol"></i></button>
+=======
+        <div class="parent">
+            <div class="btn-group" role="group">
+                <button style="font-size: 12px; font-weight: bold; background-color: lightgrey;" class="btn1" id="bold" onclick="execCmd(this, 'bold');">B</button>
+                <button style="font-weight: bold; font-style: italic; font-family: Times;" class="btn1" id="italics" onclick="execCmd(this, 'italic');">I</button>
+                <button class="btn1" id="strikeThrough" onclick="execCmd(this, 'strikethrough');"><i class="fa fa-strikethrough"></i></button>
+                <button class="btn1" id="alignLeft" onclick="execCmd(this, 'justifyleft');"><i class="fa fa-align-left"></i></button>
+                <button class="btn1" id="alighnCenter" onclick="execCmd(this, 'justifycenter');"><i class="fa fa-align-center"></i></button>
+                <button class="btn1" id="alignRight" onclick="execCmd(this, 'justifyright');"><i class="fa fa-align-right"></i></button>
+                <button class="btn1" id="subscript" onclick="execCmd(this, 'subscript');"><i class="fa fa-subscript"></i></button>
+                <button class="btn1" id="superscript" onclick="execCmd(this, 'superscript');"><i class="fa fa-superscript"></i></button>
+                <button class="btn1" onclick=""><i class="fa fa-list-ul"></i></button>
+                <button class="btn1" onclick=""><i class="fa fa-list-ol"></i></button>
+>>>>>>> a5df3cb48854faa5d49ecdbcdbecce30e9309f39
 
-        <!-- adds an html dropdown menu, allows user to choose font size-->
+                <!-- adds an html dropdown menu, allows user to choose font size-->
 
+<<<<<<< HEAD
         Font: <select onclick="execCommandWithArg('fontSize', this.value);">
         <option  value ="1">8</option>
         <option  value ="2">10</option>
@@ -45,37 +61,60 @@
 
         <button class="btn1" id="Save" onclick="download()">Save</button>
         <input class="btn1" style="padding: 0px; line-height: 13px; width: 140px;" type="file" id="yourFile" name="load" onchange="handleFiles(this.files)" accept="text/plain">
+=======
+                Font: <select name="font" style="width:80px;" onchange="if(this.options[this.selectedIndex].value=='customOption'){ toggleField(this,this.nextSibling); this.selectedIndex='0'; }">
+                    <option></option>
+                    <option class="non" value ="8">8</option>
+                    <option class="non" value ="9">9</option>
+                    <option class="non" value ="10">10</option>
+                    <option class="non" value ="11">11</option>
+                    <option class="non" value ="12">12</option>
+                    <option class="non" value ="13">8</option>
+                    <option class="non" value ="14">9</option>
+                    <option class="non" value ="15">10</option>
+                    <option class="non" value ="16">11</option>
+                    <option class="non" value ="17">12</option>
+                    <option class="non" value ="18">12</option>
+                    <option class="editable" value ="customOption">Custom Font</option>
+                </select><input name="font" style="display:none; width: 80px; padding: 0px; line-height: 13px;"disabled="disabled" onblur="if(this.value==''){toggleField(this,this.previousSibling);}">
 
-        <!-- need to restlyle the divs in this section-->
-      </div>
+                <!-- maybe a bit too complex to add a user input option here-->
+                Type:  <select id = "fontstyle" style="width:130px;">
+                    <option class="non" value ="Times New Roman">Times New Roman</option>
+                    <option class="non" value ="Courier">Courier</option>
+                    <option class="non" value ="Georgia">Georgia</option>
+                    <option class="non" value ="Arial">Arial</option>
+                    <option class="non" value ="Calibri">Calibri</option>
+                </select>
 
-      <iframe id="richTE"></iframe>
-    </div>
+                <button class="btn1" id="Save" onclick="download()">Save</button>
+                <input class="btn1" style="padding: 0px; line-height: 13px; width: 140px;" type="file" id="yourFile" name="load" onchange="handleFiles(this.files)" accept="text/plain">
+>>>>>>> a5df3cb48854faa5d49ecdbcdbecce30e9309f39
 
-          <script type="text/javascript">
-              var iframe = document.getElementById("richTE").contentWindow;
-              var textbox;
+            <!-- need to restlyle the divs in this section-->
+            </div>
 
-              iframe.onload = function() {
-                  iframe.document.designMode = "On";
-                  textbox = iframe.document.body;
-                  textbox.innerText = "";
-                  iframe.focus();
-                  logValues();
-              }
+            <iframe id="richTE"></iframe>
+        </div>
 
-              iframe.oninput = function() {
-                  logValues();
-              }
+        <script type="text/javascript">
+            var iframe = document.getElementById("richTE").contentWindow;
+            var textbox;
 
-              function execCmd(element, command) {
-                  iframe.document.execCommand(command, false, null);
-                  if (element.style.backgroundColor == "lightgrey" || element.style.backgroundColor == "") element.style.backgroundColor = "grey";
-                  else if (element.style.backgroundColor == "grey") element.style.backgroundColor = "lightgrey";
-                  else console.log("error in execCmd");
-                  iframe.focus();
-              }
+            iframe.onload = function() {
+            iframe.document.designMode = "On";
+            textbox = iframe.document.body;
 
+            textbox.innerText = "";
+            iframe.focus();
+            logValues();
+            }
+
+            iframe.oninput = function() {
+            logValues();
+            }
+
+<<<<<<< HEAD
               function execCommandWithArg (command, arg) {
                 iframe.document.execCommand(command, false, arg)
               }
@@ -86,3 +125,19 @@
           </script>
       </body>
   </html>
+=======
+            function execCmd(element, command) {
+            iframe.document.execCommand(command, false, null);
+            if (element.style.backgroundColor == "lightgrey" || element.style.backgroundColor == "") element.style.backgroundColor = "grey";
+            else if (element.style.backgroundColor == "grey") element.style.backgroundColor = "lightgrey";
+            else console.log("error in execCmd");
+            iframe.focus();
+            }
+
+            function logValues() {
+            console.log({"text": textbox.innerText, "html": textbox.innerHTML});
+            }
+        </script>
+    </body>
+</html>
+>>>>>>> a5df3cb48854faa5d49ecdbcdbecce30e9309f39
