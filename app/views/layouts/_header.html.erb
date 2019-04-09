@@ -1,11 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Textitor</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link href="style.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+</head>
 
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "Textitor", root_path, id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
+<!-- Navigation Bar-->
+<body class="margin-top" style="padding-top: 0">
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" style="margin: 0; padding: 0;">
+<div class="container-fluid">
+	<a class="navbar-brand" href="/"><img src="../assets/logo.png"><a/>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+	      data-traget="#navbarResponsive">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+     <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+			<% if logged_in? %>
+			<li class ="nav-item"> <%=link_to "Profile", users_path , class: "nav-link"%> </li>
+			<li class="nav-item"> <%= link_to  "Use Texitor", "/textboxes/textbox", class: "nav-link"%> </li>
+			<li class="nav-item"> <%= link_to  "Help", "/splash_page/help", class: "nav-link"%> </li>
+			<li class="nav-item"><%= link_to "Log out", logout_path, method: :delete, class: "nav-link" %>
 
-
+			<% else %>
+			<li class="nav-item"> <%= link_to  "Use Texitor", "/textboxes/textbox", class: "nav-link"%> </li>
+			<li class="nav-item"> <%= link_to  "Help", "/splash_page/help", class: "nav-link"%> </li>
+			<li class="nav-item"> <%= link_to  "Sign In", "/sessions/new", class: "nav-link"%> </li>
+			<% end %>
 
           <li><%= link_to "Help", '/welcome/help' %></li>
         <% if logged_in? %>
@@ -32,3 +58,9 @@
     </nav>
   </div>
 </header>
+=======
+        </ul>
+    </div>
+</div>
+</nav>
+</body>

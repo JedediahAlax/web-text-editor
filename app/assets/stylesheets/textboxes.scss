@@ -1,13 +1,59 @@
-// Place all the styles related to the textboxes controller here.
+// Place all the styles related to the Textboxes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-textarea {
-  display: block
+.parent {
+  position: relative;
+  width: 800px;
+  margin: 0 auto;
+  padding: 0;
+  line-height: 2em;
+}
 
+.btn-group {
+    margin: 0;
+    padding: 0;
+    height: 22px;
+}
+
+.btn1 {
+    height:20px;
+    width: 33px;
+    background-color: lightgrey;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    margin: 0;
+    padding: 0px;
+}
+
+button {
+    width: 65px;
+    height: 35px;
+    text-align: center;
+    background: lightgrey;
+    margin: 3px;
+}
+
+select {
+  height: 20px;
 }
 
 iframe {
-  bottom: 0;
-  position: margin-bottom;
+  resize: none;
+}
+
+iframe {
+    background-color: white;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 800px;
+    resize: none;
+    border: 2px solid black;
+    display: inline-block;
+    line-height: normal;
+    margin: 0;
+    padding: 0px;
+    overflow: auto;
+    font-size: 16px;
 }

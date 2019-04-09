@@ -5,10 +5,16 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+  <!--  <link rel="stylesheet" media="all" href="/assets/base/bootstrap.css"  type="text/scss"> -->
+    <%= stylesheet_link_tag    'application', media: 'all'%>
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag "bootstrap" if Rails.env.development? %>
+    
 
   </head>
+
 
   <body>
     <%= render 'layouts/header' %>

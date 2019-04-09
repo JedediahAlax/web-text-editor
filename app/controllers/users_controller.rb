@@ -1,6 +1,16 @@
 class UsersController < ApplicationController
+  # require users to be logged in AND to be correct user to access edit and update actions
+  before_action :logged_in_user, only: [:index, :edit, :update, :show, :destroy]
+  before_action :correct_user, only:  [:edit, :update, :show, :destroy]
+
+
+  def index
+    redirect_to current_user
+  end
+
 
   def show
+
     @user = User.find(params[:id])
     #debugger
   end
@@ -22,12 +32,49 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      # handle successful update
+      flash[:success] = "Nice! Your profile has been updated!"
+      redirect_to @user
+    else
+      render 'edit'
+    end
+  end
+
+  # This will find the user by ID and delete from the database. Redirect to splash page
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "You have successfully deleted your account."
+    redirect_to root_url
+  end
+
 
 
   private def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
+          end
 
+  # if user is not logged in redirect to login page
+  def logged_in_user
+    unless logged_in?
+      flash[:danger] = "Please log in."
+      redirect_to login_url
     end
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to root_url unless current_user?(@user)
+
+  end
+
+
 
 
 
