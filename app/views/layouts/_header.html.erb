@@ -5,62 +5,59 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Textitor</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link href="style.css" rel="stylesheet">
+	<!-- <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script> -->
+
+	 <link href="style.css" rel="stylesheet">
+
+	<!-- Site appears to function without these two scripts. Can they go? -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+
+	<!-- <link href="style.css" rel="stylesheet"> -->
+
+	<!-- Site appears to function without these two scripts. Can they go? -->
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> -->
+	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+
+
+
+
+
+
 </head>
 
 <!-- Navigation Bar-->
 <body class="margin-top" style="padding-top: 0">
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top" style="margin: 0; padding: 0;">
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
 <div class="container-fluid">
-	<a class="navbar-brand" href="/"><img src="../assets/logo.png"><a/>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
+      <a class="navbar-brand" href="/">TEXTITOR<a/>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
 	      data-traget="#navbarResponsive">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-     <div class="collapse navbar-collapse" id="navbarResponsive">
+
+ 			<!-- Can this be removed? -->
+			<!-- <span class="navbar-toggler-icon"></span> -->
+			</button>
+
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-			<% if logged_in? %>
-			<li class ="nav-item"> <%=link_to "Profile", users_path , class: "nav-link"%> </li>
-			<li class="nav-item"> <%= link_to  "Use Texitor", "/textboxes/textbox", class: "nav-link"%> </li>
-			<li class="nav-item"> <%= link_to  "Help", "/splash_page/help", class: "nav-link"%> </li>
-			<li class="nav-item"><%= link_to "Log out", logout_path, method: :delete, class: "nav-link" %>
 
-			<% else %>
-			<li class="nav-item"> <%= link_to  "Use Texitor", "/textboxes/textbox", class: "nav-link"%> </li>
-			<li class="nav-item"> <%= link_to  "Help", "/splash_page/help", class: "nav-link"%> </li>
-			<li class="nav-item"> <%= link_to  "Sign In", "/sessions/new", class: "nav-link"%> </li>
-			<% end %>
 
-          <li><%= link_to "Help", '/welcome/help' %></li>
-        <% if logged_in? %>
-        <li><%= link_to "Use Textitor", '/textboxes/textbox' %></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Account <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li><%= link_to "Profile", current_user %></li>
+					<% if logged_in? %>
+						<li class ="nav-item"> <%=link_to "Profile", users_path , class: "nav-link"%> </li>
+						<li class="nav-item"> <%= link_to  "Use Texitor", "/textboxes/textbox", class: "nav-link"%> </li>
+						<li class="nav-item"> <%= link_to  "Help", "/splash_page/help", class: "nav-link"%> </li>
+						<li class="nav-item"><%= link_to "Log out", logout_path, method: :delete, class: "nav-link" %>
+					<% else %>
+					<li class="nav-item"> <%= link_to  "Use Texitor", "/textboxes/textbox", class: "nav-link"%> </li>
+					<li class="nav-item"> <%= link_to  "Help", "/splash_page/help", class: "nav-link"%> </li>
+					<li class="nav-item"> <%= link_to  "Sign In", "/sessions/new", class: "nav-link"%> </li>
+					<% end %>
 
-              <li><%= link_to "Settings", "#" %> </li>
-              <li class="divider"></li>
-              <li>
-                <%= link_to "Log out", logout_path, method: :delete %>
-              </li>
-            </ul>
-          </li>
-        <% else %>
-            <li><%= link_to "Log in", '/sessions/new' %></li>
-        <% end %>
-
-      </ul>
-    </nav>
+          </ul>
+      </div>
   </div>
-</header>
-=======
-        </ul>
-    </div>
-</div>
 </nav>
 </body>
