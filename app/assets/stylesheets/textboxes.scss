@@ -2,6 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.btn-group {
+    margin: 0;
+    padding: 0;
+    height: 22px;
+}
+
 .parent {
   position: relative;
   width: 800px;
@@ -10,50 +16,61 @@
   line-height: 2em;
 }
 
-.btn-group {
-    margin: 0;
-    padding: 0;
-    height: 22px;
-}
-
 .btn1 {
-    height:20px;
-    width: 33px;
-    background-color: lightgrey;
-    border: 1px solid #000000;
-    border-radius: 6px;
-    margin: 0;
-    padding: 0px;
-}
-
-button {
-    width: 65px;
-    height: 35px;
-    text-align: center;
-    background: lightgrey;
-    margin: 3px;
+height:20px;
+width: 40px;
+border: 1px solid #000000;
+border-radius: 6px;
+margin: 0;
+padding: 0px;
 }
 
 select {
   height: 20px;
 }
+/*
+attempting to clean up tag styles here.
+.textarea {
+  font-family: courier;
+  font-size: 12px;
+  line-height: normal;
+}
+*/
+textarea {
+    position: absolute;
+    background-color: transparent;
+    color: rgba(0,0,0,0);
+    caret-color: black;
+    outline: none;
 
-iframe {
-  resize: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    resize: none;
+    width: 800px;
+    height: 800px;
+    top: 22px;
+    left: 0;
+    border: 2px solid black;
 }
 
 iframe {
-    background-color: white;
-    top: 0;
-    left: 0;
+    display: inline-block;
+    margin: 0;
+    overflow: auto;
+    resize: none;
     width: 800px;
     height: 800px;
-    resize: none;
+    padding: 0;
+    top: 0;
+    left: 0;
     border: 2px solid black;
-    display: inline-block;
-    line-height: normal;
-    margin: 0;
-    padding: 0px;
-    overflow: auto;
-    font-size: 16px;
+}
+
+button {
+    width: 75px;
+    height: 35px;
+    text-align: center;
+    background: lightgray;
+    margin: 3px;
 }
