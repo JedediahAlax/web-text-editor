@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     # put '/users/:id', to: "users#show", as: :user
 
     resources :users
+    resources :user_activation, only: [:edit]
+    
 
 
 end

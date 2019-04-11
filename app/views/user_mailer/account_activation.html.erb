@@ -1,0 +1,9 @@
+<h1>Textitor</h1>
+
+<p> Hi <%= @user.name %>, </p>
+
+<p>
+  Welcome to Textitor! Click on the link below to activate your account:
+</p>
+
+<%= link_to "Click me to start creating online text documents!", edit_user_activation_url(@user.activation_token, email: @user.email) %>

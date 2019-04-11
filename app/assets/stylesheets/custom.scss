@@ -45,7 +45,19 @@ $gray-light: #777;
   }
 }
 
+.checkbox {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  span {
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
 
+#session_remember_me {
+  width: auto;
+  margin-left: 0;
+}
 
 // This is going to be used through out the whole site
 body {
