@@ -43,8 +43,8 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
-                <button class="btn1" id="Save" onclick="download()">Save</button>
-                <input class="btn1" style="padding: 0px; line-height: 13px; width: 140px;" type="file" id="yourFile" name="load" onchange="handleFiles(this.files)" accept="text/plain">
+                <button class="btn1" id="Save" onclick="saveToLocal("test")">Save</button>
+                <input class="btn1" type="file" id="yourFile" name="load" onchange="loadFromLocal(this.files)" accept="text/plain">
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -82,8 +82,19 @@
                 iframe.focus();
             }
 
-            function loadFromLocal() {
-
+            function loadFromLocal(files) {
+                var file = files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.readAsText(file, "UTF-8");
+                    reader.onload = function (evt) {
+                        console.log("file loading...")
+                        textbox.innerText = evt.target.result;
+                    }
+                    reader.onerror = function (evt) {
+                        alert("Error loading file");
+                    }
+                }
             }
 
             function saveToLocal(name) {
