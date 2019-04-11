@@ -5,4 +5,12 @@ adam:
   password_digest: <%= User.digest('password') %>
   activated: true
   activated_at: <%= Time.zone.now %>
+
+michael:
+  name: Michael Mikel
+  email: prisonmike@dm.com
+  password_digest: <%= User.digest('password') %>
+  activated: true
+  activated_at: <%= Time.zone.now %>
+
   
