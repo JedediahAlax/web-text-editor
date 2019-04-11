@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <title>Textitor</title>
-    <script src="https://use.fontawesome.com/aac5c45839.js"></script>
+        <title>Textitor</title>
+        <script src="https://use.fontawesome.com/aac5c45839.js"></script>
     </head>
 
     <body>
@@ -20,30 +20,27 @@
                 <button class="btn1" onclick=""><i class="fa fa-list-ol"></i></button>
 
                 <!-- adds an html dropdown menu, allows user to choose font size-->
-
-                Font: <select name="font" style="width:80px;" onchange="if(this.options[this.selectedIndex].value=='customOption'){ toggleField(this,this.nextSibling); this.selectedIndex='0'; }">
-                    <option></option>
-                    <option class="non" value ="8">8</option>
-                    <option class="non" value ="9">9</option>
-                    <option class="non" value ="10">10</option>
-                    <option class="non" value ="11">11</option>
-                    <option class="non" value ="12">12</option>
-                    <option class="non" value ="13">8</option>
-                    <option class="non" value ="14">9</option>
-                    <option class="non" value ="15">10</option>
-                    <option class="non" value ="16">11</option>
-                    <option class="non" value ="17">12</option>
-                    <option class="non" value ="18">12</option>
-                    <option class="editable" value ="customOption">Custom Font</option>
-                </select><input name="font" style="display:none; width: 80px; padding: 0px; line-height: 13px;"disabled="disabled" onblur="if(this.value==''){toggleField(this,this.previousSibling);}">
+                <p>Font: </p>
+                <select class="select" onclick="execCommandWithArg('fontSize', this.value);">
+                    <option  value ="1">8</option>
+                    <option  value ="2">10</option>
+                    <option  value ="3">12</option>
+                    <option  value ="4">16</option>
+                    <option  value ="5">20</option>
+                    <option  value ="6">24</option>
+                    <option  value ="7">30</option>
+                </select>
 
                 <!-- maybe a bit too complex to add a user input option here-->
-                Type:  <select id = "fontstyle" style="width:130px;">
-                    <option class="non" value ="Times New Roman">Times New Roman</option>
-                    <option class="non" value ="Courier">Courier</option>
-                    <option class="non" value ="Georgia">Georgia</option>
-                    <option class="non" value ="Arial">Arial</option>
-                    <option class="non" value ="Calibri">Calibri</option>
+                <p>Type:</p>
+                <select class="select" onclick="execCommandWithArg('fontName', this.value);">
+                    <option value="Arial">Arial</option>
+                    <option value="Comic Sans">Comic Sans MS</option>
+                    <option value="Courier">Courier</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Tahoma">Tahoma</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Verdana">Verdana</option>
                 </select>
 
                 <button class="btn1" id="Save" onclick="download()">Save</button>
@@ -60,28 +57,52 @@
             var textbox;
 
             iframe.onload = function() {
-            iframe.document.designMode = "On";
-            textbox = iframe.document.body;
+                iframe.document.designMode = "On";
+                textbox = iframe.document.body;
 
-            textbox.innerText = "";
-            iframe.focus();
-            logValues();
+                textbox.innerText = "";
+                iframe.focus();
+                logValues();
             }
 
             iframe.oninput = function() {
-            logValues();
+                logValues();
             }
 
             function execCmd(element, command) {
-            iframe.document.execCommand(command, false, null);
-            if (element.style.backgroundColor == "lightgrey" || element.style.backgroundColor == "") element.style.backgroundColor = "grey";
-            else if (element.style.backgroundColor == "grey") element.style.backgroundColor = "lightgrey";
-            else console.log("error in execCmd");
-            iframe.focus();
+                iframe.document.execCommand(command, false, null);
+                //if (element.style.backgroundColor == "lightgrey" || element.style.backgroundColor == "") element.style.backgroundColor = "grey";
+                //else if (element.style.backgroundColor == "grey") element.style.backgroundColor = "lightgrey";
+                //else console.log("error in execCmd");
+                iframe.focus();
+            }
+
+            function execCommandWithArg(command, arg) {
+                iframe.document.execCommand(command, false, arg);
+                iframe.focus();
+            }
+
+            function loadFromLocal() {
+
+            }
+
+            function saveToLocal(name) {
+                var text = textbox.innerText
+                var filename = name;
+
+                download(filename, text);
+            }
+
+            function saveToDatabase() {
+
+            }
+
+            function loadFromDatabase() {
+
             }
 
             function logValues() {
-            console.log({"text": textbox.innerText, "html": textbox.innerHTML});
+                console.log({"text": textbox.innerText, "html": textbox.innerHTML});
             }
         </script>
     </body>

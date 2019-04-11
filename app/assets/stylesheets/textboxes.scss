@@ -5,20 +5,21 @@
 .parent {
   position: relative;
   width: 800px;
+  height: 22px;
   margin: 0 auto;
   padding: 0;
-  line-height: 2em;
 }
 
 .btn-group {
+    width: 800px;
     margin: 0;
     padding: 0;
-    height: 22px;
+    height: 20px;
 }
 
 .btn1 {
     height:20px;
-    width: 33px;
+    width: 30px;
     background-color: lightgrey;
     border: 1px solid #000000;
     border-radius: 6px;
@@ -26,20 +27,18 @@
     padding: 0px;
 }
 
-button {
-    width: 65px;
-    height: 35px;
-    text-align: center;
-    background: lightgrey;
-    margin: 3px;
+.fileupload {
+    height: 20px;
+    width: 75px;
 }
 
-select {
-  height: 20px;
+.select {
+    height: 20px;
+    width: 75px;
 }
 
-iframe {
-  resize: none;
+option {
+
 }
 
 iframe {
