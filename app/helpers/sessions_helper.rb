@@ -23,7 +23,7 @@ module SessionsHelper
     # will return nil if the id is invalid
     if (user_id = session[:user_id])
       # find_by only gets executed if @current_user hasnt yet been assigned
-      @current_user ||= User.find_by(:user_id)
+      @current_user ||= User.find_by(id: user_id)
     elsif (user_id = cookies.signed[:user_id])
       user = User.find_by(id: user_id)
       if user && user.authenticated?(cookies[:remember_token])
