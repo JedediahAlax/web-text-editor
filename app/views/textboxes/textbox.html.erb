@@ -43,7 +43,7 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
-                <button class="btn1" id="Save" onclick="saveToLocal("test")">Save</button>
+                <button class="btn1" id="Save" onclick="saveToLocal('plain', 'mydoc')">Save</button>
                 <input class="btn1" type="file" id="yourFile" name="load" onchange="loadFromLocal(this.files)" accept="text/plain">
 
             <!-- need to restlyle the divs in this section-->
@@ -88,7 +88,6 @@
                     var reader = new FileReader();
                     reader.readAsText(file, "UTF-8");
                     reader.onload = function (evt) {
-                        console.log("file loading...")
                         textbox.innerText = evt.target.result;
                     }
                     reader.onerror = function (evt) {
@@ -97,11 +96,29 @@
                 }
             }
 
-            function saveToLocal(name) {
-                var text = textbox.innerText
-                var filename = name;
+            function saveToLocal(textType, fileName) {
+                var text = "";
+                if (textType === "plain") {
+                    fileName = fileName + ".txt";
+                    text = textbox.innerText;
+                } else {
+                    fileName = fileName + ".rtx";
+                    text = textbox.innerHTML;
+                }
 
-                download(filename, text);
+                var downloadLink = document.createElement("a");
+                downloadLink.download = fileName;
+                downloadLink.innerHTML = "Download File";
+                downloadLink.href = window.URL.createObjectURL(new Blob([text], {type:"text/plain"}));
+                downloadLink.onclick = destroyClickedElement;
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+
+                downloadLink.click();
+            }
+
+            function destroyClickedElement(event) {
+                document.body.removeChild(event.target);
             }
 
             function saveToDatabase() {
