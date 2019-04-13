@@ -18,12 +18,14 @@ Rails.application.routes.draw do
     delete '/logout', to: 'sessions#destroy'
     get 'users/show', to: 'users#show'
 
+    post '/signup', to: 'users#create'
+
     # don't think we need this anymore
     # put '/users/:id', to: "users#show", as: :user
 
     resources :users
     resources :user_activation, only: [:edit]
-    
+
 
 
 end

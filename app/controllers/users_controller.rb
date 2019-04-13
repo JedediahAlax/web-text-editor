@@ -59,9 +59,11 @@ class UsersController < ApplicationController
 
 
 
-  private def user_params
+  private
+
+  def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
-          end
+  end
 
   # if user is not logged in redirect to login page
   def logged_in_user
