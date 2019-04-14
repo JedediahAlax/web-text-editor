@@ -9,10 +9,16 @@ class SessionsController < ApplicationController
 
     # if the user is found in database AND the password is correct for that user we log in.
     if user && user.authenticate(params[:session][:password])
-      # log user in and redirect to where ever appropriate
-      log_in user
-      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      redirect_to user
+      if user.activated?
+        log_in user
+        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        redirect_back_or user
+      else
+        message = "Your account is not yet activated."
+        message += "Check your email for the activation link."
+        flash[:warning] = message
+        redirect_to root_url
+      end
     else
       # user was not found in database OR password submitted to user was invalid. no log in :(
       flash.now[:danger] = "Invalid email and/or password."
