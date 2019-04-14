@@ -5,12 +5,7 @@ class UserActivationController < ApplicationController
     user = User.find_by(email: params[:email])
 
     if user && !user.activated? && user.authenticated?(:activation, params[:id])
-
-      user.update_attribute(:activated, true)
-      user.update_attribute(:activated_at, Time.zone.now)
-
       user.activate
-      account_activation
       log_in user
       flash[:success] = "Your Textitor account has been activated!"
       redirect_to user
