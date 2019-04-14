@@ -77,13 +77,13 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
   ActionMailer::Base.smtp_settings = {
+    :user_name    => ENV['SENDGRID_USERNAME'],
+    :password     => ENV['SENDGRID_PASSWORD'],
+    :domain       => 'https://web-text-editor.herokuapp.com',
     :from => 'textitoronline@gmail.com',
     :address      => 'smtp.sendgrid.net',
     :port         => '587',
     :authentication => :plain,
-    :user_name    => ENV['SENDGRID_USERNAME'],
-    :password     => ENV['SENDGRID_PASSWORD'],
-    :domain       => 'https://web-text-editor.herokuapp.com',
     :enable_starttls_auto => true
   }
 
