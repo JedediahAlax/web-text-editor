@@ -1,10 +1,7 @@
 class User < ApplicationRecord
 
   # Create an acessible attribute for remember token
-  attr_accessor :remember_token
-
-  # required for activation token
-  attr_accessor :activation_token
+  attr_accessor :remember_token, :activation_token, :reset_token
 
   # using a callback to downcase the email attribute before saving
   # needed for the data base uniqueness of email addresses
@@ -74,8 +71,19 @@ end
     UserMailer.account_activation(self).deliver_now
   end
 
+  def create_reset_digest
+    self.reset_token = User.new_token
+    update_attribute(:reset_digest, User.digest(reset_token))
+    update_attribute(:reset_sent_at, Time.zone.now)
+  end
 
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
 
+  def password_reset_expired?
+    reset_sent_at < 1.hour.ago
+  end
 
 
   private
