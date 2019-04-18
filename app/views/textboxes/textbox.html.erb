@@ -6,6 +6,8 @@
     </head>
 
     <body>
+
+        <textarea class="docName" id="docName" rows="1"></textarea>
         <div class="parent">
             <div class="btn-group" role="group">
                 <button style="font-size: 12px; font-weight: bold; background-color: lightgrey;" class="btn1" id="bold" onclick="execCmd(this, 'bold');">B</button>
@@ -16,8 +18,8 @@
                 <button class="btn1" id="alignRight" onclick="execCmd(this, 'justifyright');"><i class="fa fa-align-right"></i></button>
                 <button class="btn1" id="subscript" onclick="execCmd(this, 'subscript');"><i class="fa fa-subscript"></i></button>
                 <button class="btn1" id="superscript" onclick="execCmd(this, 'superscript');"><i class="fa fa-superscript"></i></button>
-                <button class="btn1" onclick=""><i class="fa fa-list-ul"></i></button>
-                <button class="btn1" onclick=""><i class="fa fa-list-ol"></i></button>
+                <button class="btn1" onclick="execCmd(this, 'insertUnorderedList');"><i class="fa fa-list-ul"></i></button>
+                <button class="btn1" onclick="execCmd(this, 'insertOrderedList');"><i class="fa fa-list-ol"></i></button>
 
                 <!-- adds an html dropdown menu, allows user to choose font size-->
                 <p>Font: </p>
@@ -43,8 +45,9 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
-                <button class="btn1" id="Save" onclick="saveToLocal('plain', 'mydoc')">Save</button>
-                <input class="btn1" type="file" id="yourFile" name="load" onchange="loadFromLocal(this.files)" accept="text/plain">
+                <button class="btn1" id="Save" onclick="saveToLocal('plain')">Save Plain</button>
+                <button class="btn1" id="Save" onclick="saveToLocal('rich')">Save Rich</button>
+                <input class="btn1" type="file" id="yourFile" name="load" onchange="loadFromLocal(this.files)" accept="text/plain,text/html">
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -55,6 +58,8 @@
         <script type="text/javascript">
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox;
+            var docName = document.getElementById("docName");
+            docName.value = "MyDocument";
 
             iframe.onload = function() {
                 iframe.document.designMode = "On";
@@ -88,7 +93,10 @@
                     var reader = new FileReader();
                     reader.readAsText(file, "UTF-8");
                     reader.onload = function (evt) {
-                        textbox.innerText = evt.target.result;
+                        if (file.type === "text/plain") textbox.innerText = evt.target.result;
+                        else if (file.type === "text/html") textbox.innerHTML = evt.target.result;
+                        else alert("Wrong file format");
+                        console.log(file);
                     }
                     reader.onerror = function (evt) {
                         alert("Error loading file");
@@ -96,8 +104,9 @@
                 }
             }
 
-            function saveToLocal(textType, fileName) {
+            function saveToLocal(textType) {
                 var text = "";
+                var fileName = docName.value;
                 if (textType === "plain") {
                     fileName = fileName + ".txt";
                     text = textbox.innerText;
@@ -114,12 +123,14 @@
                 downloadLink.style.display = "none";
                 document.body.appendChild(downloadLink);
 
+                function destroyClickedElement(event) {
+                    document.body.removeChild(event.target);
+                }
+
                 downloadLink.click();
             }
 
-            function destroyClickedElement(event) {
-                document.body.removeChild(event.target);
-            }
+
 
             function saveToDatabase() {
 
