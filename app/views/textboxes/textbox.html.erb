@@ -11,16 +11,16 @@
         <div class="parent">
           <textarea class="docName" id="docName" rows="1"></textarea>
             <div class="btn-group" role="group">
-                <button style="font-size: 12px; font-weight: bold; background-color: lightgrey;" class="btn1" id="bold" onclick="execCmd(this, 'bold');">B</button>
-                <button style="font-weight: bold; font-style: italic; font-family: Times;" class="btn1" id="italics" onclick="execCmd(this, 'italic');">I</button>
-                <button class="btn1" id="strikeThrough" onclick="execCmd(this, 'strikethrough');"><i class="fa fa-strikethrough"></i></button>
-                <button class="btn1" id="alignLeft" onclick="execCmd(this, 'justifyleft');"><i class="fa fa-align-left"></i></button>
-                <button class="btn1" id="alighnCenter" onclick="execCmd(this, 'justifycenter');"><i class="fa fa-align-center"></i></button>
-                <button class="btn1" id="alignRight" onclick="execCmd(this, 'justifyright');"><i class="fa fa-align-right"></i></button>
-                <button class="btn1" id="subscript" onclick="execCmd(this, 'subscript');"><i class="fa fa-subscript"></i></button>
-                <button class="btn1" id="superscript" onclick="execCmd(this, 'superscript');"><i class="fa fa-superscript"></i></button>
-                <button class="btn1" onclick="execCmd(this, 'insertUnorderedList');"><i class="fa fa-list-ul"></i></button>
-                <button class="btn1" onclick="execCmd(this, 'insertOrderedList');"><i class="fa fa-list-ol"></i></button>
+                <button style="font-size: 12px; font-weight: bold; background-color: lightgrey;" class="btn1" id="bold" onclick="execCmd('bold');toggleShade(this);">B</button>
+                <button style="font-weight: bold; font-style: italic; font-family: Times;" class="btn1" id="italics" onclick="execCmd('italic');toggleShade(this);">I</button>
+                <button class="btn1" id="strikeThrough" onclick="execCmd('strikethrough');toggleShade(this);"><i class="fa fa-strikethrough"></i></button>
+                <button class="btn1" id="alignLeft" onclick="execCmd('justifyleft');"><i class="fa fa-align-left"></i></button>
+                <button class="btn1" id="alighnCenter" onclick="execCmd('justifycenter');"><i class="fa fa-align-center"></i></button>
+                <button class="btn1" id="alignRight" onclick="execCmd('justifyright');"><i class="fa fa-align-right"></i></button>
+                <button class="btn1" id="subscript" onclick="execCmd('subscript');"><i class="fa fa-subscript"></i></button>
+                <button class="btn1" id="superscript" onclick="execCmd('superscript');"><i class="fa fa-superscript"></i></button>
+                <button class="btn1" onclick="execCmd('insertUnorderedList');toggleShade(this);"><i class="fa fa-list-ul"></i></button>
+                <button class="btn1" onclick="execCmd('insertOrderedList');toggleShade(this);"><i class="fa fa-list-ol"></i></button>
 
                 <!-- adds an html dropdown menu, allows user to choose font size-->
                 <p>Font: </p>
@@ -76,11 +76,17 @@
                 logValues();
             }
 
-            function execCmd(element, command) {
+            function toggleShade(element) {
+                if (element.style.backgroundColor != "grey") element.style.backgroundColor = "grey";
+                else element.style.backgroundColor = "lightgrey";
+            }
+
+            function switchShade() {
+
+            }
+
+            function execCmd(command) {
                 iframe.document.execCommand(command, false, null);
-                //if (element.style.backgroundColor == "lightgrey" || element.style.backgroundColor == "") element.style.backgroundColor = "grey";
-                //else if (element.style.backgroundColor == "grey") element.style.backgroundColor = "lightgrey";
-                //else console.log("error in execCmd");
                 iframe.focus();
             }
 
