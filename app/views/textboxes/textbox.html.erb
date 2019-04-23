@@ -7,8 +7,9 @@
 
     <body>
 
-        <textarea class="docName" id="docName" rows="1"></textarea>
+
         <div class="parent">
+          <textarea class="docName" id="docName" rows="1"></textarea>
             <div class="btn-group" role="group">
                 <button style="font-size: 12px; font-weight: bold; background-color: lightgrey;" class="btn1" id="bold" onclick="execCmd(this, 'bold');">B</button>
                 <button style="font-weight: bold; font-style: italic; font-family: Times;" class="btn1" id="italics" onclick="execCmd(this, 'italic');">I</button>
@@ -26,7 +27,7 @@
                 <select class="select" onclick="execCommandWithArg('fontSize', this.value);">
                     <option  value ="1">8</option>
                     <option  value ="2">10</option>
-                    <option  value ="3">12</option>
+                    <option  value ="3" selected="">12</option>
                     <option  value ="4">16</option>
                     <option  value ="5">20</option>
                     <option  value ="6">24</option>
@@ -45,9 +46,9 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
-                <button class="btn1" id="Save" onclick="saveToLocal('plain')">Save Plain</button>
-                <button class="btn1" id="Save" onclick="saveToLocal('rich')">Save Rich</button>
-                <input class="btn1" type="file" id="yourFile" name="load" onchange="loadFromLocal(this.files)" accept="text/plain,text/html">
+                <button class="btn2" id="Save" onclick="saveToLocal('plain')">Save Plain</button>
+                <button class="btn2" id="Save" onclick="saveToLocal('rich')">Save Rich</button>
+                <input class="btn2" type="file" id="yourFile" name="load" onchange="loadFromLocal(this.files)" accept="text/plain,text/html">
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -64,6 +65,7 @@
             iframe.onload = function() {
                 iframe.document.designMode = "On";
                 textbox = iframe.document.body;
+                iframe.document.body.style.wordWrap = 'break-word';
 
                 textbox.innerText = "";
                 iframe.focus();

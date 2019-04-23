@@ -7,18 +7,18 @@
   width: 800px;
   height: 22px;
   margin: 0 auto;
-  padding: 0;
 }
 
 .btn-group {
+    bottom: 4px;
     width: 800px;
     margin: 0;
-    padding: 0;
+    padding: 0px;
     height: 20px;
 }
 
 .btn1 {
-    height:20px;
+    height:25px;
     width: 30px;
     background-color: lightgrey;
     border: 1px solid #000000;
@@ -26,10 +26,19 @@
     margin: 0;
     padding: 0px;
 }
+.btn2 {
+  height:25px;
+  width: 100px;
+  background-color: lightgrey;
+  border: 1px solid #000000;
+  border-radius: 6px;
+  margin: 0;
+  padding: 0px;
+}
 
 .fileupload {
     height: 20px;
-    width: 75px;
+    width: 120px;
 }
 
 .select {
@@ -64,4 +73,5 @@ iframe {
     padding: 40px;
     overflow: none;
     font-size: 14px;
+    padding-top: 5px;
 }
