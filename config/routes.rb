@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
     resources :users
     resources :user_activation, only: [:edit]
+    resources :documents, only: [:create, :destroy, :edit, :new]
 
 
 

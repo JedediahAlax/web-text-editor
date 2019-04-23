@@ -3,7 +3,7 @@
   <aside class="col-md-4">
     <section class="user_info">
       <h1>
-    
+
         <%= @user.name %>
 
       </h1>
@@ -12,4 +12,13 @@
 
     </section>
   </aside>
-</div>
+  <div class="col-md-8">
+    <% if @user.documents.any? %>
+      <h3>Documents (<%= @user.documents.count %>)</h3>
+        <ol clas="documents">
+          <%= render @documents %>
+        </ol>
+        <%= will_paginate @documents %>
+        <% end %>
+      </div>
+  </div>

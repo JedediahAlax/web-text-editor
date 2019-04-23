@@ -1,0 +1,12 @@
+<li id="document-<%= document.id %>">
+
+
+
+
+
+  <span class="content"><%= link_to '/textboxes/textbox', document.content %></span>
+
+  <span class="timestamp">
+    Created <%= time_ago_in_words(document.created_at) %> ago.
+  </span>
+</li>

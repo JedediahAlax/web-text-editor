@@ -11,3 +11,9 @@ User.create!(name:  "Example User",
              password_confirmation: "fooooooobar",
              activated: true,
              activated_at: Time.zone.now)
+
+users = User.order(:created_at).take(1)
+50.times do
+  content = "Document Title"
+  users.each { |user| user.documents.create!(content: content) }
+end
