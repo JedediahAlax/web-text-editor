@@ -6,8 +6,6 @@
     </head>
 
     <body>
-
-
         <div class="parent">
           <textarea class="docName" id="docName" rows="1"></textarea>
             <div class="btn-group" role="group">
@@ -48,7 +46,8 @@
 
                 <button class="btn2" id="Save" onclick="saveToLocal('plain')">Save Plain</button>
                 <button class="btn2" id="Save" onclick="saveToLocal('rich')">Save Rich</button>
-                <input class="btn2" type="file" id="yourFile" name="load" onchange="loadFromLocal(this.files)" accept="text/plain,text/html">
+                <button class="btn2" onclick="upload();">Upload</button>
+                <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -67,7 +66,7 @@
                 textbox = iframe.document.body;
                 iframe.document.body.style.wordWrap = 'break-word';
 
-                textbox.innerText = "";
+                textbox.innerText = "\n";
                 iframe.focus();
                 logValues();
             }
@@ -95,16 +94,24 @@
                 iframe.focus();
             }
 
+            function upload() {document.getElementById("upload").click();}
+
             function loadFromLocal(files) {
                 var file = files[0];
                 if (file) {
                     var reader = new FileReader();
                     reader.readAsText(file, "UTF-8");
                     reader.onload = function (evt) {
-                        if (file.type === "text/plain") textbox.innerText = evt.target.result;
-                        else if (file.type === "text/html") textbox.innerHTML = evt.target.result;
-                        else alert("Wrong file format");
-                        console.log(file);
+                        if (file.name.includes(".txt")) {
+                            textbox.innerText = evt.target.result;
+                            docName.value = file.name.substring(0, file.name.length - 4);
+                        } else if (file.name.includes(".html")) {
+                            textbox.innerHTML = evt.target.result;
+                            docName.value = file.name.substring(0, file.name.length - 5);
+                        } else if (file.name.includes(".rtx")) {
+                            textbox.innerHTML = evt.target.result;
+                            docName.value = file.name.substring(0, file.name.length - 4);
+                        } else alert("Wrong file format");
                     }
                     reader.onerror = function (evt) {
                         alert("Error loading file");
