@@ -73,6 +73,14 @@
 
             iframe.oninput = function() {
                 logValues();
+                console.log(getCursorPosition(textbox));
+            }
+
+            iframe.onkeyup = function() {setShadeByCursor();}
+            iframe.onclick = function() {setShadeByCursor();}
+
+            function setShadeByCursor() {
+
             }
 
             function toggleShade(element) {
@@ -83,7 +91,6 @@
             //the first element in the array gets toggled
             function switchShade(element, otherElements) {
                 toggleShade(element);
-                console.log(otherElements);
                 for (i = 0; i < otherElements.length; i++) otherElements[i].style.backgroundColor = "lightgrey";
             }
 
@@ -95,6 +102,21 @@
             function execCommandWithArg(command, arg) {
                 iframe.document.execCommand(command, false, arg);
                 iframe.focus();
+            }
+
+            function getCursorPosition(element) {
+                var doc = element.ownerDocument;
+                var win = doc.defaultView;
+                var sel, range, preCaretRange, caretOffset = 0;
+                sel = win.getSelection();
+                console.log(sel);
+                range = sel.getRangeAt(0);
+                preCaretRange = range.cloneRange();
+                preCaretRange.selectNodeContents(element);
+                preCaretRange.setEnd(range.endContainer, range.endOffset);
+                caretOffset = preCaretRange.toString().length;
+
+                return caretOffset;
             }
 
             function upload() {document.getElementById("upload").click();}
