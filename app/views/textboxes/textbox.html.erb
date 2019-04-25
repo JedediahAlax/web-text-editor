@@ -9,16 +9,16 @@
         <div class="parent">
           <textarea class="docName" id="docName" rows="1"></textarea>
             <div class="btn-group" role="group">
-                <button style="font-size: 12px; font-weight: bold; background-color: lightgrey;" class="btn1" id="bold" onclick="execCmd('bold');toggleShade(this);">B</button>
-                <button style="font-weight: bold; font-style: italic; font-family: Times;" class="btn1" id="italics" onclick="execCmd('italic');toggleShade(this);">I</button>
-                <button class="btn1" id="strikeThrough" onclick="execCmd('strikethrough');toggleShade(this);"><i class="fa fa-strikethrough"></i></button>
-                <button class="btn1" id="alignLeft" onclick="execCmd('justifyleft');"><i class="fa fa-align-left"></i></button>
-                <button class="btn1" id="alighnCenter" onclick="execCmd('justifycenter');"><i class="fa fa-align-center"></i></button>
-                <button class="btn1" id="alignRight" onclick="execCmd('justifyright');"><i class="fa fa-align-right"></i></button>
-                <button class="btn1" id="subscript" onclick="execCmd('subscript');"><i class="fa fa-subscript"></i></button>
-                <button class="btn1" id="superscript" onclick="execCmd('superscript');"><i class="fa fa-superscript"></i></button>
-                <button class="btn1" onclick="execCmd('insertUnorderedList');toggleShade(this);"><i class="fa fa-list-ul"></i></button>
-                <button class="btn1" onclick="execCmd('insertOrderedList');toggleShade(this);"><i class="fa fa-list-ol"></i></button>
+                <button class="btn1" id="bold" style="font-size: 12px; font-weight: bold; background-color: lightgrey;">B</button>
+                <button class="btn1" id="italic" style="font-weight: bold; font-style: italic; font-family: Times;">I</button>
+                <button class="btn1" id="strikeThrough"><i class="fa fa-strikethrough"></i></button>
+                <button class="btn1" id="alignLeft"><i class="fa fa-align-left"></i></button>
+                <button class="btn1" id="alignCenter"><i class="fa fa-align-center"></i></button>
+                <button class="btn1" id="alignRight"><i class="fa fa-align-right"></i></button>
+                <button class="btn1" id="subscript"><i class="fa fa-subscript"></i></button>
+                <button class="btn1" id="superscript"><i class="fa fa-superscript"></i></button>
+                <button class="btn1" id="unorderedList"><i class="fa fa-list-ul"></i></button>
+                <button class="btn1" id="orderedList"><i class="fa fa-list-ol"></i></button>
 
                 <!-- adds an html dropdown menu, allows user to choose font size-->
                 <p>Font: </p>
@@ -80,8 +80,11 @@
                 else element.style.backgroundColor = "lightgrey";
             }
 
-            function switchShade() {
-
+            //the first element in the array gets toggled
+            function switchShade(element, otherElements) {
+                toggleShade(element);
+                console.log(otherElements);
+                for (i = 0; i < otherElements.length; i++) otherElements[i].style.backgroundColor = "lightgrey";
             }
 
             function execCmd(command) {
@@ -95,7 +98,6 @@
             }
 
             function upload() {document.getElementById("upload").click();}
-
             function loadFromLocal(files) {
                 var file = files[0];
                 if (file) {
@@ -153,6 +155,60 @@
 
             function loadFromDatabase() {
 
+            }
+
+            document.getElementById("bold").onclick = function() {
+                execCmd('bold');
+                toggleShade(this);
+            }
+
+            document.getElementById("italic").onclick = function() {
+                execCmd('italic');
+                toggleShade(this);
+            }
+
+            document.getElementById("strikeThrough").onclick = function() {
+                execCmd('strikethrough');
+                toggleShade(this);
+            }
+
+            document.getElementById("alignLeft").onclick = function() {
+                execCmd('justifyleft');
+                console.log(document.getElementById("alignCenter"));
+                console.log(document.getElementById("alignRight"));
+                switchShade(this, [document.getElementById("alignCenter"), document.getElementById("alignRight")]);
+            }
+
+            document.getElementById("alignCenter").onclick = function() {
+                execCmd('justifycenter');
+                switchShade(this, [document.getElementById("alignLeft"), document.getElementById("alignRight")]);
+            }
+
+            document.getElementById("alignRight").onclick = function() {
+                execCmd('justifyright');
+                console.log(document.getElementById("alignCenter"));
+                console.log(document.getElementById("alignRight"));
+                switchShade(this, [document.getElementById("alignLeft"), document.getElementById("alignCenter")]);
+            }
+
+            document.getElementById("subscript").onclick = function() {
+                execCmd('subscript');
+                switchShade(this, [document.getElementById("superscript")]);
+            }
+
+            document.getElementById("superscript").onclick = function() {
+                execCmd('superscript');
+                switchShade(this, [document.getElementById("subscript")]);
+            }
+
+            document.getElementById("unorderedList").onclick = function() {
+                execCmd('insertUnorderedList');
+                switchShade(this, [document.getElementById("orderedList")]);
+            }
+
+            document.getElementById("orderedList").onclick = function() {
+                execCmd('insertOrderedList');
+                switchShade(this, [document.getElementById("unorderedList")]);
             }
 
             function logValues() {
