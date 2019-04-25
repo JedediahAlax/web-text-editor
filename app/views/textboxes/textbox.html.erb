@@ -22,7 +22,7 @@
 
                 <!-- adds an html dropdown menu, allows user to choose font size-->
                 <p>Font: </p>
-                <select class="select" onclick="execCommandWithArg('fontSize', this.value);">
+                <select class="select" onchange="execCommandWithArg('fontSize', this.value);">
                     <option  value ="1">8</option>
                     <option  value ="2">10</option>
                     <option  value ="3" selected="">12</option>
@@ -34,7 +34,7 @@
 
                 <!-- maybe a bit too complex to add a user input option here-->
                 <p>Type:</p>
-                <select class="select" onclick="execCommandWithArg('fontName', this.value);">
+                <select class="select" onchange="execCommandWithArg('fontName', this.value);">
                     <option value="Arial">Arial</option>
                     <option value="Comic Sans">Comic Sans MS</option>
                     <option value="Courier">Courier</option>
