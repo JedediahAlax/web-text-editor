@@ -52,24 +52,19 @@
             <!-- need to restlyle the divs in this section-->
             </div>
 
-            <iframe id="richTE"></iframe>
+            <iframe id="richTE" tabindex="1"></iframe>
         </div>
 
         <script type="text/javascript">
             var iframe = document.getElementById("richTE").contentWindow;
-            var textbox;
+            var textbox = iframe.document.body;
             var docName = document.getElementById("docName");
             docName.value = "MyDocument";
 
-            iframe.onload = function() {
-                iframe.document.designMode = "On";
-                textbox = iframe.document.body;
-                iframe.document.body.style.wordWrap = 'break-word';
-
-                textbox.innerText = "\n";
-                iframe.focus();
-                logValues();
-            }
+            iframe.document.designMode = "On";
+            textbox.style.wordWrap = 'break-word';
+            textbox.innerText = "\n";
+            textbox.focus();
 
             iframe.oninput = function() {
                 logValues();
@@ -96,12 +91,12 @@
 
             function execCmd(command) {
                 iframe.document.execCommand(command, false, null);
-                iframe.focus();
+                textbox.focus();
             }
 
             function execCommandWithArg(command, arg) {
                 iframe.document.execCommand(command, false, arg);
-                iframe.focus();
+                textbox.focus();
             }
 
             function getCursorPosition(element) {
