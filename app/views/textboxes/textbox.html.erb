@@ -57,6 +57,7 @@
 
         <script type="text/javascript">
             var iframe = document.getElementById("richTE").contentWindow;
+            iframe.document.designMode = "On";
             var textbox;
             var docName = document.getElementById("docName");
             docName.value = "MyDocument";
