@@ -15,7 +15,7 @@
   <div class="col-md-8">
     <% if @user.documents.any? %>
       <h3>Documents (<%= @user.documents.count %>)</h3>
-        <ol clas="documents">
+        <ol class="documents">
           <%= render @documents %>
         </ol>
         <%= will_paginate @documents %>
