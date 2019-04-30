@@ -7,18 +7,18 @@
 
     <body>
         <div class="parent">
-          <textarea class="docName" id="docName" rows="1" spellcheck="false"></textarea>
+          <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
             <div class="btn-group" role="group">
-                <button class="btn1" id="bold" style="font-size: 12px; font-weight: bold;">B</button>
-                <button class="btn1" id="italic" style="font-weight: bold; font-style: italic; font-family: Times;">I</button>
-                <button class="btn1" id="strikeThrough"><i class="fa fa-strikethrough"></i></button>
-                <button class="btn1" id="alignLeft"><i class="fa fa-align-left"></i></button>
-                <button class="btn1" id="alignCenter"><i class="fa fa-align-center"></i></button>
-                <button class="btn1" id="alignRight"><i class="fa fa-align-right"></i></button>
-                <button class="btn1" id="subscript"><i class="fa fa-subscript"></i></button>
-                <button class="btn1" id="superscript"><i class="fa fa-superscript"></i></button>
-                <button class="btn1" id="unorderedList"><i class="fa fa-list-ul"></i></button>
-                <button class="btn1" id="orderedList"><i class="fa fa-list-ol"></i></button>
+                <button class="btn1" id="bold"  title="ctrl+b" style="font-size: 12px; font-weight: bold;">B</button>
+                <button class="btn1" id="italic" title="ctrl+i" style="font-weight: bold; font-style: italic; font-family: Times;">I</button>
+                <button class="btn1" id="strikeThrough" title=""><i class="fa fa-strikethrough"></i></button>
+                <button class="btn1" id="alignLeft" title="ctrl+l"><i class="fa fa-align-left"></i></button>
+                <button class="btn1" id="alignCenter" title="ctrl+e"><i class="fa fa-align-center"></i></button>
+                <button class="btn1" id="alignRight" title="ctrl+r"><i class="fa fa-align-right"></i></button>
+                <button class="btn1" id="subscript" title=""><i class="fa fa-subscript"></i></button>
+                <button class="btn1" id="superscript" title=""><i class="fa fa-superscript"></i></button>
+                <button class="btn1" id="unorderedList" title="ctrl+7"><i class="fa fa-list-ul"></i></button>
+                <button class="btn1" id="orderedList" title="ctrl+8"><i class="fa fa-list-ol"></i></button>
 
                 <!-- adds an html dropdown menu, allows user to choose font size-->
                 <p>Font: </p>
@@ -44,10 +44,10 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
-                <button class="btn2" id="savePlain" onclick="saveToLocal('plain')">Save Plain</button>
-                <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Save Rich</button>
-                <button class="btn2" onclick="upload();">Upload</button>
-                <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
+                <button class="btn2" id="savePlain" title="ctrl+p" onclick="saveToLocal('plain')">Save Plain</button>
+                <button class="btn2" id="saveRich" title="ctrl+s" onclick="saveToLocal('rich')">Save Rich</button>
+                <button class="btn2" id="uploadbutton" title="ctrl+u" onclick="upload();">Upload</button>
+                <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html,text/rtx"></input>
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -82,35 +82,35 @@
                 logValues();
                 console.log(e.keyCode);
                 if (e.ctrlKey) {
-                    if (e.keyCode == 66) {
+                    if (e.keyCode == 66) {           //ctl+b
                         console.log("preventDefault");
                         e.preventDefault();
                         document.getElementById("bold").click();
-                    } else if(e.keyCode == 73) {
+                    } else if(e.keyCode == 73) {    //ctl+i
                         e.preventDefault();
                         document.getElementById("italic").click();
-                    } else if(e.keyCode == 76) {
+                    } else if(e.keyCode == 76) {    //ctrl+l
                         e.preventDefault();
                         document.getElementById("alignLeft").click();
-                    } else if(e.keyCode == 69) {
+                    } else if(e.keyCode == 69) {    //ctrl+e
                         e.preventDefault();
                         document.getElementById("alignCenter").click();
-                    } else if(e.keyCode == 82) {
+                    } else if(e.keyCode == 82) {    //ctrl+r
                         e.preventDefault();
                         document.getElementById("alignRight").click();
-                    } else if(e.keyCode == 55) {
+                    } else if(e.keyCode == 55) {    //ctrl+7
                         e.preventDefault();
                         document.getElementById("unorderedList").click();
-                    } else if(e.keyCode == 56) {
+                    } else if(e.keyCode == 56) {    //ctrl+8
                         e.preventDefault();
                         document.getElementById("orderedList").click();
-                    } else if(e.keyCode == 83) {
+                    } else if(e.keyCode == 83) {    //ctrl+s
                         e.preventDefault();
                         document.getElementById("saveRich").click();
-                    } else if(e.keyCode == 80) {
+                    } else if(e.keyCode == 80) {    //ctrl+p
                         e.preventDefault();
                         document.getElementById("savePlain").click();
-                    } else if(e.keyCode == 85) {
+                    } else if(e.keyCode == 85) {    //ctrl+u
                         e.preventDefault();
                         document.getElementById("upload").click();
                     }
@@ -160,6 +160,7 @@
                 return caretOffset;
             }
 
+            //FIXME: doesn't work with firefox
             function upload() {document.getElementById("upload").click();}
             function loadFromLocal(files) {
                 var file = files[0];
@@ -168,16 +169,16 @@
                     reader.readAsText(file, "UTF-8");
                     reader.onload = function (evt) {
                         if (file.name.includes(".txt")) {
-                            iframe.innerText = evt.target.result;
-                            if (iframe.innerText) iframe.innerText = evt.target.result;
+                            textbox.innerText = evt.target.result;
+                            if (textbox.innerText) textbox.innerText = evt.target.result;
                             docName.value = file.name.substring(0, file.name.length - 4);
                         } else if (file.name.includes(".html")) {
-                            iframe.innerHTML = evt.target.result;
-                            if (iframe.innerText) iframe.innerHTML = evt.target.result;
+                            textbox.innerHTML = evt.target.result;
+                            if (textbox.innerText) textbox.innerHTML = evt.target.result;
                             docName.value = file.name.substring(0, file.name.length - 5);
                         } else if (file.name.includes(".rtx")) {
-                            iframe.innerHTML = evt.target.result;
-                            if (iframe.innerText) iframe.innerHTML = evt.target.result;
+                            textbox.innerHTML = evt.target.result;
+                            if (textbox.innerText) textboxs.innerHTML = evt.target.result;
                             docName.value = file.name.substring(0, file.name.length - 4);
                         } else alert("Wrong file format");
                     }
@@ -187,6 +188,7 @@
                 }
             }
 
+            //FIXME: Doesn't work with firefox
             function saveToLocal(textType) {
                 var text = "";
                 var fileName = docName.value;
