@@ -1,0 +1,14 @@
+<li id="document-<%= document.id %>">
+
+
+
+
+<span class= "user"><%= link_to document.user.name, document.user %></span>
+  <span class="title"><%= document.title %></span>
+
+    <span class="content"><%= document.content %></span>
+
+  <span class="timestamp">
+    Created <%= time_ago_in_words(document.created_at) %> ago.
+  </span>
+</li>
