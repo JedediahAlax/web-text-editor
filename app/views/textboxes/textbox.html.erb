@@ -47,7 +47,7 @@
                 <button class="btn2" id="savePlain" title="ctrl+p" onclick="saveToLocal('plain')">Save Plain</button>
                 <button class="btn2" id="saveRich" title="ctrl+s" onclick="saveToLocal('rich')">Save Rich</button>
                 <button class="btn2" id="uploadbutton" title="ctrl+u" onclick="upload();">Upload</button>
-                <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html,text/rtx"></input>
+                <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)"></input>
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -69,6 +69,7 @@
 
             iframe.onload = function() {
                 iframe.document.designMode = "On";
+                textbox = iframe.document.body;
                 textbox.style.wordWrap = 'break-word';
                 textbox.innerText = "\n";
                 iframe.focus();
@@ -160,7 +161,6 @@
                 return caretOffset;
             }
 
-            //FIXME: doesn't work with firefox
             function upload() {document.getElementById("upload").click();}
             function loadFromLocal(files) {
                 var file = files[0];
@@ -188,7 +188,6 @@
                 }
             }
 
-            //FIXME: Doesn't work with firefox
             function saveToLocal(textType) {
                 var text = "";
                 var fileName = docName.value;
