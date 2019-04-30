@@ -1,6 +1,10 @@
 class DocumentsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy]
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> userDocs
 
 
 
