@@ -7,9 +7,9 @@
 
     <body>
         <div class="parent">
-          <textarea class="docName" id="docName" rows="1"></textarea>
+          <textarea class="docName" id="docName" rows="1" spellcheck="false"></textarea>
             <div class="btn-group" role="group">
-                <button class="btn1" id="bold" style="font-size: 12px; font-weight: bold; background-color: lightgrey;">B</button>
+                <button class="btn1" id="bold" style="font-size: 12px; font-weight: bold;">B</button>
                 <button class="btn1" id="italic" style="font-weight: bold; font-style: italic; font-family: Times;">I</button>
                 <button class="btn1" id="strikeThrough"><i class="fa fa-strikethrough"></i></button>
                 <button class="btn1" id="alignLeft"><i class="fa fa-align-left"></i></button>
@@ -44,31 +44,77 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
-                <button class="btn2" id="Save" onclick="saveToLocal('plain')">Save Plain</button>
-                <button class="btn2" id="Save" onclick="saveToLocal('rich')">Save Rich</button>
+                <button class="btn2" id="savePlain" onclick="saveToLocal('plain')">Save Plain</button>
+                <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Save Rich</button>
                 <button class="btn2" onclick="upload();">Upload</button>
                 <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
 
             <!-- need to restlyle the divs in this section-->
             </div>
 
-            <iframe id="richTE" tabindex="1"></iframe>
+            <div style="width: 100%; height: 1px;"></div>
+            <iframe id="richTE"></iframe>
         </div>
 
         <script type="text/javascript">
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox = iframe.document.body;
             var docName = document.getElementById("docName");
-            docName.value = "MyDocument";
+            docName.value = "Untitled";
 
             iframe.document.designMode = "On";
             textbox.style.wordWrap = 'break-word';
             textbox.innerText = "\n";
             textbox.focus();
 
-            iframe.oninput = function() {
+            iframe.onload = function() {
+                iframe.document.designMode = "On";
+                textbox.style.wordWrap = 'break-word';
+                textbox.innerText = "\n";
+                iframe.focus();
+            }
+
+            document.onkeydown = function(e) {
+                if (e.which == 9) e.preventDefault();
+            }
+
+            iframe.onkeydown = function(e) {
                 logValues();
-                console.log(getCursorPosition(textbox));
+                console.log(e.keyCode);
+                if (e.ctrlKey) {
+                    if (e.keyCode == 66) {
+                        console.log("preventDefault");
+                        e.preventDefault();
+                        document.getElementById("bold").click();
+                    } else if(e.keyCode == 73) {
+                        e.preventDefault();
+                        document.getElementById("italic").click();
+                    } else if(e.keyCode == 76) {
+                        e.preventDefault();
+                        document.getElementById("alignLeft").click();
+                    } else if(e.keyCode == 69) {
+                        e.preventDefault();
+                        document.getElementById("alignCenter").click();
+                    } else if(e.keyCode == 82) {
+                        e.preventDefault();
+                        document.getElementById("alignRight").click();
+                    } else if(e.keyCode == 55) {
+                        e.preventDefault();
+                        document.getElementById("unorderedList").click();
+                    } else if(e.keyCode == 56) {
+                        e.preventDefault();
+                        document.getElementById("orderedList").click();
+                    } else if(e.keyCode == 83) {
+                        e.preventDefault();
+                        document.getElementById("saveRich").click();
+                    } else if(e.keyCode == 80) {
+                        e.preventDefault();
+                        document.getElementById("savePlain").click();
+                    } else if(e.keyCode == 85) {
+                        e.preventDefault();
+                        document.getElementById("upload").click();
+                    }
+                }
             }
 
             iframe.onkeyup = function() {setShadeByCursor();}
@@ -80,13 +126,13 @@
 
             function toggleShade(element) {
                 if (element.style.backgroundColor != "grey") element.style.backgroundColor = "grey";
-                else element.style.backgroundColor = "lightgrey";
+                else element.style.backgroundColor = "#eeeeee";
             }
 
             //the first element in the array gets toggled
             function switchShade(element, otherElements) {
                 toggleShade(element);
-                for (i = 0; i < otherElements.length; i++) otherElements[i].style.backgroundColor = "lightgrey";
+                for (i = 0; i < otherElements.length; i++) otherElements[i].style.backgroundColor = "#eeeeee";
             }
 
             function execCmd(command) {
@@ -122,13 +168,16 @@
                     reader.readAsText(file, "UTF-8");
                     reader.onload = function (evt) {
                         if (file.name.includes(".txt")) {
-                            textbox.innerText = evt.target.result;
+                            iframe.innerText = evt.target.result;
+                            if (iframe.innerText) iframe.innerText = evt.target.result;
                             docName.value = file.name.substring(0, file.name.length - 4);
                         } else if (file.name.includes(".html")) {
-                            textbox.innerHTML = evt.target.result;
+                            iframe.innerHTML = evt.target.result;
+                            if (iframe.innerText) iframe.innerHTML = evt.target.result;
                             docName.value = file.name.substring(0, file.name.length - 5);
                         } else if (file.name.includes(".rtx")) {
-                            textbox.innerHTML = evt.target.result;
+                            iframe.innerHTML = evt.target.result;
+                            if (iframe.innerText) iframe.innerHTML = evt.target.result;
                             docName.value = file.name.substring(0, file.name.length - 4);
                         } else alert("Wrong file format");
                     }
