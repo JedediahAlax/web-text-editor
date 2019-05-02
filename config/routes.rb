@@ -28,6 +28,8 @@ Rails.application.routes.draw do
     resources :users
     resources :user_activation, only: [:edit]
     resources :password_resets, only: [:new, :create, :edit, :update]
+    resources :documents, only: [:create, :destroy, :edit, :new]
+    resources :textboxes
 
 
 

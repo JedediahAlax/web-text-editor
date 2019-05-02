@@ -1,5 +1,8 @@
 class User < ApplicationRecord
 
+  # association with document model
+  has_many :documents, dependent: :destroy
+
   # Create an acessible attribute for remember token
   attr_accessor :remember_token, :activation_token, :reset_token
 

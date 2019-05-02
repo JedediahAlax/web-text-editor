@@ -1,0 +1,14 @@
+<li id="document-<%= document.id %>">
+
+
+
+
+
+  <span class="title"><%= link_to document.title %></span>
+
+    <span class="content"><%= truncate(document.content, length:50) %></span>
+
+  <span class="timestamp">
+    Created <%= time_ago_in_words(document.created_at) %> ago.
+  </span>
+</li>

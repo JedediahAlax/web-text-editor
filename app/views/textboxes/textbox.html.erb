@@ -4,8 +4,11 @@
         <title>Textitor</title>
         <script src="https://use.fontawesome.com/aac5c45839.js"></script>
     </head>
-
+    <% if logged_in? %>
+      <div> <h3>   <%= @user.name %> </h3> </div>
+      <% end %>
     <body>
+
         <div class="parent">
           <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
             <div class="btn-group" role="group">
@@ -45,10 +48,22 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
+<<<<<<< HEAD
+                <button class="btn2" id="savePlain" onclick="saveToLocal('plain')">Save Plain</button>
+                <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Save Rich</button>
+                <button class="btn2" onclick="upload();">Upload</button>
+                <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
+                <!-- added new button to save to db, should appear only if user is logged in -->
+                <% if logged_in? %>
+                <button class="btn2" id="saveDB" onclick="saveToDatabase">Save</button>
+                <% end %>
+
+=======
                 <button class="btn2" id="savePlain" title="ctrl+p" onclick="saveToLocal('plain')">Save Plain</button>
                 <button class="btn2" id="saveRich" title="ctrl+s" onclick="saveToLocal('rich')">Save Rich</button>
                 <button class="btn2" id="uploadButton" title="ctrl+f" onclick="upload();">Upload</button>
                 <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)"></input>
+>>>>>>> 4eee09689b654058cdf50dd1133bdff4825057d9
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -82,7 +97,11 @@
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox = iframe.document.body;
             var docName = document.getElementById("docName");
+<<<<<<< HEAD
+            docName.value = "Untitled"
+=======
             docName.value = "untitled";
+>>>>>>> 4eee09689b654058cdf50dd1133bdff4825057d9
 
             //for chrome
             iframe.document.designMode = "On";
