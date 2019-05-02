@@ -3,10 +3,10 @@
 
 
 
-<span class= "user"><%= link_to document.user.name, document.user %></span>
-  <span class="title"><%= document.title %></span>
 
-    <span class="content"><%= document.content %></span>
+  <span class="title"><%= link_to document.title %></span>
+
+    <span class="content"><%= truncate(document.content, length:50) %></span>
 
   <span class="timestamp">
     Created <%= time_ago_in_words(document.created_at) %> ago.

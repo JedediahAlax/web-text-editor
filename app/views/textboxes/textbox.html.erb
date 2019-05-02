@@ -4,8 +4,11 @@
         <title>Textitor</title>
         <script src="https://use.fontawesome.com/aac5c45839.js"></script>
     </head>
-
+    <% if logged_in? %>
+      <div> <h3>   <%= @user.name %> </h3> </div>
+      <% end %>
     <body>
+
         <div class="parent">
           <textarea class="docName" id="docName" rows="1" spellcheck="false"></textarea>
             <div class="btn-group" role="group">
@@ -48,6 +51,11 @@
                 <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Save Rich</button>
                 <button class="btn2" onclick="upload();">Upload</button>
                 <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
+                <!-- added new button to save to db, should appear only if user is logged in -->
+                <% if logged_in? %>
+                <button class="btn2" id="saveDB" onclick="saveToDatabase">Save</button>
+                <% end %>
+
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -60,7 +68,7 @@
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox = iframe.document.body;
             var docName = document.getElementById("docName");
-            docName.value = "Untitled";
+            docName.value = "Untitled"
 
             iframe.document.designMode = "On";
             textbox.style.wordWrap = 'break-word';

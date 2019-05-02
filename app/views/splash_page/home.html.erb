@@ -12,7 +12,7 @@
 	body {
 		background-image: url(../assets/5021.png);
 	}
-	
+
 	h1, h2, #carouselText {
 		color: white;
   		text-shadow: 2px 2px 4px black;
@@ -45,7 +45,7 @@
       <h2 style="font-size: 25px;">A web-based rich-text editor</h2>
 			<%= link_to "NEW DOCUMENT", '/textboxes/textbox', class: "btn btn-outline-light btn-lrg" %>
 			<% if logged_in? %>
-     		<%= link_to "MY DOCUMENTS", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
+     		<%= link_to "MY DOCUMENTS", current_user, class: "btn btn-outline-light btn-lrg" %>
      		<p style="font-size: 15px;" id="carouselText"> Welcome back to textitor!</p>
 			<% else %>
 			<%= link_to "LOG IN", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
