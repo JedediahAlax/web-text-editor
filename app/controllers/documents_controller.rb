@@ -3,9 +3,7 @@ class DocumentsController < ApplicationController
 
 
 
-def show
-  @document = Document.find_by[params[:id]]
-end
+
 
 def new
 end

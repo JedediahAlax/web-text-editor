@@ -48,7 +48,7 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
-<<<<<<< HEAD
+
                 <button class="btn2" id="savePlain" onclick="saveToLocal('plain')">Save Plain</button>
                 <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Save Rich</button>
                 <button class="btn2" onclick="upload();">Upload</button>
@@ -58,12 +58,11 @@
                 <button class="btn2" id="saveDB" onclick="saveToDatabase">Save</button>
                 <% end %>
 
-=======
-                <button class="btn2" id="savePlain" title="ctrl+p" onclick="saveToLocal('plain')">Save Plain</button>
+        <button class="btn2" id="savePlain" title="ctrl+p" onclick="saveToLocal('plain')">Save Plain</button>
                 <button class="btn2" id="saveRich" title="ctrl+s" onclick="saveToLocal('rich')">Save Rich</button>
                 <button class="btn2" id="uploadButton" title="ctrl+f" onclick="upload();">Upload</button>
                 <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)"></input>
->>>>>>> 4eee09689b654058cdf50dd1133bdff4825057d9
+
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -97,11 +96,9 @@
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox = iframe.document.body;
             var docName = document.getElementById("docName");
-<<<<<<< HEAD
+
             docName.value = "Untitled"
-=======
-            docName.value = "untitled";
->>>>>>> 4eee09689b654058cdf50dd1133bdff4825057d9
+
 
             //for chrome
             iframe.document.designMode = "On";
