@@ -83,7 +83,8 @@
                 "savePlain": document.getElementById("savePlain"),
                 "saveRich": document.getElementById("saveRich"),
                 "uploadButton": document.getElementById("uploadButton"),
-                "upload": document.getElementById("upload")
+                "upload": document.getElementById("upload"),
+                "saveDB": document.getElementById("saveDB")
             };
 
             var iframe = document.getElementById("richTE").contentWindow;
@@ -108,48 +109,26 @@
                 iframe.focus();
             }
 
-            document.onkeydown = function(e) {
-                if (e.which == 9) e.preventDefault();    // allows for tabs NOTE: doesn't work for firefox
-            }
+            document.onkeydown = function(e) {if (e.which == 9) e.preventDefault();}    // allows for tabs NOTE: doesn't work for firefox
 
             iframe.onkeydown = function(e) {
                 logValues();
                 console.log(e.keyCode);
                 if (e.ctrlKey) {
-                    if (e.keyCode == 66) {           //ctl+b
-                        e.preventDefault();
-                        styleButtons.bold.click();
-                    } else if(e.keyCode == 73) {    //ctl+i
-                        e.preventDefault();
-                        styleButtons.italic.click();
-                    } else if(e.keyCode == 85) {    //ctl+i
-                        e.preventDefault();
-                        styleButtons.underline.click();
-                    } else if(e.keyCode == 76) {    //ctrl+l
-                        e.preventDefault();
-                        styleButtons.alignLeft.click();
-                    } else if(e.keyCode == 69) {    //ctrl+e
-                        e.preventDefault();
-                        styleButtons.alignCenter.click();
-                    } else if(e.keyCode == 82) {    //ctrl+r
-                        e.preventDefault();
-                        styleButtons.alignRight.click();
-                    } else if(e.keyCode == 55) {    //ctrl+7
-                        e.preventDefault();
-                        styleButtons.unorderedList.click();
-                    } else if(e.keyCode == 56) {    //ctrl+8
-                        e.preventDefault();
-                        styleButtons.orderedList.click();
-                    } else if(e.keyCode == 83) {    //ctrl+s
-                        e.preventDefault();
-                        otherButtons.saveRich.click();
-                    } else if(e.keyCode == 80) {    //ctrl+p
-                        e.preventDefault();
-                        otherButtons.savePlain.click();
-                    } else if(e.keyCode == 70) {    //ctrl+u
-                        e.preventDefault();
-                        otherButtons.upload.click();
-                    }
+                    e.preventDefault();
+
+                    if (e.keyCode == 66) styleButtons.bold.click();    //ctl+b
+                    else if(e.keyCode == 73) styleButtons.italic.click();    //ctl+i
+                    else if(e.keyCode == 85) styleButtons.underline.click();    //ctl+i
+                    else if(e.keyCode == 76) styleButtons.alignLeft.click();    //ctrl+l
+                    else if(e.keyCode == 69) styleButtons.alignCenter.click();    //ctrl+e
+                    else if(e.keyCode == 82) styleButtons.alignRight.click();    //ctrl+r
+                    else if(e.keyCode == 55) styleButtons.unorderedList.click();    //ctrl+7
+                    else if(e.keyCode == 56) styleButtons.orderedList.click();    //ctrl+8
+                    else if(e.keyCode == 83 && otherButtons.saveDB != null) otherButtons.saveDB.click();    //ctrl+s
+                    else if(e.keyCode == 68) otherButtons.saveRich.click();    //ctrl+d
+                    //else if(e.keyCode == 80) otherButtons.savePlain.click();    //ctrl+p
+                    else if(e.keyCode == 70) otherButtons.upload.click();    //ctrl+u
                 }
             }
 
@@ -166,7 +145,7 @@
                         styleList += ">";
                         anchorNode = anchorNode.parentNode;
                     }
-                    console.log(styleList);
+
                     if (styleList.includes("<B>")) styleButtons.bold.style.backgroundColor = "grey";
                     else styleButtons.bold.style.backgroundColor = "#eeeeee";
 
