@@ -10,18 +10,19 @@
     <body>
 
         <div class="parent">
-          <textarea class="docName" id="docName" rows="1" spellcheck="false"></textarea>
+          <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
             <div class="btn-group" role="group">
-                <button class="btn1" id="bold" style="font-size: 12px; font-weight: bold;">B</button>
-                <button class="btn1" id="italic" style="font-weight: bold; font-style: italic; font-family: Times;">I</button>
-                <button class="btn1" id="strikeThrough"><i class="fa fa-strikethrough"></i></button>
-                <button class="btn1" id="alignLeft"><i class="fa fa-align-left"></i></button>
-                <button class="btn1" id="alignCenter"><i class="fa fa-align-center"></i></button>
-                <button class="btn1" id="alignRight"><i class="fa fa-align-right"></i></button>
-                <button class="btn1" id="subscript"><i class="fa fa-subscript"></i></button>
-                <button class="btn1" id="superscript"><i class="fa fa-superscript"></i></button>
-                <button class="btn1" id="unorderedList"><i class="fa fa-list-ul"></i></button>
-                <button class="btn1" id="orderedList"><i class="fa fa-list-ol"></i></button>
+                <button class="btn1" id="bold" title="ctrl+b" style="font-size: 12px; font-weight: bold;">B</button>
+                <button class="btn1" id="italic" title="ctrl+i" style="font-weight: bold; font-style: italic; font-family: Times;">I</button>
+                <button class="btn1" id="underline" title="ctrl+u" style="text-decoration: underline;">U</button>
+                <button class="btn1" id="strikeThrough" title=""><i class="fa fa-strikethrough"></i></button>
+                <button class="btn1" id="alignLeft" title="ctrl+l"><i class="fa fa-align-left"></i></button>
+                <button class="btn1" id="alignCenter" title="ctrl+e"><i class="fa fa-align-center"></i></button>
+                <button class="btn1" id="alignRight" title="ctrl+r"><i class="fa fa-align-right"></i></button>
+                <button class="btn1" id="subscript" title=""><i class="fa fa-subscript"></i></button>
+                <button class="btn1" id="superscript" title=""><i class="fa fa-superscript"></i></button>
+                <button class="btn1" id="unorderedList" title="ctrl+7"><i class="fa fa-list-ul"></i></button>
+                <button class="btn1" id="orderedList" title="ctrl+8"><i class="fa fa-list-ol"></i></button>
 
                 <!-- adds an html dropdown menu, allows user to choose font size-->
                 <p>Font: </p>
@@ -47,6 +48,7 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
+<<<<<<< HEAD
                 <button class="btn2" id="savePlain" onclick="saveToLocal('plain')">Save Plain</button>
                 <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Save Rich</button>
                 <button class="btn2" onclick="upload();">Upload</button>
@@ -56,6 +58,12 @@
                 <button class="btn2" id="saveDB" onclick="saveToDatabase">Save</button>
                 <% end %>
 
+=======
+                <button class="btn2" id="savePlain" title="ctrl+p" onclick="saveToLocal('plain')">Save Plain</button>
+                <button class="btn2" id="saveRich" title="ctrl+s" onclick="saveToLocal('rich')">Save Rich</button>
+                <button class="btn2" id="uploadButton" title="ctrl+f" onclick="upload();">Upload</button>
+                <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)"></input>
+>>>>>>> 4eee09689b654058cdf50dd1133bdff4825057d9
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -65,71 +73,144 @@
         </div>
 
         <script type="text/javascript">
+            var styleButtons = {
+                "bold": document.getElementById("bold"),
+                "italic": document.getElementById("italic"),
+                "underline": document.getElementById("underline"),
+                "strikeThrough": document.getElementById("strikeThrough"),
+                "alignLeft": document.getElementById("alignLeft"),
+                "alignCenter": document.getElementById("alignCenter"),
+                "alignRight": document.getElementById("alignRight"),
+                "subscript": document.getElementById("subscript"),
+                "superscript": document.getElementById("superscript"),
+                "unorderedList": document.getElementById("unorderedList"),
+                "orderedList": document.getElementById("orderedList")
+            };
+
+            var otherButtons = {
+                "savePlain": document.getElementById("savePlain"),
+                "saveRich": document.getElementById("saveRich"),
+                "uploadButton": document.getElementById("uploadButton"),
+                "upload": document.getElementById("upload")
+            };
+
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox = iframe.document.body;
             var docName = document.getElementById("docName");
+<<<<<<< HEAD
             docName.value = "Untitled"
+=======
+            docName.value = "untitled";
+>>>>>>> 4eee09689b654058cdf50dd1133bdff4825057d9
 
+            //for chrome
             iframe.document.designMode = "On";
             textbox.style.wordWrap = 'break-word';
             textbox.innerText = "\n";
             textbox.focus();
 
+            // for firefox
             iframe.onload = function() {
                 iframe.document.designMode = "On";
+                textbox = iframe.document.body;
                 textbox.style.wordWrap = 'break-word';
                 textbox.innerText = "\n";
                 iframe.focus();
             }
 
             document.onkeydown = function(e) {
-                if (e.which == 9) e.preventDefault();
+                if (e.which == 9) e.preventDefault();    // allows for tabs NOTE: doesn't work for firefox
             }
 
             iframe.onkeydown = function(e) {
                 logValues();
                 console.log(e.keyCode);
                 if (e.ctrlKey) {
-                    if (e.keyCode == 66) {
-                        console.log("preventDefault");
+                    if (e.keyCode == 66) {           //ctl+b
                         e.preventDefault();
-                        document.getElementById("bold").click();
-                    } else if(e.keyCode == 73) {
+                        styleButtons.bold.click();
+                    } else if(e.keyCode == 73) {    //ctl+i
                         e.preventDefault();
-                        document.getElementById("italic").click();
-                    } else if(e.keyCode == 76) {
+                        styleButtons.italic.click();
+                    } else if(e.keyCode == 85) {    //ctl+i
                         e.preventDefault();
-                        document.getElementById("alignLeft").click();
-                    } else if(e.keyCode == 69) {
+                        styleButtons.underline.click();
+                    } else if(e.keyCode == 76) {    //ctrl+l
                         e.preventDefault();
-                        document.getElementById("alignCenter").click();
-                    } else if(e.keyCode == 82) {
+                        styleButtons.alignLeft.click();
+                    } else if(e.keyCode == 69) {    //ctrl+e
                         e.preventDefault();
-                        document.getElementById("alignRight").click();
-                    } else if(e.keyCode == 55) {
+                        styleButtons.alignCenter.click();
+                    } else if(e.keyCode == 82) {    //ctrl+r
                         e.preventDefault();
-                        document.getElementById("unorderedList").click();
-                    } else if(e.keyCode == 56) {
+                        styleButtons.alignRight.click();
+                    } else if(e.keyCode == 55) {    //ctrl+7
                         e.preventDefault();
-                        document.getElementById("orderedList").click();
-                    } else if(e.keyCode == 83) {
+                        styleButtons.unorderedList.click();
+                    } else if(e.keyCode == 56) {    //ctrl+8
                         e.preventDefault();
-                        document.getElementById("saveRich").click();
-                    } else if(e.keyCode == 80) {
+                        styleButtons.orderedList.click();
+                    } else if(e.keyCode == 83) {    //ctrl+s
                         e.preventDefault();
-                        document.getElementById("savePlain").click();
-                    } else if(e.keyCode == 85) {
+                        otherButtons.saveRich.click();
+                    } else if(e.keyCode == 80) {    //ctrl+p
                         e.preventDefault();
-                        document.getElementById("upload").click();
+                        otherButtons.savePlain.click();
+                    } else if(e.keyCode == 70) {    //ctrl+u
+                        e.preventDefault();
+                        otherButtons.upload.click();
                     }
                 }
             }
 
-            iframe.onkeyup = function() {setShadeByCursor();}
+            iframe.onkeyup = function(e) {if (e.keyCode >= 37 && e.keyCode <= 40) setShadeByCursor();}
             iframe.onclick = function() {setShadeByCursor();}
 
             function setShadeByCursor() {
+                if (textbox.innerText.length > 1) {
+                    var anchorNode = textbox.ownerDocument.defaultView.getSelection().anchorNode.parentNode;
+                    var styleList = "";
+                    while (anchorNode != textbox && anchorNode != null) {
+                        styleList += "<" + anchorNode.tagName;
+                        if (anchorNode.tagName == "DIV") styleList += anchorNode.align;
+                        styleList += ">";
+                        anchorNode = anchorNode.parentNode;
+                    }
+                    console.log(styleList);
+                    if (styleList.includes("<B>")) styleButtons.bold.style.backgroundColor = "grey";
+                    else styleButtons.bold.style.backgroundColor = "#eeeeee";
 
+                    if (styleList.includes("<I>")) styleButtons.italic.style.backgroundColor = "grey";
+                    else styleButtons.italic.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<U>")) styleButtons.underline.style.backgroundColor = "grey";
+                    else styleButtons.underline.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<STRIKE>")) styleButtons.strikeThrough.style.backgroundColor = "grey";
+                    else styleButtons.strikeThrough.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<DIVleft>")) styleButtons.alignLeft.style.backgroundColor = "grey";
+                    else styleButtons.alignLeft.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<DIVcenter>")) styleButtons.alignCenter.style.backgroundColor = "grey";
+                    else styleButtons.alignCenter.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<DIVright>")) styleButtons.alignRight.style.backgroundColor = "grey";
+                    else styleButtons.alignRight.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<SUB>")) styleButtons.subscript.style.backgroundColor = "grey";
+                    else styleButtons.subscript.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<SUP>")) styleButtons.superscript.style.backgroundColor = "grey";
+                    else styleButtons.superscript.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<UL>")) styleButtons.unorderedList.style.backgroundColor = "grey";
+                    else styleButtons.unorderedList.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<OL>")) styleButtons.orderedList.style.backgroundColor = "grey";
+                    else styleButtons.orderedList.style.backgroundColor = "#eeeeee";
+
+                }
             }
 
             function toggleShade(element) {
@@ -138,34 +219,22 @@
             }
 
             //the first element in the array gets toggled
-            function switchShade(element, otherElements) {
-                toggleShade(element);
+            function switchShade(element, otherElements, toggle) {
+                if (toggle) toggleShade(element);
+                else element.style.backgroundColor = "grey";
                 for (i = 0; i < otherElements.length; i++) otherElements[i].style.backgroundColor = "#eeeeee";
             }
 
             function execCmd(command) {
                 iframe.document.execCommand(command, false, null);
-                textbox.focus();
+                textbox.focus();    //chrome
+                iframe.focus();    //firefox
             }
 
             function execCommandWithArg(command, arg) {
                 iframe.document.execCommand(command, false, arg);
-                textbox.focus();
-            }
-
-            function getCursorPosition(element) {
-                var doc = element.ownerDocument;
-                var win = doc.defaultView;
-                var sel, range, preCaretRange, caretOffset = 0;
-                sel = win.getSelection();
-                console.log(sel);
-                range = sel.getRangeAt(0);
-                preCaretRange = range.cloneRange();
-                preCaretRange.selectNodeContents(element);
-                preCaretRange.setEnd(range.endContainer, range.endOffset);
-                caretOffset = preCaretRange.toString().length;
-
-                return caretOffset;
+                textbox.focus();    //chrome
+                iframe.focus();    //firefox
             }
 
             function upload() {document.getElementById("upload").click();}
@@ -176,16 +245,13 @@
                     reader.readAsText(file, "UTF-8");
                     reader.onload = function (evt) {
                         if (file.name.includes(".txt")) {
-                            iframe.innerText = evt.target.result;
-                            if (iframe.innerText) iframe.innerText = evt.target.result;
+                            textbox.innerText = evt.target.result;
                             docName.value = file.name.substring(0, file.name.length - 4);
                         } else if (file.name.includes(".html")) {
-                            iframe.innerHTML = evt.target.result;
-                            if (iframe.innerText) iframe.innerHTML = evt.target.result;
+                            textbox.innerHTML = evt.target.result;
                             docName.value = file.name.substring(0, file.name.length - 5);
                         } else if (file.name.includes(".rtx")) {
-                            iframe.innerHTML = evt.target.result;
-                            if (iframe.innerText) iframe.innerHTML = evt.target.result;
+                            textbox.innerHTML = evt.target.result;
                             docName.value = file.name.substring(0, file.name.length - 4);
                         } else alert("Wrong file format");
                     }
@@ -231,58 +297,72 @@
 
             }
 
-            document.getElementById("bold").onclick = function() {
+            styleButtons.bold.onclick = function() {
                 execCmd('bold');
                 toggleShade(this);
             }
 
-            document.getElementById("italic").onclick = function() {
+            styleButtons.italic.onclick = function() {
                 execCmd('italic');
                 toggleShade(this);
             }
 
-            document.getElementById("strikeThrough").onclick = function() {
+            styleButtons.underline.onclick = function() {
+                execCmd('underline');
+                toggleShade(this);
+            }
+
+            styleButtons.strikeThrough.onclick = function() {
                 execCmd('strikethrough');
                 toggleShade(this);
             }
 
-            document.getElementById("alignLeft").onclick = function() {
+            styleButtons.alignLeft.onclick = function() {
                 execCmd('justifyleft');
-                console.log(document.getElementById("alignCenter"));
-                console.log(document.getElementById("alignRight"));
-                switchShade(this, [document.getElementById("alignCenter"), document.getElementById("alignRight")]);
+                switchShade(this, [styleButtons.alignCenter, styleButtons.alignRight], false);
             }
 
-            document.getElementById("alignCenter").onclick = function() {
+            styleButtons.alignCenter.onclick = function() {
                 execCmd('justifycenter');
-                switchShade(this, [document.getElementById("alignLeft"), document.getElementById("alignRight")]);
+                switchShade(this, [styleButtons.alignLeft, styleButtons.alignRight], false);
             }
 
-            document.getElementById("alignRight").onclick = function() {
+            styleButtons.alignRight.onclick = function() {
                 execCmd('justifyright');
-                console.log(document.getElementById("alignCenter"));
-                console.log(document.getElementById("alignRight"));
-                switchShade(this, [document.getElementById("alignLeft"), document.getElementById("alignCenter")]);
+                switchShade(this, [styleButtons.alignLeft, styleButtons.alignCenter], false);
             }
 
-            document.getElementById("subscript").onclick = function() {
+            styleButtons.subscript.onclick = function() {
                 execCmd('subscript');
-                switchShade(this, [document.getElementById("superscript")]);
+                switchShade(this, [styleButtons.superscript], true);
             }
 
-            document.getElementById("superscript").onclick = function() {
+            styleButtons.superscript.onclick = function() {
                 execCmd('superscript');
-                switchShade(this, [document.getElementById("subscript")]);
+                switchShade(this, [styleButtons.subscript], true);
             }
 
-            document.getElementById("unorderedList").onclick = function() {
+            styleButtons.unorderedList.onclick = function() {
                 execCmd('insertUnorderedList');
-                switchShade(this, [document.getElementById("orderedList")]);
+                switchShade(this, [styleButtons.orderedList], true);
             }
 
-            document.getElementById("orderedList").onclick = function() {
+            styleButtons.orderedList.onclick = function() {
                 execCmd('insertOrderedList');
-                switchShade(this, [document.getElementById("unorderedList")]);
+                switchShade(this, [styleButtons.unorderedList], true);
+            }
+
+            function getCursorPosition() {
+                var range;
+                var preCaretRange;
+
+                range = textbox.ownerDocument.defaultView.getSelection().getRangeAt(0);
+                preCaretRange = range.cloneRange();
+                preCaretRange.selectNodeContents(textbox);
+                preCaretRange.setEnd(range.endContainer, range.endOffset);
+                preCaretRange = preCaretRange.toString().length;
+
+                return preCaretRange;
             }
 
             function logValues() {

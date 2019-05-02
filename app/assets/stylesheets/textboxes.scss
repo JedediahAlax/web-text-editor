@@ -37,27 +37,21 @@
   padding: 0px;
 }
 
-.fileupload {
-    height: 20px;
-    width: 120px;
-}
-
 .select {
-    height: 20px;
+    height: 25px;
     width: 75px;
+    margin: 2px;
+    padding: 0px;
+    border-radius: 6px;
 }
 
 .docName {
-    width: 120px;
+    width: 180px;
     height: 30px;
     border: 1px solid black;
     resize: none;
-    overflow: auto;
+    overflow: hidden;
     font-size: 16px;
-}
-
-option {
-
 }
 
 iframe {
