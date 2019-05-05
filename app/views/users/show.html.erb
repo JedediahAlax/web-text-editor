@@ -13,7 +13,16 @@
         <ol class="documents">
           <%= render @documents %>
         </ol>
-        <%= will_paginate @documents %>
+            <%= will_paginate @documents %>
         <% end %>
       </div>
   </div>
+
+  <%= form_for(@document) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <div class="field">
+        <%= f.text_area :title, placeholder: "title me..." %>
+      <%= f.text_area :content, placeholder: "Compose new document..." %>
+    </div>
+    <%= f.submit "Post", class: "btn btn-primary" %>
+  <% end %>

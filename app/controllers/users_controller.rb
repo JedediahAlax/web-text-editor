@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
     @user = User.find(params[:id])
     @documents = @user.documents.paginate(page: params[:page])
+    @document = current_user.documents.build if logged_in?
     #debugger
   end
 
