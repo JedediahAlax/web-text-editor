@@ -23,8 +23,9 @@ Rails.application.routes.draw do
     post '/signup', to: 'users#create'
 
 
+    #get '/documents/:id', to: 'documents#edit'
+    get '/documents/new', to: 'documents#new'
     get '/documents/:id', to: 'documents#edit'
-
     # don't think we need this anymore
     # put '/users/:id', to: "users#show", as: :user
 

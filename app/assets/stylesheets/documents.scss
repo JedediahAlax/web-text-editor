@@ -1,3 +1,75 @@
 // Place all the styles related to the Documents controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+// Place all the styles related to the Textboxes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.parent {
+  position: relative;
+  width: 800px;
+  height: 22px;
+  margin: 0 auto;
+}
+
+.btn-group {
+    width: 800px;
+    height: 35px;
+    margin: 0;
+    padding: 3px;
+    background-color: #cccccc;
+    border-radius: 6px;
+}
+
+.btn1 {
+    height:25px;
+    width: 30px;
+    background-color: #eeeeee;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    margin: 2px;
+    padding: 0px;
+}
+.btn2 {
+  height:25px;
+  width: 100px;
+  background-color: #eeeeee;
+  border: 1px solid #000000;
+  border-radius: 6px;
+  margin: 2px;
+  padding: 0px;
+}
+
+.select {
+    height: 25px;
+    width: 75px;
+    margin: 2px;
+    padding: 0px;
+    border-radius: 6px;
+}
+
+.docName {
+    width: 180px;
+    height: 30px;
+    border: 1px solid black;
+    resize: none;
+    overflow: hidden;
+    font-size: 16px;
+}
+
+iframe {
+    background-color: white;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 800px;
+    resize: none;
+    border: 2px solid black;
+    display: inline-block;
+    line-height: normal;
+    margin: 0;
+    padding: 40px;
+    overflow: none;
+    font-size: 14px;
+    padding-top: 5px;
+}

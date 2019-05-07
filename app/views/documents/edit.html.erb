@@ -9,16 +9,21 @@
     <% end %>
     <body>
 
+      <div class="parent">
+
+          <% if logged_in? %>
+            <%= form_for @userDoc, html: {id: :doc_form } do |f| %>
+            <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off",  :placeholder => "Title"  %>
+            <%= f.hidden_field :content, :value =>  " " , id: 'richT'%>
+
+            <%= f.submit "Save to Profile", class: "btn-sm btn btn-primary", id: 'subBtn' %>
+            <% end %>
+            <% else %>
+              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
+          <% end %>
 
 
-        <div class="parent">
 
-        <!-- REMOVED FOR TITLE OF DOCUMENT DISPLAY -->
-        <!--  <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea> -->
-
-
-              <!-- Get title of document to display in textarea for editing -->
-              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"><%= @userDoc.title %></textarea>
 
             <div class="btn-group" role="group">
                 <button class="btn1" id="bold" title="ctrl+b" style="font-size: 12px; font-weight: bold;">B</button>
@@ -63,7 +68,7 @@
                 <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
                 <!-- added new button to save to db, should appear only if user is logged in -->
                 <% if logged_in? %>
-                <button class="btn2" id="saveDB" onclick="saveToDatabase">Save</button>
+                <button class="btn2" id="saveDB" onclick="saveToDatabase();">Save</button>
                 <% end %>
 
             <!-- need to restlyle the divs in this section-->
@@ -72,6 +77,8 @@
             <div style="width: 100%; height: 1px;"></div>
             <iframe id="richTE"></iframe>
         </div>
+
+
 
         <script type="text/javascript">
             var styleButtons = {
@@ -95,25 +102,19 @@
                 "upload": document.getElementById("upload"),
                 "saveDB": document.getElementById("saveDB")
             };
-
+            var richT = document.getElementById("richT");
+            console.log(richT);
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox = iframe.document.body;
+            //var docName = document.getElementById("docName");
 
-
-
-//******************************************************************************************//
-            // REMOVED FOR TITLE OF DOCUMENT TO SHOW IN TEXT AREA
-            //<!-- var docName = document.getElementById("docName"); -->
-            //docName.value = docTitle;
-
+            //docName.value = "New Document"
 
 
             //for chrome
             iframe.document.designMode = "On";
             textbox.style.wordWrap = 'break-word';
-
-            textbox.innerText = @userDoc.content;
-
+            textbox.innerHTML = gon.userDoc.content;
             textbox.focus();
 
             // for firefox
@@ -121,8 +122,12 @@
                 iframe.document.designMode = "On";
                 textbox = iframe.document.body;
                 textbox.style.wordWrap = 'break-word';
-                textbox.innerText = "\n";
+                textbox.innerHTML = "\n";
                 iframe.focus();
+            }
+
+            document.getElementById("subBtn").onclick = function() {
+              richT.value = textbox.innerHTML;
             }
 
             document.onkeydown = function(e) {if (e.which == 9) e.preventDefault();}    // allows for tabs NOTE: doesn't work for firefox
@@ -197,6 +202,8 @@
 
                 }
             }
+
+
 
             function toggleShade(element) {
                 if (element.style.backgroundColor != "grey") element.style.backgroundColor = "grey";
@@ -273,6 +280,13 @@
             }
 
             function saveToDatabase() {
+                var title = document.getElementById("docName").value;
+                var text = document.getElementById("richTE").contentWindow.document.body.innerHTML;
+
+                document.forms["doc_form"].title.value = title;
+                document.forms["doc_form"].content.value = text;
+
+                document.getElementById("doc_form").submit();
 
             }
 
@@ -352,5 +366,7 @@
                 console.log({"text": textbox.innerText, "html": textbox.innerHTML});
             }
         </script>
+
+
     </body>
 </html>

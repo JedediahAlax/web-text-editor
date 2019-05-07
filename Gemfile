@@ -8,6 +8,8 @@ gem 'rails', '~> 5.2.3'
 # added bootstrap for style
 # gem 'bootstrap-sass', '3.3.7'
 
+gem 'gon' 
+
 gem 'bootstrap-sass', '~> 3.4.1'
 
 gem 'will_paginate', '3.1.7'

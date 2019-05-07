@@ -8,8 +8,10 @@
     </section>
   </aside>
   <div class="col-md-8">
+    <%= link_to "NEW DOC", '/documents/new' %>
     <% if @user.documents.any? %>
       <h3>Documents (<%= @user.documents.count %>)</h3>
+
         <ol class="documents">
           <%= render @documents %>
         </ol>
@@ -17,12 +19,3 @@
         <% end %>
       </div>
   </div>
-
-  <%= form_for(@document) do |f| %>
-    <%= render 'shared/error_messages', object: f.object %>
-    <div class="field">
-        <%= f.text_area :title, placeholder: "title me..." %>
-      <%= f.text_area :content, placeholder: "Compose new document..." %>
-    </div>
-    <%= f.submit "Post", class: "btn btn-primary" %>
-  <% end %>
