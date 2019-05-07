@@ -13,16 +13,16 @@
 
           <% if logged_in? %>
             <%= form_for @document, html: {id: :doc_form } do |f| %>
-            <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off",  :placeholder => "Title"  %>
+            <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off",  :placeholder => "Title" %>
             <%= f.hidden_field :content, :value =>  " " , id: 'richT'%>
 
             <%= f.submit "Save to Profile", class: "btn-sm btn btn-primary", id: 'subBtn' %>
             <% end %>
             <% else %>
-              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
+
           <% end %>
 
-
+              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
 
 
             <div class="btn-group" role="group">
@@ -67,9 +67,6 @@
                 <button class="btn2" onclick="upload();">Upload</button>
                 <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
                 <!-- added new button to save to db, should appear only if user is logged in -->
-                <% if logged_in? %>
-                <button class="btn2" id="saveDB" onclick="saveToDatabase();">Save</button>
-                <% end %>
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -106,10 +103,10 @@
             console.log(richT);
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox = iframe.document.body;
-            //var docName = document.getElementById("docName");
+            var docName = document.getElementById("docName");
+            docName.style.display = "none";
 
-            //docName.value = "New Document"
-
+            docName.value = "untitled"
 
             //for chrome
             iframe.document.designMode = "On";

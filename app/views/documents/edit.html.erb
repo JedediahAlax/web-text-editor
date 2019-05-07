@@ -19,10 +19,10 @@
             <%= f.submit "Save to Profile", class: "btn-sm btn btn-primary", id: 'subBtn' %>
             <% end %>
             <% else %>
-              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
+
           <% end %>
 
-
+              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
 
 
             <div class="btn-group" role="group">
@@ -66,10 +66,6 @@
                 <!--<button class="btn2" id="saveRich" onclick="saveToLocal('plain')">Save Rich</button> -->
                 <button class="btn2" onclick="upload();">Upload</button>
                 <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
-                <!-- added new button to save to db, should appear only if user is logged in -->
-                <% if logged_in? %>
-                <button class="btn2" id="saveDB" onclick="saveToDatabase();">Save</button>
-                <% end %>
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -106,9 +102,10 @@
             console.log(richT);
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox = iframe.document.body;
-            //var docName = document.getElementById("docName");
+            var docName = document.getElementById("docName");
+            docName.style.display = "none";
 
-            //docName.value = "New Document"
+            docName.value = "untitled"
 
 
             //for chrome
@@ -122,7 +119,7 @@
                 iframe.document.designMode = "On";
                 textbox = iframe.document.body;
                 textbox.style.wordWrap = 'break-word';
-                textbox.innerHTML = "\n";
+                textbox.innerHTML = textbox.innerHTML = gon.userDoc.content;;
                 iframe.focus();
             }
 
