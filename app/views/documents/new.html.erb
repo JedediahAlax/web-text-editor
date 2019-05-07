@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Textitor</title>
+        <script src="https://use.fontawesome.com/aac5c45839.js"></script>
+    </head>
+    <% if logged_in? %>
+        <div> <h3>   <%= @user.name %> </h3> </div>
+    <% end %>
+    <body>
+
+      <div class="parent">
+
+          <% if logged_in? %>
+            <%= form_for @document, html: {id: :doc_form } do |f| %>
+            <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off",  :placeholder => "Title"  %>
+            <%= f.hidden_field :content, :value =>  " " , id: 'richT'%>
+
+            <%= f.submit "Save to Profile", class: "btn-sm btn btn-primary", id: 'subBtn' %>
+            <% end %>
+            <% else %>
+              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
+          <% end %>
+
+
+
+
+            <div class="btn-group" role="group">
+                <button class="btn1" id="bold" title="ctrl+b" style="font-size: 12px; font-weight: bold;">B</button>
+                <button class="btn1" id="italic" title="ctrl+i" style="font-weight: bold; font-style: italic; font-family: Times;">I</button>
+                <button class="btn1" id="underline" title="ctrl+u" style="text-decoration: underline;">U</button>
+                <button class="btn1" id="strikeThrough" title=""><i class="fa fa-strikethrough"></i></button>
+                <button class="btn1" id="alignLeft" title="ctrl+l"><i class="fa fa-align-left"></i></button>
+                <button class="btn1" id="alignCenter" title="ctrl+e"><i class="fa fa-align-center"></i></button>
+                <button class="btn1" id="alignRight" title="ctrl+r"><i class="fa fa-align-right"></i></button>
+                <button class="btn1" id="subscript" title=""><i class="fa fa-subscript"></i></button>
+                <button class="btn1" id="superscript" title=""><i class="fa fa-superscript"></i></button>
+                <button class="btn1" id="unorderedList" title="ctrl+7"><i class="fa fa-list-ul"></i></button>
+                <button class="btn1" id="orderedList" title="ctrl+8"><i class="fa fa-list-ol"></i></button>
+
+                <!-- adds an html dropdown menu, allows user to choose font size-->
+                <p>Font: </p>
+                <select class="select" onchange="execCommandWithArg('fontSize', this.value);">
+                    <option  value ="1">8</option>
+                    <option  value ="2">10</option>
+                    <option  value ="3" selected="">12</option>
+                    <option  value ="4">16</option>
+                    <option  value ="5">20</option>
+                    <option  value ="6">24</option>
+                    <option  value ="7">30</option>
+                </select>
+
+                <!-- maybe a bit too complex to add a user input option here-->
+                <p>Type:</p>
+                <select class="select" onchange="execCommandWithArg('fontName', this.value);">
+                    <option value="Arial">Arial</option>
+                    <option value="Comic Sans">Comic Sans MS</option>
+                    <option value="Courier">Courier</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Tahoma">Tahoma</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Verdana">Verdana</option>
+                </select>
+
+                <button class="btn2" id="savePlain" onclick="saveToLocal('rich')">Download</button>
+                <!--<button class="btn2" id="saveRich" onclick="saveToLocal('plain')">Save Rich</button> -->
+                <button class="btn2" onclick="upload();">Upload</button>
+                <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
+                <!-- added new button to save to db, should appear only if user is logged in -->
+                <% if logged_in? %>
+                <button class="btn2" id="saveDB" onclick="saveToDatabase();">Save</button>
+                <% end %>
+
+            <!-- need to restlyle the divs in this section-->
+            </div>
+
+            <div style="width: 100%; height: 1px;"></div>
+            <iframe id="richTE"></iframe>
+        </div>
+
+
+
+        <script type="text/javascript">
+            var styleButtons = {
+                "bold": document.getElementById("bold"),
+                "italic": document.getElementById("italic"),
+                "underline": document.getElementById("underline"),
+                "strikeThrough": document.getElementById("strikeThrough"),
+                "alignLeft": document.getElementById("alignLeft"),
+                "alignCenter": document.getElementById("alignCenter"),
+                "alignRight": document.getElementById("alignRight"),
+                "subscript": document.getElementById("subscript"),
+                "superscript": document.getElementById("superscript"),
+                "unorderedList": document.getElementById("unorderedList"),
+                "orderedList": document.getElementById("orderedList")
+            };
+
+            var otherButtons = {
+                "savePlain": document.getElementById("savePlain"),
+                "saveRich": document.getElementById("saveRich"),
+                "uploadButton": document.getElementById("uploadButton"),
+                "upload": document.getElementById("upload"),
+                "saveDB": document.getElementById("saveDB")
+            };
+            var richT = document.getElementById("richT");
+            console.log(richT);
+            var iframe = document.getElementById("richTE").contentWindow;
+            var textbox = iframe.document.body;
+            //var docName = document.getElementById("docName");
+
+            //docName.value = "New Document"
+
+
+            //for chrome
+            iframe.document.designMode = "On";
+            textbox.style.wordWrap = 'break-word';
+            textbox.innerHTML = "\n";
+            textbox.focus();
+
+            // for firefox
+            iframe.onload = function() {
+                iframe.document.designMode = "On";
+                textbox = iframe.document.body;
+                textbox.style.wordWrap = 'break-word';
+                textbox.innerHTML = "\n";
+                iframe.focus();
+            }
+
+            document.getElementById("subBtn").onclick = function() {
+              richT.value = textbox.innerHTML;
+            }
+
+            document.onkeydown = function(e) {if (e.which == 9) e.preventDefault();}    // allows for tabs NOTE: doesn't work for firefox
+
+            iframe.onkeydown = function(e) {
+                logValues();
+                console.log(e.keyCode);
+                if (e.ctrlKey) {
+                    e.preventDefault();
+
+                    if (e.keyCode == 66) styleButtons.bold.click();    //ctl+b
+                    else if(e.keyCode == 73) styleButtons.italic.click();    //ctl+i
+                    else if(e.keyCode == 85) styleButtons.underline.click();    //ctl+i
+                    else if(e.keyCode == 76) styleButtons.alignLeft.click();    //ctrl+l
+                    else if(e.keyCode == 69) styleButtons.alignCenter.click();    //ctrl+e
+                    else if(e.keyCode == 82) styleButtons.alignRight.click();    //ctrl+r
+                    else if(e.keyCode == 55) styleButtons.unorderedList.click();    //ctrl+7
+                    else if(e.keyCode == 56) styleButtons.orderedList.click();    //ctrl+8
+                    else if(e.keyCode == 83 && otherButtons.saveDB != null) otherButtons.saveDB.click();    //ctrl+s
+                    else if(e.keyCode == 68) otherButtons.saveRich.click();    //ctrl+d
+                    //else if(e.keyCode == 80) otherButtons.savePlain.click();    //ctrl+p
+                    else if(e.keyCode == 70) otherButtons.upload.click();    //ctrl+u
+                }
+            }
+
+            iframe.onkeyup = function(e) {if (e.keyCode >= 37 && e.keyCode <= 40) setShadeByCursor();}
+            iframe.onclick = function() {setShadeByCursor();}
+
+            function setShadeByCursor() {
+                if (textbox.innerText.length > 1) {
+                    var anchorNode = textbox.ownerDocument.defaultView.getSelection().anchorNode.parentNode;
+                    var styleList = "";
+                    while (anchorNode != textbox && anchorNode != null) {
+                        styleList += "<" + anchorNode.tagName;
+                        if (anchorNode.tagName == "DIV") styleList += anchorNode.align;
+                        styleList += ">";
+                        anchorNode = anchorNode.parentNode;
+                    }
+
+                    if (styleList.includes("<B>")) styleButtons.bold.style.backgroundColor = "grey";
+                    else styleButtons.bold.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<I>")) styleButtons.italic.style.backgroundColor = "grey";
+                    else styleButtons.italic.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<U>")) styleButtons.underline.style.backgroundColor = "grey";
+                    else styleButtons.underline.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<STRIKE>")) styleButtons.strikeThrough.style.backgroundColor = "grey";
+                    else styleButtons.strikeThrough.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<DIVleft>")) styleButtons.alignLeft.style.backgroundColor = "grey";
+                    else styleButtons.alignLeft.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<DIVcenter>")) styleButtons.alignCenter.style.backgroundColor = "grey";
+                    else styleButtons.alignCenter.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<DIVright>")) styleButtons.alignRight.style.backgroundColor = "grey";
+                    else styleButtons.alignRight.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<SUB>")) styleButtons.subscript.style.backgroundColor = "grey";
+                    else styleButtons.subscript.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<SUP>")) styleButtons.superscript.style.backgroundColor = "grey";
+                    else styleButtons.superscript.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<UL>")) styleButtons.unorderedList.style.backgroundColor = "grey";
+                    else styleButtons.unorderedList.style.backgroundColor = "#eeeeee";
+
+                    if (styleList.includes("<OL>")) styleButtons.orderedList.style.backgroundColor = "grey";
+                    else styleButtons.orderedList.style.backgroundColor = "#eeeeee";
+
+                }
+            }
+
+
+
+            function toggleShade(element) {
+                if (element.style.backgroundColor != "grey") element.style.backgroundColor = "grey";
+                else element.style.backgroundColor = "#eeeeee";
+            }
+
+            //the first element in the array gets toggled
+            function switchShade(element, otherElements, toggle) {
+                if (toggle) toggleShade(element);
+                else element.style.backgroundColor = "grey";
+                for (i = 0; i < otherElements.length; i++) otherElements[i].style.backgroundColor = "#eeeeee";
+            }
+
+            function execCmd(command) {
+                iframe.document.execCommand(command, false, null);
+                textbox.focus();    //chrome
+                iframe.focus();    //firefox
+            }
+
+            function execCommandWithArg(command, arg) {
+                iframe.document.execCommand(command, false, arg);
+                textbox.focus();    //chrome
+                iframe.focus();    //firefox
+            }
+
+            function upload() {document.getElementById("upload").click();}
+            function loadFromLocal(files) {
+                var file = files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.readAsText(file, "UTF-8");
+                    reader.onload = function (evt) {
+                        if (file.name.includes(".txt")) {
+                            textbox.innerText = evt.target.result;
+                            docName.value = file.name.substring(0, file.name.length - 4);
+                        } else if (file.name.includes(".html")) {
+                            textbox.innerHTML = evt.target.result;
+                            docName.value = file.name.substring(0, file.name.length - 5);
+                        } else if (file.name.includes(".rtx")) {
+                            textbox.innerHTML = evt.target.result;
+                            docName.value = file.name.substring(0, file.name.length - 4);
+                        } else alert("Wrong file format");
+                    }
+                    reader.onerror = function (evt) {
+                        alert("Error loading file");
+                    }
+                }
+            }
+
+            function saveToLocal(textType) {
+                var text = "";
+                var fileName = docName.value;
+                if (textType === "plain") {
+                    fileName = fileName + ".txt";
+                    text = textbox.innerText;
+                } else {
+                    fileName = fileName + ".rtx";
+                    text = textbox.innerHTML;
+                }
+
+                var downloadLink = document.createElement("a");
+                downloadLink.download = fileName;
+                downloadLink.innerHTML = "Download File";
+                downloadLink.href = window.URL.createObjectURL(new Blob([text], {type:"text/plain"}));
+                downloadLink.onclick = destroyClickedElement;
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+
+                function destroyClickedElement(event) {
+                    document.body.removeChild(event.target);
+                }
+
+                downloadLink.click();
+            }
+
+            function saveToDatabase() {
+                var title = document.getElementById("docName").value;
+                var text = document.getElementById("richTE").contentWindow.document.body.innerHTML;
+
+                document.forms["doc_form"].title.value = title;
+                document.forms["doc_form"].content.value = text;
+
+                document.getElementById("doc_form").submit();
+
+            }
+
+            function loadFromDatabase() {
+
+            }
+
+            styleButtons.bold.onclick = function() {
+                execCmd('bold');
+                toggleShade(this);
+            }
+
+            styleButtons.italic.onclick = function() {
+                execCmd('italic');
+                toggleShade(this);
+            }
+
+            styleButtons.underline.onclick = function() {
+                execCmd('underline');
+                toggleShade(this);
+            }
+
+            styleButtons.strikeThrough.onclick = function() {
+                execCmd('strikethrough');
+                toggleShade(this);
+            }
+
+            styleButtons.alignLeft.onclick = function() {
+                execCmd('justifyleft');
+                switchShade(this, [styleButtons.alignCenter, styleButtons.alignRight], false);
+            }
+
+            styleButtons.alignCenter.onclick = function() {
+                execCmd('justifycenter');
+                switchShade(this, [styleButtons.alignLeft, styleButtons.alignRight], false);
+            }
+
+            styleButtons.alignRight.onclick = function() {
+                execCmd('justifyright');
+                switchShade(this, [styleButtons.alignLeft, styleButtons.alignCenter], false);
+            }
+
+            styleButtons.subscript.onclick = function() {
+                execCmd('subscript');
+                switchShade(this, [styleButtons.superscript], true);
+            }
+
+            styleButtons.superscript.onclick = function() {
+                execCmd('superscript');
+                switchShade(this, [styleButtons.subscript], true);
+            }
+
+            styleButtons.unorderedList.onclick = function() {
+                execCmd('insertUnorderedList');
+                switchShade(this, [styleButtons.orderedList], true);
+            }
+
+            styleButtons.orderedList.onclick = function() {
+                execCmd('insertOrderedList');
+                switchShade(this, [styleButtons.unorderedList], true);
+            }
+
+            function getCursorPosition() {
+                var range;
+                var preCaretRange;
+
+                range = textbox.ownerDocument.defaultView.getSelection().getRangeAt(0);
+                preCaretRange = range.cloneRange();
+                preCaretRange.selectNodeContents(textbox);
+                preCaretRange.setEnd(range.endContainer, range.endOffset);
+                preCaretRange = preCaretRange.toString().length;
+
+                return preCaretRange;
+            }
+
+            function logValues() {
+                console.log({"text": textbox.innerText, "html": textbox.innerHTML});
+            }
+        </script>
+
+
+    </body>
+</html>
