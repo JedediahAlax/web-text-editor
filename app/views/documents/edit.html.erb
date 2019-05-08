@@ -13,6 +13,7 @@
 
           <% if logged_in? %>
             <%= form_for @userDoc, html: {id: :doc_form } do |f| %>
+
             <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off",  :placeholder => "Title"  %>
             <%= f.hidden_field :content, :value =>  " " , id: 'richT'%>
 

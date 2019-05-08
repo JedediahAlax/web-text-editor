@@ -25,7 +25,7 @@
 			<li class="nav-item"><%= link_to "Log out", logout_path, method: :delete, class: "nav-link" %>
 
 					<% else %>
-					<li class="nav-item"> <%= link_to  "Use Texitor", "/documents/new", class: "nav-link"%> </li>
+					<li class="nav-item"> <%= link_to  "Use Texitor", '/textboxes/textbox', class: "nav-link"%> </li>
 					<li class="nav-item"> <%= link_to  "Help", "/splash_page/help", class: "nav-link"%> </li>
 					<li class="nav-item"> <%= link_to  "Sign In", "/sessions/new", class: "nav-link"%> </li>
 					<% end %>
