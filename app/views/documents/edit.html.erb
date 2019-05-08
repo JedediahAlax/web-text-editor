@@ -13,8 +13,9 @@
 
           <% if logged_in? %>
             <%= form_for @userDoc, html: {id: :doc_form } do |f| %>
+            <%= render 'shared/doc_error_message' %>
 
-            <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off",  :placeholder => "Title"  %>
+            <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off", id: 'docT'  %>
             <%= f.hidden_field :content, :value =>  " " , id: 'richT'%>
 
             <%= f.submit "Save to Profile", class: "btn-sm btn btn-primary", id: 'subBtn' %>
@@ -78,6 +79,7 @@
 
 
         <script type="text/javascript">
+
             var styleButtons = {
                 "bold": document.getElementById("bold"),
                 "italic": document.getElementById("italic"),
@@ -100,7 +102,8 @@
                 "saveDB": document.getElementById("saveDB")
             };
             var richT = document.getElementById("richT");
-            console.log(richT);
+            var docT = document.getElementById("docT")
+
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox = iframe.document.body;
             var docName = document.getElementById("docName");
@@ -126,6 +129,8 @@
 
             document.getElementById("subBtn").onclick = function() {
               richT.value = textbox.innerHTML;
+              if (docT.value == "")
+              docT.value = docName.value;
             }
 
             document.onkeydown = function(e) {if (e.which == 9) e.preventDefault();}    // allows for tabs NOTE: doesn't work for firefox
@@ -277,20 +282,6 @@
                 downloadLink.click();
             }
 
-            function saveToDatabase() {
-                var title = document.getElementById("docName").value;
-                var text = document.getElementById("richTE").contentWindow.document.body.innerHTML;
-
-                document.forms["doc_form"].title.value = title;
-                document.forms["doc_form"].content.value = text;
-
-                document.getElementById("doc_form").submit();
-
-            }
-
-            function loadFromDatabase() {
-
-            }
 
             styleButtons.bold.onclick = function() {
                 execCmd('bold');

@@ -23,7 +23,7 @@ end
 def update
   @document = Document.find(params[:id])
   if @document.update_attributes(document_params)
-    flash[:sucess] = "Document Updated!"
+    flash.now[:sucess] = "Document Updated!"
   redirect_to current_user
   else
     flash.now[:danger] = "You must provide a title for your document."

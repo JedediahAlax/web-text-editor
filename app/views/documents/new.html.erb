@@ -13,7 +13,7 @@
 
           <% if logged_in? %>
             <%= form_for @document, html: {id: :doc_form } do |f| %>
-            
+
             <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off",  :placeholder => "Title" %>
             <%= f.hidden_field :content, :value =>  " " , id: 'richT'%>
 
@@ -275,21 +275,6 @@
                 }
 
                 downloadLink.click();
-            }
-
-            function saveToDatabase() {
-                var title = document.getElementById("docName").value;
-                var text = document.getElementById("richTE").contentWindow.document.body.innerHTML;
-
-                document.forms["doc_form"].title.value = title;
-                document.forms["doc_form"].content.value = text;
-
-                document.getElementById("doc_form").submit();
-
-            }
-
-            function loadFromDatabase() {
-
             }
 
             styleButtons.bold.onclick = function() {
