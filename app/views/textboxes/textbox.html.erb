@@ -48,20 +48,33 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
-                <button class="btn2" onclick="openForm()">Download</button>
+                <button class="btn2" id="download" onclick="openForm()">Download</button>
                   <div class = "form-popup" id="myForm" style="display: none;">
                     <form class="form-container" onsubmit="return false;">
                       <h2>Which Filetype?</h2>
-                        <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Rich (.rtx)</button>
-                        <button class="btn2" id="savePlain" onclick="saveToLocal('plain')">Plain (.txt)</button>
-                        <button type="button" class="btn cancel" style="color: red;" onclick="closeForm()">Close</button>
+                      <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Rich (.rtx)</button>
+                      <button class="btn2" id="savePlain" onclick="saveToLocal('plain')">Plain (.txt)</button>
+                      <button type="button" class="btn cancel" style="color: red;" onclick="closeForm()">Close</button>
                     </form>
                   </div>
+
+                  <button class="btn2" onclick="upload();">Upload</button>
+                  <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
             </div>
 
             <div style="width: 100%; height: 1px;"></div>
             <iframe id="richTE"></iframe>
         </div>
+        <script>
+          function openForm() {
+            document.getElementById("myForm").style.display = "block";
+            document.getElementById("download").style.display = "none";
+                        }
+          function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+            document.getElementById("download").style.display = "block";
+                        }
+        </script>
 
         <script type="text/javascript">
             var styleButtons = {
