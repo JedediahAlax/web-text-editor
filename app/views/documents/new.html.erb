@@ -13,14 +13,15 @@
 
           <% if logged_in? %>
             <%= form_for @document, html: {id: :doc_form } do |f| %>
-            <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off",  :placeholder => "Title"  %>
+            <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off",  :placeholder => "Title", id: 'documentName'  %>
             <%= f.hidden_field :content, :value =>  " " , id: 'richT'%>
 
             <%= f.submit "Save to Profile", class: "btn-sm btn btn-primary", id: 'subBtn' %>
             <% end %>
             <% else %>
-              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
+              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false" placeholder="Untitled"></textarea>
           <% end %>
+              <textarea class="docName" id="docName" rows="1" maxlength="44" style="display: none" spellcheck="false" placeholder="Untitled"></textarea>
 
 
 
@@ -62,14 +63,19 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
-                <button class="btn2" id="savePlain" onclick="saveToLocal('rich')">Download</button>
-                <!--<button class="btn2" id="saveRich" onclick="saveToLocal('plain')">Save Rich</button> -->
-                <button class="btn2" onclick="upload();">Upload</button>
-                <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
-                <!-- added new button to save to db, should appear only if user is logged in -->
-                <% if logged_in? %>
-                <button class="btn2" id="saveDB" onclick="saveToDatabase();">Save</button>
-                <% end %>
+                <button class="btn2" onclick="openForm()">Download</button>
+  <div class = "form-popup" id="myForm" style="display: none;">
+    <form class="form-container" onsubmit="return false;">
+      <h2>Which Filetype?</h2>
+      <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Rich (.rtx)</button>
+      <button class="btn2" id="savePlain" onclick="saveToLocal('plain')">Plain (.txt)</button>
+      <button type="button" class="btn cancel" style="color: red;" onclick="closeForm()">Close</button>
+    </form>
+  </div>
+
+  <button class="btn2" onclick="upload();">Upload</button>
+  <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
+  <!-- added new button to save to db, should appear only if user is logged in -->
 
             <!-- need to restlyle the divs in this section-->
             </div>
@@ -79,7 +85,15 @@
         </div>
 
 
+        <script>
+                function openForm() {
+                  document.getElementById("myForm").style.display = "block";
+                }
+                function closeForm() {
+                  document.getElementById("myForm").style.display = "none";
 
+                }
+                </script>
         <script type="text/javascript">
             var styleButtons = {
                 "bold": document.getElementById("bold"),
@@ -255,6 +269,9 @@
 
             function saveToLocal(textType) {
                 var text = "";
+                <% if logged_in? %>
+                docName.value = documentName.value;
+                <%end%>
                 var fileName = docName.value;
                 if (textType === "plain") {
                     fileName = fileName + ".txt";

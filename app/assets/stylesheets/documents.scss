@@ -1,6 +1,3 @@
-// Place all the styles related to the Documents controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
 // Place all the styles related to the Textboxes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
@@ -10,6 +7,20 @@
   width: 800px;
   height: 22px;
   margin: 0 auto;
+}
+
+.form-popup {
+  display: none;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: #cccccc;
 }
 
 .btn-group {
