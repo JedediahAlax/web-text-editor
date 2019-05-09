@@ -23,7 +23,9 @@
           <% end %>
               <textarea class="docName" id="docName" rows="1" maxlength="44" style="display: none" spellcheck="false" placeholder="Untitled"></textarea>
 
+          <% end %>
 
+              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
 
 
             <div class="btn-group" role="group">
@@ -120,10 +122,10 @@
             console.log(richT);
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox = iframe.document.body;
-            //var docName = document.getElementById("docName");
+            var docName = document.getElementById("docName");
+            docName.style.display = "none";
 
-            //docName.value = "New Document"
-
+            docName.value = "untitled"
 
             //for chrome
             iframe.document.designMode = "On";
@@ -294,21 +296,6 @@
                 }
 
                 downloadLink.click();
-            }
-
-            function saveToDatabase() {
-                var title = document.getElementById("docName").value;
-                var text = document.getElementById("richTE").contentWindow.document.body.innerHTML;
-
-                document.forms["doc_form"].title.value = title;
-                document.forms["doc_form"].content.value = text;
-
-                document.getElementById("doc_form").submit();
-
-            }
-
-            function loadFromDatabase() {
-
             }
 
             styleButtons.bold.onclick = function() {

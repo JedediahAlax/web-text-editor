@@ -43,11 +43,12 @@
     <div class="carousel-caption">
       <h1 class="display-2" style="font-size: 100px;">Textitor!</h1>
       <h2 style="font-size: 25px;">A web-based rich-text editor</h2>
-			<%= link_to "NEW DOCUMENT", '/textboxes/textbox', class: "btn btn-outline-light btn-lrg" %>
 			<% if logged_in? %>
-     		<%= link_to "MY DOCUMENTS", current_user, class: "btn btn-outline-light btn-lrg" %>
+			<%= link_to "NEW DOCUMENT", '/documents/new', class: "btn btn-outline-light btn-lrg" %>
+			<%= link_to "MY DOCUMENTS", current_user, class: "btn btn-outline-light btn-lrg" %>
      		<p style="font-size: 15px;" id="carouselText"> Welcome back to textitor!</p>
 			<% else %>
+			<%= link_to "NEW DOCUMENT", '/textboxes/textbox', class: "btn btn-outline-light btn-lrg" %>
 			<%= link_to "LOG IN", '/sessions/new', class: "btn btn-outline-light btn-lrg" %>
 			<p style="font-size: 15px;" id="carouselText"> If you don't have an account you can create one from the log in page! </p>
 			<% end %>

@@ -3,7 +3,9 @@ class DocumentsController < ApplicationController
   before_action :correct_user, only:  [:edit, :update, :show, :destroy]
 
 
-
+def index
+  redirect_to current_user
+end
 
 
 def new
@@ -13,18 +15,23 @@ def new
 end
 
 def edit
-  @user = current_user
-  @userDoc = @user.documents.find(params[:id])
-  gon.userDoc = @userDoc
+    @user = current_user
+    @userDoc = @user.documents.find(params[:id])
+    gon.userDoc = @userDoc
+    rescue ActiveRecord::RecordNotFound
+      flash[:danger] = "You can't edit other users' documents!"
+      redirect_to current_user
+
 end
 
 def update
-  @document = current_user.documents.build(document_params)
-  if @document.save
-    flash[:success] = "Document saved!"
-    redirect_to current_user
+  @document = Document.find(params[:id])
+  if @document.update_attributes(document_params)
+    flash[:sucess] = "Document Updated!"
+  redirect_to current_user
   else
-    render 'splash_page/home'
+    flash.now[:danger] = "You must provide a title for your document."
+    render 'edit'
   end
 end
 
@@ -35,7 +42,9 @@ def create
     flash[:success] = "Document saved!"
     redirect_to current_user
   else
-    render 'splash_page/home'
+    @user = current_user
+    flash.now[:danger] = "You must provide a title for your document."
+    render 'new'
   end
 end
 

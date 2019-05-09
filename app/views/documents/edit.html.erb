@@ -13,7 +13,9 @@
 
           <% if logged_in? %>
             <%= form_for @userDoc, html: {id: :doc_form } do |f| %>
-            <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off",  :placeholder => "Title",  id: 'documentName'  %>
+            <%= render 'shared/doc_error_message' %>
+
+            <%= f.text_field :title, rows: 1, cols: 23, autocomplete: "off", id: 'docT'  %>
             <%= f.hidden_field :content, :value =>  " " , id: 'richT'%>
 
             <%= f.submit "Save to Profile", class: "btn-sm btn btn-primary", id: 'subBtn' %>
@@ -23,6 +25,7 @@
           <% end %>
               <textarea class="docName" id="docName" rows="1" maxlength="44" style="display: none;" spellcheck="false" placeholder="Untitled"></textarea>
 
+              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
 
 
             <div class="btn-group" role="group">
@@ -92,6 +95,7 @@
                 }
                 </script>
         <script type="text/javascript">
+
             var styleButtons = {
                 "bold": document.getElementById("bold"),
                 "italic": document.getElementById("italic"),
@@ -114,12 +118,14 @@
                 "saveDB": document.getElementById("saveDB")
             };
             var richT = document.getElementById("richT");
-            console.log(richT);
+            var docT = document.getElementById("docT")
+
             var iframe = document.getElementById("richTE").contentWindow;
             var textbox = iframe.document.body;
-            //var docName = document.getElementById("docName");
+            var docName = document.getElementById("docName");
+            docName.style.display = "none";
 
-            //docName.value = "New Document"
+            docName.value = "Untitled"
 
 
             //for chrome
@@ -133,12 +139,14 @@
                 iframe.document.designMode = "On";
                 textbox = iframe.document.body;
                 textbox.style.wordWrap = 'break-word';
-                textbox.innerHTML = "\n";
+                textbox.innerHTML = textbox.innerHTML = gon.userDoc.content;;
                 iframe.focus();
             }
 
             document.getElementById("subBtn").onclick = function() {
               richT.value = textbox.innerHTML;
+              if (docT.value == "")
+              docT.value = docName.value;
             }
 
             document.onkeydown = function(e) {if (e.which == 9) e.preventDefault();}    // allows for tabs NOTE: doesn't work for firefox
@@ -267,7 +275,7 @@
             function saveToLocal(textType) {
                 var text = "";
                 <% if logged_in? %>
-                docName.value = documentName.value;
+                docName.value = docT.value;
                 <%end%>
                 var fileName = docName.value;
                 if (textType === "plain") {
@@ -293,20 +301,6 @@
                 downloadLink.click();
             }
 
-            function saveToDatabase() {
-                var title = document.getElementById("docName").value;
-                var text = document.getElementById("richTE").contentWindow.document.body.innerHTML;
-
-                document.forms["doc_form"].title.value = title;
-                document.forms["doc_form"].content.value = text;
-
-                document.getElementById("doc_form").submit();
-
-            }
-
-            function loadFromDatabase() {
-
-            }
 
             styleButtons.bold.onclick = function() {
                 execCmd('bold');
