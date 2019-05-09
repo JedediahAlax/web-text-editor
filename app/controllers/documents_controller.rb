@@ -15,15 +15,19 @@ def new
 end
 
 def edit
-  @user = current_user
-  @userDoc = @user.documents.find(params[:id])
-  gon.userDoc = @userDoc
+    @user = current_user
+    @userDoc = @user.documents.find(params[:id])
+    gon.userDoc = @userDoc
+    rescue ActiveRecord::RecordNotFound
+      flash[:danger] = "You can't edit other users' documents!"
+      redirect_to current_user
+
 end
 
 def update
   @document = Document.find(params[:id])
   if @document.update_attributes(document_params)
-    flash.now[:sucess] = "Document Updated!"
+    flash[:sucess] = "Document Updated!"
   redirect_to current_user
   else
     flash.now[:danger] = "You must provide a title for your document."
