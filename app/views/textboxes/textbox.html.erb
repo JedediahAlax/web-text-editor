@@ -48,16 +48,15 @@
                     <option value="Verdana">Verdana</option>
                 </select>
 
-                <button class="btn2" id="savePlain" onclick="saveToLocal('rich')">Download</button>
-                <!--<button class="btn2" id="saveRich" onclick="saveToLocal('plain')">Save Rich</button> -->
-                <button class="btn2" onclick="upload();">Upload</button>
-                <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>
-                <!-- added new button to save to db, should appear only if user is logged in -->
-                <% if logged_in? %>
-                <button class="btn2" id="saveDB" onclick="saveToDatabase">Save</button>
-                <% end %>
-
-            <!-- need to restlyle the divs in this section-->
+                <button class="btn2" onclick="openForm()">Download</button>
+                  <div class = "form-popup" id="myForm" style="display: none;">
+                    <form class="form-container" onsubmit="return false;">
+                      <h2>Which Filetype?</h2>
+                        <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Rich (.rtx)</button>
+                        <button class="btn2" id="savePlain" onclick="saveToLocal('plain')">Plain (.txt)</button>
+                        <button type="button" class="btn cancel" style="color: red;" onclick="closeForm()">Close</button>
+                    </form>
+                  </div>
             </div>
 
             <div style="width: 100%; height: 1px;"></div>
@@ -116,7 +115,7 @@
                 console.log(e.keyCode);
                 if (e.ctrlKey) {
                     e.preventDefault();
-                    
+
                     if (e.keyCode == 66) styleButtons.bold.click();    //ctl+b
                     else if(e.keyCode == 73) styleButtons.italic.click();    //ctl+i
                     else if(e.keyCode == 85) styleButtons.underline.click();    //ctl+i

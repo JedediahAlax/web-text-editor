@@ -25,8 +25,6 @@
           <% end %>
               <textarea class="docName" id="docName" rows="1" maxlength="44" style="display: none;" spellcheck="false" placeholder="Untitled"></textarea>
 
-              <textarea class="docName" id="docName" rows="1" maxlength="44" spellcheck="false"></textarea>
-
 
             <div class="btn-group" role="group">
                 <button class="btn1" id="bold" title="ctrl+b" style="font-size: 12px; font-weight: bold;">B</button>
@@ -66,14 +64,14 @@
                 </select>
 
                 <button class="btn2" onclick="openForm()">Download</button>
-  <div class = "form-popup" id="myForm" style="display: none;">
-    <form class="form-container" onsubmit="return false;">
-      <h2>Which Filetype?</h2>
-      <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Rich (.rtx)</button>
-      <button class="btn2" id="savePlain" onclick="saveToLocal('plain')">Plain (.txt)</button>
-      <button type="button" class="btn cancel" style="color: red;" onclick="closeForm()">Close</button>
-    </form>
-  </div>
+                  <div class = "form-popup" id="myForm" style="display: none;">
+                    <form class="form-container" onsubmit="return false;">
+                      <h2>Which Filetype?</h2>
+                        <button class="btn2" id="saveRich" onclick="saveToLocal('rich')">Rich (.rtx)</button>
+                        <button class="btn2" id="savePlain" onclick="saveToLocal('plain')">Plain (.txt)</button>
+                        <button type="button" class="btn cancel" style="color: red;" onclick="closeForm()">Close</button>
+                    </form>
+                  </div>
 
   <button class="btn2" onclick="upload();">Upload</button>
   <input class="btn2" type="file" id="upload" style="display: none;" onchange="loadFromLocal(this.files)" accept="text/plain,text/html"></input>

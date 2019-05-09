@@ -9,6 +9,20 @@
   margin: 0 auto;
 }
 
+.form-popup {
+  display: none;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: #cccccc;
+}
+
 .btn-group {
     width: 800px;
     height: 35px;
